@@ -1,4 +1,3 @@
-import WavyText from '@/components/WavyText'
 import Navbar from '../components/Navbar'
 import Link from 'next/link'
 
@@ -20,7 +19,7 @@ export default function About() {
         </p>
 
         <p>
-          <Link href="https://portfolio-riobas-projects.vercel.app/" className="text-blue-500 hover:underline"><WavyText text=' here.' /></Link>
+          <Link href="https://portfolio-riobas-projects.vercel.app/" className="text-blue-500 hover:underline">Here</Link>
         </p>
       </section>
     </div>
