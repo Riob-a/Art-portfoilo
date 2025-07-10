@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar'
+import Image from 'next/image';
 import Link from 'next/link'
-import WavyText from '../components/WavyText';
 
 export default function Home() {
   return (
@@ -29,8 +29,11 @@ export default function Home() {
                 </textPath>
               </text>
             </svg>
-
-            <img src="/globe-2.svg" alt="Globe" className="globe-icon" />
+            <Image
+              alt="logo"
+              src="/globe-2.svg"
+              className="globe-icon"
+            />
           </div>
 
         </header>
