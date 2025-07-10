@@ -1,0 +1,422 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300&family=Jacquard+12&family=Jacquard+24&family=Manufacturing+Consent&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pirata+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=UnifrakturMaguntia&family=UoqMunThenKhung&display=swap');
+@import "tailwindcss";
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* font-family: 'Satoshi', sans-serif;
+font-family: 'Clash Display', sans-serif;
+font-family: 'Clash Grotesk', sans-serif;
+font-family: 'Panchang', sans-serif;
+font-family: 'Nippo', sans-serif;
+font-family: 'Aktura', serif;
+font-family: 'Melodrama', serif;
+font-family: 'Supreme', sans-serif;
+ */
+
+/* scroller */
+/* WebKit */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff7e5f;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1faee;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #feb47b #0a0a0a;
+  /* scrollbar-color:   #0a0a0a #ff7e5f; */
+
+}
+
+/* end */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /* font-family: 'Panchang', sans-serif;*/
+
+  font-family: 'Technor', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+
+  display: flex;
+  flex-direction: column;
+
+  h2{
+  font-family: 'Panchang', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  }
+}
+
+main {
+  flex: 1;
+}
+
+/* index */
+.header {
+  /* position: relative; */
+  background: linear-gradient(60deg, #feb47b, #ff7e5f);
+  background-size: 200% 200%;
+  animation: gradientWave 12s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
+  background-position: center;
+  background-repeat: space;
+  height: 500px;
+  text-align: center;
+  align-items: center;
+  /* border: 0.5rem solid #ffffff; */
+  margin: 1rem;
+  padding: 20px 20px;
+}
+
+.header .text {
+  font-size: 6rem;
+  /* font-family: 'Archivo Black', sans-serif; */
+  font-family: 'Panchang', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: bold;
+  padding: 125px 10px;
+  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  background-size: 200% 200%;
+  animation: gradientWave 12s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.globe-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  /* opacity: 0.5; */
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer
+}
+
+.globe-icon {
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  transition: transform 0.5s ease-in-out
+}
+
+/* .overlay-text {
+  font-family: "Manufacturing Consent", system-ui;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+.globe-icon:hover {
+  transform: rotate(360deg);
+}
+
+.svg-text-arc {
+  position: absolute;
+  top: -2px;
+  right: -3.5px;
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+
+.svg-text-arc text {
+   font-family: "Manufacturing Consent", system-ui;
+  font-size: 4rem;
+  fill: #010101;
+  /* letter-spacing: 1.5px; */
+}
+
+@media screen and (max-width: 768px) {
+  .header .text {
+    font-size: 2.5rem;
+  }
+}
+
+.main-index {
+  padding: 20px;
+  outline-offset: 1px;
+  outline: 1px solid #edebebc5;
+  outline-style: solid;
+}
+
+.g-link {
+  background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
+  /* background: linear-gradient(180deg, #ff7e5f 50%, #feb47b 50%); */
+  background-size: 200% 200%;
+  animation: gradientWave 2.5s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+  font-family: 'Panchang', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: bold;
+}
+
+.g-link:hover {
+  background-position: right center;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+@keyframes gradientWave {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* end */
+
+/* gallery */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.animate-fadeOut {
+  animation: fadeOut 0.3s ease-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.animate-scaleOut {
+  animation: scaleOut 0.3s ease-out;
+}
+
+.art-card {
+  background-color: transparent;
+  /* color: #010101; */
+  color: transparent;
+  border: 2px solid transparent;
+  transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, filter 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.image {
+  transition: filter 0.3s ease-in-out;
+}
+
+.desc {
+  /* color: #3F4856; */
+  color: transparent;
+  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
+}
+
+
+.art-card:hover {
+  /* background-color: #171717; */
+  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease, filter 0.3s ease-in-out;
+  border: 2px solid #ff7e5f;
+  background-color: #1e1d1d;
+  color: #ffffffad;
+
+  .desc {
+    color: #ff7e5f;
+  }
+
+  .image {
+    background: blur(2px);
+    filter: brightness(0.8);
+    transition: filter 0.3s ease-in-out;
+  }
+}
+
+
+
+.modal {
+  background-color: #00000049;
+  backdrop-filter: blur(8px);
+  transition: filter 2s ease-in-out;
+  scrollbar-color: #0a0a0a #ff7e5f;
+
+
+}
+
+.modal-content {
+  color: #000000;
+  background: transparent !important
+    /* background-color: #000000; */
+}
+
+/* end */
+
+/* About */
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft 1s ease-out both;
+}
+
+.animate-fadeInLeftDelay {
+  animation: fadeInLeft 1s ease-out both;
+  animation-delay: 0.4s;
+  opacity: 0;
+  /* Ensure hidden before animation kicks in */
+}
+
+/* Staggered delays */
+.delay-1 {
+  animation-delay: 0.3s;
+}
+
+.delay-2 {
+  animation-delay: 0.6s;
+}
+
+.delay-3 {
+  animation-delay: 0.9s;
+}
+
+.delay-4 {
+  animation-delay: 1.2s;
+}
+
+/* right */
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInRight {
+  animation: fadeInRight 1s ease-out both;
+}
+
+.animate-fadeInRightDelay {
+  animation: fadeInLeft 1s ease-out both;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+/* end */
+
+/* Contact */
+button.gradient-text {
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
+  background-size: 200% 200%;
+  animation: gradientWave 2.5s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Panchang', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  border: 1.5px dashed #feb47b;
+  animation:
+    fadeInLeft 1s ease-out both,
+    gradientWave 2.5s ease infinite;
+  animation-delay: 1.2s, 0s;
+}
+
+.gradient-text :hover {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* end */
