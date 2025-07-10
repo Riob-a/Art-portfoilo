@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import "./components.css";
 
 export default function WavyText({ text = "Variable" }) {
   const textRef = useRef(null);
