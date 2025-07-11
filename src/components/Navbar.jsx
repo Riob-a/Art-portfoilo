@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <nav className="navbar shadow-md p-4 flex justify-between items-center">
-      <p className="logo text-l font-bold flex items-center gap-2" data-aos="zoomIn" data-aos-delay=''>
+      <p className="logo text-l font-bold flex items-center gap-2" data-aos="fade-in" data-aos-delay=''>
         <Image
           alt="logo"
           src="/globe-2.svg"
@@ -25,10 +25,10 @@ export default function Navbar() {
         {/* D3RRICK */}
       </p>
       <div className="space-x-5 flex items-center">
-        <Link className={linkClasses('/')} data-aos="fade-right" data-aos-delay='200' href="/">Home</Link>
-        <Link className={linkClasses('/gallery')} data-aos="fade-right" data-aos-delay='400' href="/gallery">Gallery</Link>
-        <Link className={linkClasses('/about')} data-aos="fade-right" data-aos-delay='600' href="/about">About</Link>
-        <Link className={linkClasses('/contact')} data-aos="fade-right" data-aos-delay='800' href="/contact">Contact</Link>
+        <Link className={linkClasses('/')} data-aos="fade-in" data-aos-delay='200' href="/">Home</Link>
+        <Link className={linkClasses('/gallery')} data-aos="fade-in" data-aos-delay='400' href="/gallery">Gallery</Link>
+        <Link className={linkClasses('/about')} data-aos="fade-in" data-aos-delay='600' href="/about">About</Link>
+        <Link className={linkClasses('/contact')} data-aos="fade-in" data-aos-delay='800' href="/contact">Contact</Link>
       </div>
     </nav>
   )

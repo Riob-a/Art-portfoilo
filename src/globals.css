@@ -79,7 +79,7 @@ main {
 .header {
   /* position: relative; */
   background: linear-gradient(60deg, #feb47b, #ff7e5f);
-  background-size: 200% 200%;
+  background-size: 400% 400%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
