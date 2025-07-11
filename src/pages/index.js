@@ -29,7 +29,7 @@ export default function Home() {
                 </textPath>
               </text>
             </svg>
-            <Image
+            <img
               alt="logo"
               src="/globe-2.svg"
               className="globe-icon"

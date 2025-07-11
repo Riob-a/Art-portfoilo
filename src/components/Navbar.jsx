@@ -24,7 +24,7 @@ export default function Navbar() {
         The Portfolio
         {/* D3RRICK */}
       </p>
-      <div className="space-x-5">
+      <div className="space-x-5 flex items-center">
         <Link className={linkClasses('/')} data-aos="fade-right" data-aos-delay='200' href="/">Home</Link>
         <Link className={linkClasses('/gallery')} data-aos="fade-right" data-aos-delay='400' href="/gallery">Gallery</Link>
         <Link className={linkClasses('/about')} data-aos="fade-right" data-aos-delay='600' href="/about">About</Link>
