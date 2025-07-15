@@ -40,11 +40,10 @@ export default function Home() {
       </section>
 
       <section className="p-8 mb-4">
-        <div className="main-index flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div className="main-index flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4" data-aos="fade-in">
           <div>
             <h1 className="text-2xl font-bold mb-1" data-aos="fade-up">
               <b className="logo-2">The Portfolio.</b>
-              {/* <WavyText text="The Portfolio." /> */}
             </h1>
             <p className="text-base" data-aos="fade-up" data-aos-delay="200">
               Feel free to explore my collection of visual art

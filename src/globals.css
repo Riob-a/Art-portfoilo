@@ -63,11 +63,11 @@ body {
   display: flex;
   flex-direction: column;
 
-  h2{
-  font-family: 'Panchang', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
+  h2 {
+    font-family: 'Panchang', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
   }
 }
 
@@ -150,7 +150,7 @@ main {
 }
 
 .svg-text-arc text {
-   font-family: "Manufacturing Consent", system-ui;
+  font-family: "Manufacturing Consent", system-ui;
   font-size: 4rem;
   fill: #010101;
   /* letter-spacing: 1.5px; */
@@ -330,6 +330,18 @@ main {
 /* end */
 
 /* About */
+.a-link {
+  color: #ff7e5f;
+  transition: color 0.5s ease-in-out;
+}
+
+.a-link:hover {
+  color: #feb47b;
+  text-decoration: underline;
+  transition: color 0.5s ease-in-out, text-decoration 0.5s ease-in-out;
+  /* transform: scale(1.1); */
+}
+
 @keyframes fadeInLeft {
   0% {
     opacity: 0;
@@ -524,6 +536,7 @@ button.gradient-text {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 /* end */
 
 /* footer */
@@ -593,7 +606,7 @@ button.gradient-text {
     font-size: 2rem;
   }
 } */
- @keyframes wave {
+@keyframes wave {
   0% {
     transform: translateX(0);
     font-variation-settings: "wght" 10, "wdth" 75;
@@ -660,4 +673,3 @@ button.gradient-text {
     font-size: 1rem;
   }
 }
-
