@@ -79,7 +79,8 @@ main {
 .header {
   /* position: relative; */
   background: linear-gradient(60deg, #feb47b, #ff7e5f);
-  background-size: 400% 400%;
+  background-size: 1000% 800%;
+  /* background-size: 800% 800%; */
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
@@ -94,7 +95,6 @@ main {
 
 .header .text {
   font-size: 6rem;
-  /* font-family: 'Archivo Black', sans-serif; */
   font-family: 'Panchang', sans-serif;
   font-optical-sizing: auto;
   font-weight: 800;
@@ -104,6 +104,7 @@ main {
   background-size: 200% 200%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
+  /* -webkit-text-stroke: 1px black; */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

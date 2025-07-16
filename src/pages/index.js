@@ -8,7 +8,7 @@ export default function Home() {
       <Navbar />
       <section>
         <header className="header relative text-center">
-          <h1 className="text" data-aos="fade-in" data-aos-delay="2000">[Portfolio.]</h1>
+          <h1 className="text" data-aos="fade-in" data-aos-delay="2000">[Portfolio]</h1>
 
           <div className="globe-container">
             <svg
