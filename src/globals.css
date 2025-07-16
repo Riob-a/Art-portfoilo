@@ -459,8 +459,8 @@ button.gradient-text {
 .logo-pic {
   width: 30px;
   height: 30px;
-  background: linear-gradient(60deg, #feb47b, #ff7e5f);
-  background-size: 200% 500%;
+  background: linear-gradient(90deg, #feb47b, #ff7e5f);
+  background-size: 200% 200%;
   animation: gradientWave 5s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   border-radius: 1rem;
