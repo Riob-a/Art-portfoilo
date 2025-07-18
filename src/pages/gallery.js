@@ -18,6 +18,7 @@ const artworks = [
   // { title: "triumph", imageUrl: "/images/triumph.jpg", description: "Graffiti meets nature." },
   // { title: "ls-400", imageUrl: "/images/ls-400.jpg", description: "Graffiti meets nature." },
   { title: "still-life", imageUrl: "/images/still life.jpg", description: "Graffiti meets nature." },
+  
   // { title: "house", imageUrl: "/images/house.jpg", description: "Graffiti meets nature." },
 ];
 
