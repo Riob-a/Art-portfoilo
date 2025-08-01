@@ -14,10 +14,6 @@ export default function ArtworkDetail() {
         ? artworks.find((a) => a.slug === slug)
         : null;
 
-    if (!slug || !artwork) {
-        return <div className="p-8">Loading...</div>;
-    }
-
     useEffect(() => {
         setAnimationClass('animate-scaleIn');
 
@@ -32,8 +28,9 @@ export default function ArtworkDetail() {
         };
     }, [router]);
 
-    if (!artwork) return <div className="p-8">Project not found or loading...</div>;
-
+    if (!slug || !artwork) {
+        return <div className="p-8">Loading...</div>;
+    }
 
     return (
         <div className={`slug p-8 mt-8 mb-8 max-w-5xl mx-auto  ${animationClass}`}>

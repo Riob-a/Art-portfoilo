@@ -30,10 +30,12 @@ export default function Home() {
                 </textPath>
               </text>
             </svg>
-            <img
+            <Image
               alt="logo"
               src="/globe-2.svg"
               className="globe-icon"
+              height={30}
+              width={30}
             />
           </div>
 
