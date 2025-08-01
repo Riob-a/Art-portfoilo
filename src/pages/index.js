@@ -1,13 +1,14 @@
 import Navbar from '../components/Navbar'
 import Image from 'next/image';
-import Link from 'next/link'
+import Link from 'next/link';
+import { motion } from 'framer-motion'
 
 export default function Home() {
   return (
     <div>
       <Navbar />
       <section>
-        <header className="header relative text-center">
+        <header className="header relative text-center" data-aos="fade-in" data-aos-delay="">
           <h1 className="text" data-aos="fade-in" data-aos-delay="2000">[Portfolio]</h1>
 
           <div className="globe-container">
@@ -24,7 +25,7 @@ export default function Home() {
                 />
               </defs>
               <text dy="-30" textLength="170">
-                <textPath href="#text-circle" startOffset="50%" textAnchor="middle"  data-aos="fade-in" data-aos-delay="">
+                <textPath href="#text-circle" startOffset="50%" textAnchor="middle" data-aos="fade-in" data-aos-delay="">
                   D.R.O
                 </textPath>
               </text>
@@ -49,15 +50,19 @@ export default function Home() {
               Feel free to explore my collection of visual art
             </p>
           </div>
-
-          <Link
-            href="/gallery"
-            className="g-link inline-block px-6 py-2 rounded-md"
-            data-aos="fade-right"
-            data-aos-delay="400"
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
-            [ View Gallery ]
-          </Link>
+            <Link
+              href="/gallery"
+              className="g-link inline-block px-6 py-2 rounded-md"
+              data-aos="fade-right"
+              data-aos-delay="400"
+            >
+              [ View Gallery ]
+            </Link>
+          </motion.div>
         </div>
       </section>
 

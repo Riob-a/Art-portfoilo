@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useRef } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { FaDownload } from 'react-icons/fa';
 
-export default function ArtCard({ title, imageUrl, description, aosDelay = 0 }) {
+
+export default function ArtCard({ title, imageUrl, description, slug, aosDelay = 0 }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -38,25 +42,25 @@ export default function ArtCard({ title, imageUrl, description, aosDelay = 0 }) 
     return (
         <>
             {/* Art Card */}
-            <div
-                className="art-card rounde overflow-hidden  cursor-pointer"
+            <motion.div
+                whileHover={{ scale: 1.05, y: -10, x: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 onClick={() => setIsModalOpen(true)}
 
             >
-                <div data-aos="fade-up" data-aos-delay={aosDelay}>
+                <div
+                    className="art-card rounded-lg overflow-hidden  cursor-pointer"
+                    data-aos="fade-in" data-aos-delay={aosDelay}
+                >
                     <Image
                         src={imageUrl}
                         alt={title}
-                        width={400}
+                        width={600}
                         height={300}
-                        className="w-full image  object-cover"
+                        className="w-full image h-80 object-cover"
                     />
-                    <div className="p-4">
-                        <h2 className="text-xl font-bold mb-2">{title}</h2>
-                        <p className="desc text-sm">{description}</p>
-                    </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Modal Fullscreen View */}
             {isModalOpen && (
@@ -70,7 +74,7 @@ export default function ArtCard({ title, imageUrl, description, aosDelay = 0 }) 
                     >
                         {/* Close Button */}
                         <button
-                            className="absolute top-4 right-6 text-white text-3xl hover:text-red-400 z-10"
+                            className="absolute top-4 right-6  text-3xl x-button"
                             onClick={handleClose}
                             aria-label="Close modal"
                         >
@@ -82,30 +86,25 @@ export default function ArtCard({ title, imageUrl, description, aosDelay = 0 }) 
                             <Image
                                 src={imageUrl}
                                 alt={title}
-                                width={1200}
-                                height={800}
+                                width={600}
+                                height={300}
                                 className="w-auto max-h-[70vh] object-contain rounded"
                             />
                             <h2 className="text-white text-2xl mt-4">{title}</h2>
-                            <p className="text-gray-300 mt-2">{description}</p>
+                            {/* <p className="text-gray-300 mt-2">{description}</p> */}
 
-                            {/* Download Button */}
-                            <a
-                                href={imageUrl}
-                                download
-                                className="mt-4 bg-white  text-black px-5 py-2 rounded hover:bg-gray-500 transition hover:text-white"
-                            >
-                                <Image
-                                          alt="logo"
-                                          src="/file.svg"
-                                          // src="/globe-1-ln.svg"
-                                          width={20}
-                                          height={20}
-                                          className="m-1 inline-block"
-                                        />
-                                Download Artwork
-                            </a>
+                            {/* Buttons side by side */}
+                            <div className="flex gap-4 mt-4">
+                                <Link href={`/artworks/${slug}`}>
+                                    <button className="m-button rounded-sm">More Detai...</button>
+                                </Link>
+                                <a href={imageUrl} download className="m-button rounded-sm flex items-center gap-2">
+                                    <FaDownload />
+                                    Download
+                                </a>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             )}

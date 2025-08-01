@@ -9,7 +9,7 @@ export default function Footer() {
        >
         Privacy Policy
       </a>
-      <span className='flex items-center gap-1'><FaLink/> by derrick</span>
+      <span className='flex items-center gap-1'><a className='flex items-center gap-1' href="https://portfolio-five-five.vercel.app/"><FaLink/> by derrick</a></span>
     </footer>
   );
 }
