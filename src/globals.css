@@ -497,6 +497,9 @@ button.gradient-text {
 }
 
 @media screen and (max-width: 768px) {
+   html {
+    font-size: 14px;
+  }
   .logo {
     font-size: 0.6rem;
   }
@@ -513,6 +516,11 @@ button.gradient-text {
   .slug {
     margin: 15px;
   }
+  .m-button{
+    padding:0.5rem;
+    margin: auto;
+  }
+
 }
 
 /* Navbar */
