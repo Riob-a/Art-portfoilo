@@ -6,6 +6,7 @@ const artworks = [
   { title: "mosaic", imageUrl: "/images/Mosaic-skull.jpg", description: "Potrait of a Human skull Drawn entirely out of paint.This was My Second yearly study of the human skull" },
   { title: "Colored-skull", imageUrl: "/images/Colored-skull.jpg", description: "Potrait of the Human Skull Drawn with both pencil and paint. This is my fourth attempt going for more detail than the third" },
   { title: "still-life", imageUrl: "/images/still life.jpg", description: "Simple still life of a fiew bottles and an apple" },
+  { title: "Hanging-branch", imageUrl: "/images/Branch.jpg", description: "A composition consisting of a hanging branch, drawn entirely digitally." }
 ].map(art => ({
   ...art,
   slug: createSlug(art.title),
