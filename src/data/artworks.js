@@ -8,6 +8,7 @@ const artworks = [
   { title: "still-life", imageUrl: "/images/still life.jpg", description: "Simple still life of a fiew bottles and an apple" },
   { title: "Hanging-branch", imageUrl: "/images/Branch.jpg", description: "A composition consisting of a hanging branch, drawn entirely digitally." },
   { title: "Spots", imageUrl: "/images/Spots.jpg", description: "Spots and patterns." },
+  { title: "Rose", imageUrl: "/images/Rose.jpg", description: "A beautiful rose drawn with intricate details." },
 
 ].map(art => ({
   ...art,
