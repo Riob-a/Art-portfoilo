@@ -49,17 +49,20 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
 
             >
                 <div
-                    className="art-card rounded-lg overflow-hidden  cursor-pointer"
                     data-aos="fade-in" data-aos-delay={aosDelay}
                 >
-                    <Image
+                    <div
+                        className="art-card rounded-lg overflow-hidden  cursor-pointer"
+                        // data-aos="fade-in" data-aos-delay={aosDelay}
+                    >
+                        <Image
                         src={imageUrl}
                         alt={title}
                         width={600}
                         height={300}
                         className="w-full image h-80 object-cover"
                     />
-                </div>
+                </div></div>
             </motion.div>
 
             {/* Modal Fullscreen View */}

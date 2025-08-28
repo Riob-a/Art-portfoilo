@@ -227,6 +227,7 @@ main {
   align-items: center;
   margin: 1rem;
   padding: 20px 20px;
+  border-radius: 1rem;
 }
 
 .header .text {
@@ -328,8 +329,9 @@ main {
 .art-card {
   background-color: #1e1d1d;
   color: #010101;
+  filter: grayscale(80%);
   /* border: 2px solid transparent; */
-  transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, filter 0.3s ease-in-out;
+  transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, filter 1s ease-in-out;
   cursor: pointer;
 }
 
@@ -343,7 +345,8 @@ main {
 }
 
 .art-card:hover {
-  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease, filter 0.3s ease-in-out;
+  filter: grayscale(0%);
+  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease, filter 0.8s ease-in-out;
 
   .desc {
     color: #ff7e5f;
