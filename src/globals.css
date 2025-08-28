@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@300;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/druk-wide-bold');
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300&family=Jacquard+12&family=Jacquard+24&family=Manufacturing+Consent&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pirata+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=UnifrakturMaguntia&family=UoqMunThenKhung&display=swap');
 @import "tailwindcss";
 
@@ -216,13 +217,13 @@ main {
 
 /* index */
 .header {
-  background: linear-gradient(60deg, #feb47b, #ff7e5f);
+  background: linear-gradient(60deg, #feb47b, #ff7e5f, #ff613a);
   background-size: 1000% 800%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
   background-repeat: space;
-  height: 500px;
+  height: 550px;
   text-align: center;
   align-items: center;
   margin: 1rem;
@@ -231,13 +232,13 @@ main {
 }
 
 .header .text {
-  font-size: 6rem;
+  font-size: 9rem;
   font-family: 'Panchang', sans-serif;
   font-optical-sizing: auto;
-  font-weight: 800;
+  font-weight: 900;
   font-style: bold;
   padding: 125px 10px;
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
+  background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
   background-size: 200% 200%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
@@ -299,6 +300,16 @@ main {
   outline-style: solid;
 }
 
+.svg{
+  stroke: #ff7e5f;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.svg:hover{
+  stroke: #feb47b;
+  transition: stroke 0.5s ease-in-out;
+} 
+
 .g-link {
   background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
   /* background: linear-gradient(180deg, #ff7e5f 50%, #feb47b 50%); */
@@ -330,7 +341,7 @@ main {
   background-color: #1e1d1d;
   color: #010101;
   filter: grayscale(80%);
-  /* border: 2px solid transparent; */
+  margin: auto;
   transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, filter 1s ease-in-out;
   cursor: pointer;
 }
@@ -388,12 +399,15 @@ main {
 
 .x-button {
   color: #ff613a;
-  transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
+  transition: color 0.5s ease-in-out, background-color 1s ease-in-out, transform 0.5s ease-in-out;
+  transform: rotate(-180deg);
 }
 
 .x-button:hover {
   color: #feb47b;
-  transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
+  transition: color 0.5s ease-in-out, background-color 1s ease-in-out, transform 0.8s ease-in-out;
+  transform: rotate(90deg);
+  transform: scale(1.5);
 }
 
 .slug {
@@ -480,6 +494,12 @@ button.gradient-text {
   cursor: pointer;
   transition: transform 0.5s ease-in-out;
   font-family: 'Panchang', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.logo-3 {
+  font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
 }

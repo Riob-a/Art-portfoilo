@@ -9,6 +9,7 @@ import { FaDownload } from 'react-icons/fa';
 export default function ArtCard({ title, imageUrl, description, slug, aosDelay = 0 }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
+    // const heights = ["h-60", "h-72", "h-80", "h-96"];
 
     useEffect(() => {
         const handleEsc = (e) => {
@@ -46,6 +47,7 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                 whileHover={{ scale: 1.05, y: -10, x: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 onClick={() => setIsModalOpen(true)}
+                className="mb-6 break-inside-avoid"
 
             >
                 <div
@@ -53,16 +55,20 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                 >
                     <div
                         className="art-card rounded-lg overflow-hidden  cursor-pointer"
-                        // data-aos="fade-in" data-aos-delay={aosDelay}
+                    // data-aos="fade-in" data-aos-delay={aosDelay}
                     >
                         <Image
-                        src={imageUrl}
-                        alt={title}
-                        width={600}
-                        height={300}
-                        className="w-full image h-80 object-cover"
-                    />
-                </div></div>
+                            src={imageUrl}
+                            alt={title}
+                            width={600}
+                            height={300}
+                            // className="w-full image h-80 object-cover"
+                            className="w-full  rounded-lg object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        // className={`w-full object-cover rounded-lg ${heights[i % heights.length]}`} 
+                        />
+                    </div>
+                </div>
             </motion.div>
 
             {/* Modal Fullscreen View */}

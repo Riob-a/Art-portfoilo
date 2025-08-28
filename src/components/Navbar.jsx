@@ -17,12 +17,11 @@ export default function Navbar() {
 
 
   return (
-    <nav className="navbar shadow-md p-4 flex justify-between items-center">
+    <nav className="navbar shadow-md p-3 flex justify-between items-center rounded-lg">
       <p className="logo text-l font-bold flex items-center gap-2" data-aos="fade-in" data-aos-delay=''>
         <Image
           alt="logo"
           src="/globe-2.svg"
-          // src="/globe-1-ln.svg"
           width={30}
           height={30}
           className="logo-pic inline-block"
