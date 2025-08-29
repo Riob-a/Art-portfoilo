@@ -9,6 +9,7 @@ const artworks = [
   { title: "Hanging-branch", imageUrl: "/images/Branch.jpg", description: "A composition consisting of a hanging branch, drawn entirely digitally.", category:"Digital" , year:"2025" },
   { title: "Spots", imageUrl: "/images/Spots.jpg", description: "Spots and patterns.", category:"Digital", year:"2025" },
   { title: "Rose", imageUrl: "/images/Rose.jpg", description: "A beautiful rose drawn with intricate details.", category:"Digital", year:"2025"  },
+  { title: "Cyclops", imageUrl: "/images/Cyclops.jpg", description: "Cyclops .", category:"Digital", year:"2025"  }
 
 ].map(art => ({
   ...art,
