@@ -99,18 +99,18 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                                 height={300}
                                 className="w-auto max-h-[70vh] object-contain rounded"
                             />
-                            <h2 className="text-white text-2xl mt-4">{title}</h2>
+                            <h2 className="modal-text-2 text-white text-2xl mt-4">{title}</h2>
                             {/* <p className="text-gray-300 mt-2">{description}</p> */}
 
                             {/* Buttons side by side */}
-                            <div className="flex gap-4 mt-4">
+                            <div className="flex gap-4 mt-2">
                                 <Link href={`/artworks/${slug}`}>
                                     <button className="m-button rounded-sm">More...</button>
                                 </Link>
-                                <a href={imageUrl} download className="m-button rounded-sm flex items-center gap-2">
+                                {/* <a href={imageUrl} download className="m-button rounded-sm flex items-center gap-2">
                                     <FaDownload />
                                     Download
-                                </a>
+                                </a> */}
                             </div>
                         </div>
 

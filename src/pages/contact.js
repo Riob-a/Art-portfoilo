@@ -46,8 +46,8 @@ export default function Contact() {
   return (
     <div>
       <Navbar />
-      <section className="p-8 max-w-xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4 animate-fadeInLeft">Get in Touch</h2>
+      <section className="p-8 max-w-xl mx-auto a-content">
+        <h2 className="text-2xl font-bold mb-4 animate-fadeInLeft a-heading">Get in Touch</h2>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <input
             type="text"
@@ -87,8 +87,8 @@ export default function Contact() {
       </section>
 
       <section className="contact p-8 mt-8 mb-8 max-w-xl mx-auto text-center" data-aos="fade-in" data-aos-delay="400">
-        <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
-        <p className="flex flex-wrap items-center gap-4 justify-center">
+        <h2 className="text-2xl font-bold mb-4 a-heading">Contact Information</h2>
+        <p className="flex flex-wrap items-center gap-4 justify-center a-content">
           <motion.a href="mailto: riobad74@gmail.com" className="p-link flex items-center gap-1 text-sm" whileHover={{ scale: 1.05, color:'#ff7e5f'  }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >

@@ -38,7 +38,7 @@ export default function Navbar() {
       </div>
       
       {/* mobile and smaller */}
-      <div className="md:hidden hamburger">
+      <div className="md:hidden hamburger" style={{ color: '#608561' }}>
         <button onClick={toggleMenu} className="text-2xl h-button">
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>

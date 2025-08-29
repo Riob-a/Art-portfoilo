@@ -6,8 +6,8 @@ export default function About() {
   return (
     <div>
       <Navbar />
-      <section className="p-8 max-w-2xl mx-auto animate-fadeInLeft">
-        <h2 className="text-2xl font-bold mb-4">About Me</h2>
+      <section className="p-8 max-w-2xl mx-auto animate-fadeInLeft a-content">
+        <h2 className="text-2xl font-bold mb-4 a-heading">About Me</h2>
         <p>
           I am a visual artist comfortable with both paint and pencil, preferrably pencil, specializing in
           creating intricate compositions that combine both pencil and paint, with the occasional still life.

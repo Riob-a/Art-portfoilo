@@ -16,6 +16,24 @@
   }
 }
 
+@layer utilities {
+  .swing-hover {
+    transition: transform 0.3s ease;
+    transform-origin: left center;
+    display: inline-block;
+    margin-right: 12px;
+    perspective: 300px;
+
+    /* transform: rotate3d(0, 1, 0, 0deg) translateZ(0); */
+
+  }
+
+  .swing-hover:hover {
+    transition: transform 0.3s ease;
+    transform: rotate3d(0.09, 1, 0, 30deg) translateZ(-1px);
+  }
+}
+
 /* font-family: 'Satoshi', sans-serif;
 font-family: 'Clash Display', sans-serif;
 font-family: 'Clash Grotesk', sans-serif;
@@ -217,8 +235,8 @@ main {
 
 /* index */
 .header {
-  background: linear-gradient(60deg, #feb47b, #ff7e5f, #ff613a);
-  background-size: 1000% 800%;
+  background: linear-gradient(60deg, #fac094, #feb47b, #ff7e5f, #ff613a);
+  background-size: 1100% 800%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
@@ -238,8 +256,8 @@ main {
   font-weight: 900;
   font-style: bold;
   padding: 125px 10px;
-  background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
-  background-size: 200% 200%;
+  background: linear-gradient(90deg, #fb5228, #ff613a, #ff7e5f, #feb47b, #fac094);
+  background-size: 500% 200%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   -webkit-background-clip: text;
@@ -289,7 +307,15 @@ main {
 
 @media screen and (max-width: 768px) {
   .header .text {
+    font-size: 2.7rem;
+    padding: 185px 0px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .header .text {
     font-size: 2rem;
+    padding: 185px 0px;
   }
 }
 
@@ -300,15 +326,24 @@ main {
   outline-style: solid;
 }
 
-.svg{
+.svg {
   stroke: #ff7e5f;
   width: 1.5rem;
   height: 1.5rem;
 }
-.svg:hover{
+
+.svg:hover {
   stroke: #feb47b;
   transition: stroke 0.5s ease-in-out;
-} 
+}
+
+.desc-details {
+  color: #E0A15E;
+}
+
+.desc-intro {
+  color: #608561;
+}
 
 .g-link {
   background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
@@ -333,6 +368,32 @@ main {
   background-clip: text;
   transition: all 0.3s ease;
 }
+
+/* .left-c {
+  border-top: transparent 2px solid;
+  border-right: transparent 2px solid;
+  transition: border-top 0.5s ease, border-right 0.5s ease, transform 0.5s ease;
+}
+
+.left-c:hover {
+  border-top: solid 2px #E0A15E;
+  border-right: solid 2px #E0A15E;
+  transform: translate(-5px, -5px);
+  transition: border-top 0.5s ease, border-right 0.5s ease, transform 0.5s ease;
+}
+
+.right-c {
+  border-top: transparent 2px solid;
+  border-left: transparent 2px solid;
+  transition: border-top 0.5s ease, border-left 0.5s ease, transform 0.5s ease;
+}
+
+.right-c:hover {
+  border-top: solid 2px #E0A15E;
+  border-left: solid 2px #E0A15E;
+  transform: translate(5px, -5px);
+  transition: border-top 0.5s ease, border-left 0.5s ease, transform 0.5s ease;
+} */
 
 /* end */
 
@@ -376,15 +437,43 @@ main {
   scrollbar-color: #0a0a0a #ff7e5f;
 }
 
+.modal-heading {
+  color: #E0A15E;
+  font-family: 'Druk Wide Bold', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.modal-text {
+  color: #608561;
+  font-family: 'Druk Wide Bold', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.modal-text-1 {
+  color: #608561;
+  font-family: 'Druk Wide Bold', sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.modal-text-2 {
+  color: #E0A15E;
+  font-family: 'Druk Wide Bold', sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
 .modal-content {
   color: #000000;
   background: transparent !important
 }
 
 .m-button {
-  font-weight: 500;
+  font-weight: 800;
   padding: 10px;
-  background-color: #ff613a;
+  background-color: #E0A15E;
   color: #171717;
   transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
 
@@ -406,8 +495,9 @@ main {
 .x-button:hover {
   color: #feb47b;
   transition: color 0.5s ease-in-out, background-color 1s ease-in-out, transform 0.8s ease-in-out;
-  transform: rotate(90deg);
+  transform: rotate(180deg);
   transform: scale(1.5);
+
 }
 
 .slug {
@@ -426,7 +516,7 @@ main {
 
 .slug-image:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 8px #76767686;
+  box-shadow: 0 4px 8px #00000086;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -439,6 +529,17 @@ main {
 /* end */
 
 /* About */
+.a-heading {
+  color: #E0A15E;
+  font-family: 'Druk Wide Bold', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.a-content {
+  color: #608561;
+}
+
 .a-link {
   color: #ff7e5f;
   transition: color 0.5s ease-in-out;
@@ -532,7 +633,7 @@ button.gradient-text {
   }
 
   .logo {
-    font-size: 0.6rem;
+    font-size: 0.9rem;
   }
 
   .Image {
@@ -541,7 +642,7 @@ button.gradient-text {
   }
 
   .link {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
 
   .slug {
@@ -560,30 +661,24 @@ button.gradient-text {
   border: 1px solid transparent;
   font-family: 'Technor', sans-serif;
   font-weight: 500;
-  transition: color 1s ease, border-color 1s ease, background-color 0.3s ease;
+  transition: color 1s ease, border-color 1s ease, background-color 0.3s ease, transform 0.3s;
   color: #ededed66
 }
 
 .link {
-  transition: background-color 0.3s, color 0.3s;
-
+  transition: color 0.3s, transform 0.3s;
 }
 
 .navbar:hover {
   transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
-  border: 1px solid #EDEDED;
-  color: #EDEDED
+  border: 1px solid #E0A15E;
+  color: #608561
 }
 
 .link:hover {
-  transition: all 0.3s ease;
-  background: linear-gradient(90deg, #ff7e5f, #feb47b);
-  background-size: 200% 200%;
-  animation: gradientWave 10s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #E0A15E;
+  transform: scale(1.5);
+  transition: color 0.3s, transform 0.3s;
 }
 
 .active-link {
@@ -607,9 +702,9 @@ button.gradient-text {
 }
 
 .footer:hover {
-  color: #EDEDED;
+  color: #608561;
   transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
-  border: 1px solid #EDEDED
+  border: 1px solid #E0A15E;
 }
 
 /*  */

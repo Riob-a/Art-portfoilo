@@ -2,9 +2,23 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import artworks from '../../data/artworks';
-import { FaWindowClose, FaLink } from "react-icons/fa";
+import { FaDownload  } from "react-icons/fa";
 
 export default function ArtworkDetail() {
+    const svg =
+    <svg xmlns="http://www.w3.org/2000/svg"
+      width="30" height="30"
+      viewBox="0 0 24 24"
+      className='svg-1 inline-block'
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M7 17L17 7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+
     const router = useRouter();
     const { slug } = router.query;
     const [animationClass, setAnimationClass] = useState('animate-scaleIn');
@@ -35,7 +49,7 @@ export default function ArtworkDetail() {
         <div className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto ${animationClass}`}>
             {/* Header with title + close */}
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold logo-3">/{artwork.title}</h1>
+                <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1>
                 <button
                     className="x-button text-3xl"
                     onClick={() => {
@@ -43,7 +57,7 @@ export default function ArtworkDetail() {
                         setTimeout(() => router.push('/gallery'), 200);
                     }}
                 >
-                     ✕
+                     {svg}
                 </button>
             </div>
 
@@ -63,7 +77,7 @@ export default function ArtworkDetail() {
 
                 {/* Right: Details */}
                 <div className="flex flex-col justify-start">
-                    <p className="text-lg text-gray-700 leading-relaxed mb-6"
+                    <p className="modal-text-1  text-sm text-gray-700 leading-relaxed mb-6"
                         data-aos="fade-in" data-aos-delay="600"
                     >
                         {artwork.description}
@@ -72,8 +86,8 @@ export default function ArtworkDetail() {
                     <div className="border-t border-gray-300 pt-4 mt-4 space-y-2 text-sm"
                         data-aos="fade-in" data-aos-delay="1000"
                     >
-                        <p><span className="font-semibold">Category:</span> {artwork.category}</p>
-                        <p><span className="font-semibold">Year:</span> {artwork.year}</p>
+                        <p><span className="font-semibold modal-text-2">Category: </span> <span className="modal-text-1">{artwork.category}</span></p>
+                        <p><span className="font-semibold modal-text-2">Year: </span> <span className="modal-text-1">{artwork.year}</span></p>
                     </div>
 
                     {/* CTA Links */}
@@ -81,19 +95,10 @@ export default function ArtworkDetail() {
                         <a
                             href={artwork.imageUrl}
                             download
-                            className="px-4 py-2 m-button text-sm rounded-lg flex items-center gap-1"
+                            className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
                         >
-                            Download
+                           <FaDownload /> Download
                         </a>
-                        <button
-                            onClick={() => {
-                                setAnimationClass('animate-scaleOut');
-                                setTimeout(() => router.push('/gallery'), 200);
-                            }}
-                            className="px-4 py-2 m-button  text-sm rounded-lg  flex items-center gap-1"
-                        >
-                             Back to Gallery
-                        </button>
                     </div>
                 </div>
             </div>
