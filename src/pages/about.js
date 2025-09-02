@@ -48,12 +48,13 @@ export default function About() {
           >
             About Me
           </motion.h2>
-
-          <Link href="/" className="line-arrow">
-            <button style={{ y: yArrow }} className="arrow-l-button">
-              {arrow}
-            </button>
-          </Link>
+          <motion.div className="line-arrow" style={{ y: yArrow }}>
+            <Link href="/" >
+              <button  className="arrow-l-button">
+                {arrow}
+              </button>
+            </Link>
+          </motion.div>
         </div>
 
         <motion.div style={{ y: yText }} className="space-y-6 text-lg leading-relaxed">

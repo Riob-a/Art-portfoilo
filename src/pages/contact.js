@@ -72,7 +72,7 @@ export default function Contact() {
   }
 
   return (
-    <div>
+    <div className='animate-fadeInLeft'>
       {/* <Navbar /> */}
       <section className="p-8 max-w-xl mx-auto a-content min-h-screen md:min-h-[180vh] | flex flex-col justify-center">
         <div className="flex items-center justify-between mb-4 ">

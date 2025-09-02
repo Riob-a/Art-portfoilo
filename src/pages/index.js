@@ -112,7 +112,7 @@ export default function Home() {
           <div className="md:col-span-6 flex flex-col gap-4 mb-5">
             {/* Project Details */}
             <div className="main-index-2 border-gray-300 pt-4 desc-details" data-aos="fade-in" data-aos-delay="200">
-              <h2 className="text-sm uppercase tracking-wide font-semibold mb-2">
+              <h2 className="text-sm uppercase tracking-wide font-semibold mb-2" >
                 Details
               </h2>
               <div className="border-t border-gray-500 text-sm grid grid-cols-3 gap-y-4">
@@ -168,7 +168,7 @@ export default function Home() {
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
-          <li>art projects</li>
+          <li>art projects</li><li>•</li>
         </ul>
 
         {/* duplicate track */}
@@ -180,7 +180,7 @@ export default function Home() {
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
-          <li>art projects</li>
+          <li>art projects</li><li>•</li>
         </ul>
       </div>
 

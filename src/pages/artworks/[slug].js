@@ -1,23 +1,131 @@
+// import { useRouter } from 'next/router';
+// import Image from 'next/image';
+// import { useEffect, useState } from 'react';
+// import artworks from '../../data/artworks';
+// import { FaDownload  } from "react-icons/fa";
+
+// export default function ArtworkDetail() {
+//     const svg =
+//     <svg xmlns="http://www.w3.org/2000/svg"
+//       width="30" height="30"
+//       viewBox="0 0 24 24"
+//       className='svg-1 inline-block'
+//       fill="none"
+//       stroke="currentColor"
+//       strokeWidth="3"
+//       strokeLinecap="round"
+//       strokeLinejoin="round">
+//       <path d="M7 17L17 7" />
+//       <polyline points="7 7 17 7 17 17" />
+//     </svg>
+
+//     const router = useRouter();
+//     const { slug } = router.query;
+//     const [animationClass, setAnimationClass] = useState('animate-scaleIn');
+
+//     const artwork = typeof slug === 'string'
+//         ? artworks.find((a) => a.slug === slug)
+//         : null;
+
+//     useEffect(() => {
+//         setAnimationClass('animate-scaleIn');
+
+//         const handleRouteChangeStart = () => {
+//             setAnimationClass('animate-scaleOut');
+//         };
+
+//         router.events.on('routeChangeStart', handleRouteChangeStart);
+
+//         return () => {
+//             router.events.off('routeChangeStart', handleRouteChangeStart);
+//         };
+//     }, [router]);
+
+//     if (!slug || !artwork) {
+//         return <div className="p-8">Loading...</div>;
+//     }
+
+//     return (
+//         <div className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-lg ${animationClass}`}>
+//             {/* Header with title + close */}
+//             <div className="flex justify-between items-center mb-8">
+//                 <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1>
+//                 <button
+//                     className="x-button text-3xl"
+//                     onClick={() => {
+//                         setAnimationClass('animate-scaleOut');
+//                         setTimeout(() => router.push('/'), 200);
+//                     }}
+//                 >
+//                      {svg}
+//                 </button>
+//             </div>
+
+//             {/* Two-column layout */}
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+//                 {/* Left: Large Artwork Image */}
+//                 <div className="w-full">
+//                     <Image
+//                         src={artwork.imageUrl}
+//                         alt={artwork.title}
+//                         width={800}
+//                         height={600}
+//                         className="slug-image rounded-lg shadow-md w-full object-cover"
+//                         data-aos="fade-in" data-aos-delay="1200"
+//                     />
+//                 </div>
+
+//                 {/* Right: Details */}
+//                 <div className="flex flex-col justify-start main-index">
+//                     <p className="modal-text-1  text-sm text-gray-700 leading-relaxed mb-6"
+//                         data-aos="fade-in" data-aos-delay="600"
+//                     >
+//                         {artwork.description}
+//                     </p>
+
+//                     <div className="border-t border-gray-300 pt-4 mt-4 space-y-2 text-sm"
+//                         data-aos="fade-in" data-aos-delay="1000"
+//                     >
+//                         <p><span className="font-semibold modal-text-2">Category: </span> <span className="modal-text-1">{artwork.category}</span></p>
+//                         <p><span className="font-semibold modal-text-2">Year: </span> <span className="modal-text-1">{artwork.year}</span></p>
+//                     </div>
+
+//                     {/* CTA Links */}
+//                     <div className="flex gap-4 mt-6">
+//                         <a
+//                             href={artwork.imageUrl}
+//                             download
+//                             className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
+//                         >
+//                            <FaDownload /> Download
+//                         </a>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import artworks from '../../data/artworks';
-import { FaDownload  } from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function ArtworkDetail() {
     const svg =
-    <svg xmlns="http://www.w3.org/2000/svg"
-      width="30" height="30"
-      viewBox="0 0 24 24"
-      className='svg-1 inline-block'
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round">
-      <path d="M7 17L17 7" />
-      <polyline points="7 7 17 7 17 17" />
-    </svg>
+        <svg xmlns="http://www.w3.org/2000/svg"
+            width="30" height="30"
+            viewBox="0 0 24 24"
+            className='svg-1 inline-block'
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round">
+            <path d="M7 17L17 7" />
+            <polyline points="7 7 17 7 17 17" />
+        </svg>;
 
     const router = useRouter();
     const { slug } = router.query;
@@ -35,18 +143,28 @@ export default function ArtworkDetail() {
         };
 
         router.events.on('routeChangeStart', handleRouteChangeStart);
-
         return () => {
             router.events.off('routeChangeStart', handleRouteChangeStart);
         };
     }, [router]);
+
+    // 🔹 Ref + parallax motion values for details card
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["0 1", "1 1"]
+    });
+
+    // Details move slightly down while scrolling
+    const yDetails = useTransform(scrollYProgress, [0, 1], [0, 60]);
+    const opacityDetails = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
 
     if (!slug || !artwork) {
         return <div className="p-8">Loading...</div>;
     }
 
     return (
-        <div className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-lg ${animationClass}`}>
+        <div ref={ref} className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-lg ${animationClass}`}>
             {/* Header with title + close */}
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1>
@@ -57,13 +175,13 @@ export default function ArtworkDetail() {
                         setTimeout(() => router.push('/'), 200);
                     }}
                 >
-                     {svg}
+                    {svg}
                 </button>
             </div>
 
             {/* Two-column layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                {/* Left: Large Artwork Image */}
+                {/* Left: Static Artwork Image */}
                 <div className="w-full">
                     <Image
                         src={artwork.imageUrl}
@@ -75,9 +193,12 @@ export default function ArtworkDetail() {
                     />
                 </div>
 
-                {/* Right: Details */}
-                <div className="flex flex-col justify-start main-index">
-                    <p className="modal-text-1  text-sm text-gray-700 leading-relaxed mb-6"
+                {/* Right: Details with Parallax */}
+                <motion.div 
+                    style={{ y: yDetails, opacity: opacityDetails }} 
+                    className="flex flex-col justify-start main-index"
+                >
+                    <p className="modal-text-1 text-sm text-gray-700 leading-relaxed mb-6"
                         data-aos="fade-in" data-aos-delay="600"
                     >
                         {artwork.description}
@@ -97,10 +218,10 @@ export default function ArtworkDetail() {
                             download
                             className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
                         >
-                           <FaDownload /> Download
+                            <FaDownload /> Download
                         </a>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </div>
     );
