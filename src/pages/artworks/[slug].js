@@ -46,7 +46,7 @@ export default function ArtworkDetail() {
     }
 
     return (
-        <div className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto ${animationClass}`}>
+        <div className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-lg ${animationClass}`}>
             {/* Header with title + close */}
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1>
@@ -54,7 +54,7 @@ export default function ArtworkDetail() {
                     className="x-button text-3xl"
                     onClick={() => {
                         setAnimationClass('animate-scaleOut');
-                        setTimeout(() => router.push('/gallery'), 200);
+                        setTimeout(() => router.push('/'), 200);
                     }}
                 >
                      {svg}
@@ -76,7 +76,7 @@ export default function ArtworkDetail() {
                 </div>
 
                 {/* Right: Details */}
-                <div className="flex flex-col justify-start">
+                <div className="flex flex-col justify-start main-index">
                     <p className="modal-text-1  text-sm text-gray-700 leading-relaxed mb-6"
                         data-aos="fade-in" data-aos-delay="600"
                     >

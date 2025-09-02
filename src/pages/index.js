@@ -1,9 +1,13 @@
 import Navbar from '../components/Navbar'
+import ArtCard from '../components/ArtCard';
+import artworks from '../data/artworks'
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 export default function Home() {
+
   const svg =
     <svg xmlns="http://www.w3.org/2000/svg"
       width="30" height="30"
@@ -28,20 +32,29 @@ export default function Home() {
         type: "spring",
         stiffness: 300,
         damping: 15
-    // hidden: { x: 0, opacity: 1 },
-    // visible: (i) => ({
-    //   x: [0, -10, 0],
-    //   opacity: 1,
-    //   transition: {
-    //     delay: i * 0.12,
-    //     duration: 1.5,
-    //     repeat: Infinity,
-    //     repeatDelay: 1,
-    //     ease: "easeInOut"
-        
       }
     })
   }
+
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax transforms for hero
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const globeY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+
+  // Parallax transforms for "Turning Ideas Into Reality"
+  const headingRef = useRef(null);
+  const { scrollYProgress: headingScroll } = useScroll({
+    target: headingRef,
+    offset: ["start center", "end start"],
+  });
+
+  const line1Y = useTransform(headingScroll, [0, 1], [0, -50]);   // "Turning Ideas"
+  const line2Y = useTransform(headingScroll, [0, 1], [0, -100]);
 
 
   return (
@@ -82,58 +95,39 @@ export default function Home() {
         </header>
       </section>
 
-      <section className="px-4 py-8 mb-4">
-        <div
-          className="grid grid-cols-1 md:grid-cols-12 gap-6 main-inde rounded-lg"
-          data-aos="fade-in"
-        >
-          {/* Left Column (Heading) */}
-          <div className="md:col-span-6 main-inde rounded-lg">
-            <h1
-              className="logo-3 text-2xl md:text-5xl font-bold leading-tight mb-6"
-            >
-              <span data-aos="fade-up">Turning Ideas</span>  <br />
-              <span data-aos="fade-up" data-aos-delay="200">
-                Into{" "}
-                {/** Wave animation on "Reality" */}
-                <motion.span style={{ color: '#E0A15E', display: "inline-flex" }}>
-                  {"Reality".split("").map((letter, i) => (
-                    <motion.span
-                      key={i}
-                      custom={i}
-                      variants={letterWave}
-                      initial="hidden"
-                      animate="visible"
-                      style={{ display: "inline-block" }}
-                    >
-                      {letter}
-                    </motion.span>
-                  ))}
-                </motion.span>.
-              </span>
+      <section ref={headingRef} className="px-4 py-8 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 main-inde rounded-lg">
+          <div className="md:col-span-6 main-ind">
+            <h1 className="logo-3 text-2xl md:text-8xl font-bold leading-tight mb-6">
+              <motion.span style={{ y: line1Y }} className="block">
+                Turning Ideas
+              </motion.span>
+              <motion.span style={{ y: line2Y }} className="block text-red-500">
+                Into Reality
+              </motion.span>
             </h1>
           </div>
 
           {/* Right Column (Details + Text + Link) */}
           <div className="md:col-span-6 flex flex-col gap-4 mb-5">
             {/* Project Details */}
-            <div className="border- border-gray-300 pt-4 desc-details" data-aos="fade-in" data-aos-delay="200">
+            <div className="main-index-2 border-gray-300 pt-4 desc-details" data-aos="fade-in" data-aos-delay="200">
               <h2 className="text-sm uppercase tracking-wide font-semibold mb-2">
                 Details
               </h2>
-              <div className="border-t border-gray-300 text-sm grid grid-cols-3 gap-y-4">
+              <div className="border-t border-gray-500 text-sm grid grid-cols-3 gap-y-4">
                 <span className="font-medium">Category</span>
                 <span className="col-span-2">Art gallery</span>
 
-                <span className="font-medium border-t border-gray-300">Services</span>
-                <span className="col-span-2 border-t border-gray-300">
+                <span className="font-medium border-t border-gray-500">Services</span>
+                <span className="col-span-2 border-t border-gray-500">
                   Art Direction <br />
                   Web Design <br />
                   Visual Design
                 </span>
 
-                <span className="font-medium border-t border-gray-300  border-b border-gray-300">Year</span>
-                <span className="col-span-2 border-t border-gray-300  border-b border-gray-300">2024 - Present</span>
+                <span className="font-medium border-t border-gray-500  border-b border-gray-500">Year</span>
+                <span className="col-span-2 border-t border-gray-500  border-b border-gray-500">2024 - Present</span>
               </div>
             </div>
 
@@ -165,6 +159,43 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="logo-3 border-t border-gray-500 border-b border-gray-500 marquee" role="marquee" aria-label="art projects scrolling">
+        <ul className="marquee__content">
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li>
+        </ul>
+
+        {/* duplicate track */}
+        <ul className="marquee__content" aria-hidden="true">
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li><li>•</li>
+          <li>art projects</li>
+        </ul>
+      </div>
+
+      <div className="p-6 columns-1 sm:columns-2 md:columns-3 gap-6 [column-fill:_balance]">
+        {artworks.map((art, i) => (
+          <ArtCard
+            key={i}
+            title={art.title}
+            imageUrl={art.imageUrl}
+            description={art.description}
+            slug={art.slug}
+            aosDelay={i * 250}
+          />
+        ))}
+      </div>
 
     </div>
   )

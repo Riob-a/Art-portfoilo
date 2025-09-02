@@ -51,7 +51,7 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
 
             >
                 <div
-                    data-aos="fade-in" data-aos-delay={aosDelay}
+                    data-aos="fade-up" data-aos-delay={aosDelay}
                 >
                     <div
                         className="art-card rounded-lg overflow-hidden  cursor-pointer"
