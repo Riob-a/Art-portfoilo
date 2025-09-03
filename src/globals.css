@@ -407,9 +407,9 @@ main {
   font-style: bold;
   padding: 125px 10px;
   /* background: linear-gradient(90deg, #fb5228, #ff613a, #ff7e5f, #feb47b, #fac094); */
-  background: linear-gradient(90deg, black, gray, white);
-
-  background-size: 500% 200%;
+  /* background: linear-gradient(90deg, black, gray, white); */
+  background: linear-gradient(90deg, #ffffff, #000000, white);
+  background-size: 1000% 200%;
   animation: gradientWave 12s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   -webkit-background-clip: text;
