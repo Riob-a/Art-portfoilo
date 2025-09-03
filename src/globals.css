@@ -208,7 +208,7 @@ font-family: 'Supreme', sans-serif;
 
 .line-arrow {
   border-radius: 50%;
-  border: 2px solid #fefdfd;
+  border: 2px solid #feb47b;
   background-color: #ff0000;
 }
 
@@ -486,7 +486,8 @@ main {
   outline-offset: 1px;
   outline: 1px solid #000000c5;
   outline-style: solid;
-  background-color: #FAE4CF;
+  background-color: #fae4cfae;
+  backdrop-filter: blur(10px);
 }
 
 .svg {
@@ -742,7 +743,8 @@ main {
 }
 
 .form-input {
-  backdrop-filter: blur(8px);
+  /* background: #ff000033; */
+  backdrop-filter: blur(10px);
   font-weight: 600;
 }
 
@@ -849,7 +851,6 @@ button.gradient-text {
     padding: 0.5rem;
     margin: auto;
   }
-
 }
 
 /* Navbar */
@@ -869,7 +870,7 @@ button.gradient-text {
 
 .navbar {
   background-color: white;
-  border: 1px solid transparent;
+  /* border: 2px solid transparent; */
   font-family: 'Technor', sans-serif;
   font-weight: 500;
   transition: color 1s ease, border-color 1s ease, background-color 0.3s ease, transform 0.3s;
@@ -911,13 +912,15 @@ button.gradient-text {
 
 .navbar.expanded {
   background-color: #ffffff;
+  border: 2px solid #070707;
   max-width: 90%;
   max-height: 100%;
   border-radius: 30px;
-  transition: max-width 0.4s ease-in-out, max-height 0.4s ease-in-out, border-radius 0.8s ease-in-out, background-color 0.8s ease-in-out;
+  transition: max-width 0.4s ease-in-out, max-height 0.4s ease-in-out, border-radius 0.8s ease-in-out, background-color 0.8s ease-in-out, border-color 1s ease;
 }
 
 .navbar.collapsed {
+  border: 2px solid transparent;
   flex-shrink: 0;
   max-width: 45px;
   max-height: 45px;
@@ -929,7 +932,7 @@ button.gradient-text {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: max-width 0.4s ease-in-out, max-height 0.4s ease-in-out, border-radius 0.8s ease-in-out, background-color 0.8s ease-in-out;
+  transition: max-width 0.4s ease-in-out, max-height 0.4s ease-in-out, border-radius 0.8s ease-in-out, background-color 0.8s ease-in-out, border-color 1s ease;
 }
 
 .navbar.collapsed .logo-pic {
@@ -993,12 +996,13 @@ button.gradient-text {
 .footer {
   color: #cfcdcd;
   border: 1px solid transparent;
-  transition: color 1s ease, border-color 1s ease, background-color 0.3s ease;
+  transition: color 1s ease, border-color 1s ease, background-color 2s ease;
 }
 
 .footer:hover {
-  color: #608561;
-  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
+  color: #feb47b;
+  background-color: #ff0000;
+  transition: color 1s ease, border-color 2s ease, background-color 3s ease;
   border: 1px solid #ff0000
 }
 

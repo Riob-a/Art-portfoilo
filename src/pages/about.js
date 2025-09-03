@@ -41,16 +41,20 @@ export default function About() {
         ref={ref}
         className="p-8 max-w-2xl mx-auto animate-fadeInLeft a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center"
       >
-        <div className="flex items-center justify-between mb-16">
+        <div className="flex items-center justify-between mb-18">
           <motion.h2
             style={{ y: yHeading }}
-            className="text-2xl md:text-8xl font-bold mb-4 a-heading"
+            className="text-2xl md:text-8xl font-bold mb-18 a-heading"
           >
             About Me
           </motion.h2>
-          <motion.div className="line-arrow" style={{ y: yArrow }}>
+          <motion.div
+            className="line-arrow"
+            style={{ y: yArrow }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            whileTap={{ scale: 0.9 }}>
             <Link href="/" >
-              <button  className="arrow-l-button">
+              <button className="arrow-l-button">
                 {arrow}
               </button>
             </Link>

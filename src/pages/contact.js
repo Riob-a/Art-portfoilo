@@ -75,7 +75,7 @@ export default function Contact() {
     <div className='animate-fadeInLeft'>
       {/* <Navbar /> */}
       <section className="p-8 max-w-xl mx-auto a-content min-h-screen md:min-h-[180vh] | flex flex-col justify-center">
-        <div className="flex items-center justify-between mb-4 ">
+        <div className="flex items-center justify-between mb-18 ">
           <div className="flex flex-col gap-2">
             <motion.h2
               style={{ y: ySlow }}
@@ -98,12 +98,20 @@ export default function Contact() {
               Touch
             </motion.h2>
           </div>
-          <Link href="/" className="line-arrow">
-            <button className="arrow-l-button">{arrow}</button>
-          </Link>
+
+          <motion.div
+            className='line-arrow'
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Link href="/" className="">
+              <button className="arrow-l-button">{arrow}</button>
+            </Link>
+
+          </motion.div>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6">
+        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6 mt-30">
           <input
             type="text"
             name="name"
