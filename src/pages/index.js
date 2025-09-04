@@ -22,31 +22,17 @@ export default function Home() {
       <polyline points="7 7 17 7 17 17" />
     </svg>
 
-  const letterWave = {
-    hidden: { y: 40, opacity: 0 },
-    visible: (i) => ({
-      y: 0,
-      opacity: 1,
-      transition: {
-        delay: i * 0.12, // wave delay per letter
-        type: "spring",
-        stiffness: 300,
-        damping: 15
-      }
-    })
-  }
-
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
   });
 
-  // Parallax transforms for hero
+  // Parallax for hero
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -150]);
   const globeY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
-  // Parallax transforms for "Turning Ideas Into Reality"
+  // Parallax for "Turning Ideas Into Reality"
   const headingRef = useRef(null);
   const { scrollYProgress: headingScroll } = useScroll({
     target: headingRef,
@@ -184,7 +170,7 @@ export default function Home() {
         </ul>
       </div>
 
-      <div className="p-6 columns-1 sm:columns-2 md:columns-3 gap-6 [column-fill:_balance]">
+      <div className="p-6 columns-1 sm:columns-2 md:columns-4 gap-6 [column-fill:_balance]">
         {artworks.map((art, i) => (
           <ArtCard
             key={i}

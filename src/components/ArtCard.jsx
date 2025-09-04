@@ -54,7 +54,7 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                     data-aos="fade-up" data-aos-delay={aosDelay}
                 >
                     <div
-                        className="art-card rounded-lg overflow-hidden  cursor-pointer"
+                        className="art-card rounded-xl overflow-hidden  cursor-pointer"
                     // data-aos="fade-in" data-aos-delay={aosDelay}
                     >
                         <Image
@@ -63,7 +63,7 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                             width={600}
                             height={300}
                             // className="w-full image h-80 object-cover"
-                            className="w-full  rounded-lg object-cover"
+                            className="w-full  rounded-xl object-cover"
                             sizes="(max-width: 768px) 100vw, 33vw"
                         // className={`w-full object-cover rounded-lg ${heights[i % heights.length]}`} 
                         />

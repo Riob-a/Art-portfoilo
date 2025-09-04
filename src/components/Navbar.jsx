@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { motion, useScroll, useTransform } from "framer-motion";
+
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -28,7 +30,13 @@ export default function Navbar() {
         </div>
 
         {/* Logo in the Center */}
-        <div className="w-1/3 flex justify-center items-center">
+        <motion.div
+          className="w-1/3 flex justify-center items-center"
+          transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+          whileTap={{ scale: 0.8 }}
+          // whileHover={{ scale: 1.08}}
+          >
+            
           <button
             onClick={toggleExpanded}
             className="logo text-l font-bold flex items-center justify-center p-1"
@@ -41,7 +49,7 @@ export default function Navbar() {
               className="logo-pic"
             />
           </button>
-        </div>
+        </motion.div>
 
         {/* Right Links */}
         <div className="links right flex space-x-3 justify-end w-1/3">

@@ -51,8 +51,8 @@ export default function About() {
           <motion.div
             className="line-arrow"
             style={{ y: yArrow }}
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            whileTap={{ scale: 0.9 }}>
+            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+            whileTap={{ scale: 0.6 }}>
             <Link href="/" >
               <button className="arrow-l-button">
                 {arrow}

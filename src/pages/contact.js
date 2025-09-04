@@ -101,8 +101,8 @@ export default function Contact() {
 
           <motion.div
             className='line-arrow'
-            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            whileTap={{ scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+            whileTap={{ scale: 0.6 }}
           >
             <Link href="/" className="">
               <button className="arrow-l-button">{arrow}</button>

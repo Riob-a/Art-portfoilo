@@ -387,7 +387,7 @@ main {
   background: linear-gradient(270deg, #ff0000, #fb1919, #ef3535, #f34c4c);
 
   background-size: 1100% 800%;
-  animation: gradientWave 12s ease infinite;
+  animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
   background-repeat: space;
@@ -408,9 +408,9 @@ main {
   padding: 125px 10px;
   /* background: linear-gradient(90deg, #fb5228, #ff613a, #ff7e5f, #feb47b, #fac094); */
   /* background: linear-gradient(90deg, black, gray, white); */
-  background: linear-gradient(90deg, #ffffff, #000000, white);
+  background: linear-gradient(45deg, #ffffff, #000000, white);
   background-size: 1000% 200%;
-  animation: gradientWave 12s ease infinite;
+  animation: gradientWave 30s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
