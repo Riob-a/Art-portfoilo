@@ -301,9 +301,11 @@ font-family: 'Supreme', sans-serif;
 .arrow-r-button:hover .arrow-icon {
   animation: slideRightReset 0.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 }
-.carousel-button-next:hover{
+
+.carousel-button-next:hover {
   animation: slideRightReset 0.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 }
+
 @keyframes slideRightReset {
   0% {
     opacity: 0;
@@ -561,6 +563,7 @@ main {
   gap: var(--gap);
   align-items: center;
   animation: marquee-scroll var(--duration) linear infinite;
+  transition: color 0.5s ease-in-out;
   will-change: transform;
 }
 
@@ -582,6 +585,8 @@ main {
 /* Optional niceties */
 .marquee:hover .marquee__content {
   animation-play-state: paused;
+  color: #E85002;
+  transition: color 0.5s ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -818,8 +823,8 @@ button.gradient-text {
   flex-shrink: 0;
 
   background: linear-gradient(90deg, #feb47b, #ff7e5f);
-  background-size: 200% 200%;
-  animation: gradientWave 5s ease infinite;
+  background-size: 200% 100%;
+  animation: gradientWave 4s ease infinite;
 
   border-radius: 30px;
   transition: transform 0.5s ease-in-out;
@@ -834,6 +839,13 @@ button.gradient-text {
 .rotate:hover {
   transition: transform 0.5s ease-in-out;
   transform: rotate(360deg);
+}
+
+.logo-transition {
+  border-radius: 50%;
+  background: linear-gradient(90deg, #feb47b, #ff7e5f);
+  background-size: 200% 100%;
+  animation: gradientWave 1s ease infinite;
 }
 
 @media screen and (max-width: 768px) {
@@ -900,6 +912,7 @@ button.gradient-text {
   font-size: 1.1rem;
   font-weight: 800;
   transition: color 0.3s, transform 0.3s;
+  padding: 0.5rem 2rem;
 }
 
 /* .navbar:hover {
@@ -1022,18 +1035,10 @@ button.gradient-text {
 }
 
 /*  */
-.wavy-text {
-  display: inline-block;
-  font-size: 1rem;
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  transition: font-weight 2s ease-in-out, font-width 2s ease-in-out;
-
-}
-
 .perspective {
   position: relative;
-  perspective: 1500px;
+  perspective: 2000px;
+  perspective-origin: center;
 }
 
 .preserve-3d {
@@ -1042,5 +1047,4 @@ button.gradient-text {
 
 .d-card {
   height: 800px;
-
 }

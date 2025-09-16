@@ -53,13 +53,14 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                         className="art-card rounded-xl overflow-hidden  cursor-pointer"
                     >
                         <Image
+                            loading="lazy"
                             src={imageUrl}
                             alt={title}
                             width={600}
                             height={300}
                             // className="w-full image h-80 object-cover"
                             className="w-full  rounded-xl object-cover"
-                            // sizes="(max-width: 768px) 100vw, 33vw"
+                        // sizes="(max-width: 768px) 100vw, 33vw"
                         />
                     </div>
                 </div>

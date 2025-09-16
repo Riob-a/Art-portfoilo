@@ -15,8 +15,8 @@ export default function Home() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setRadius(10); // mobile
+      if (window.innerWidth < 768) {
+        setRadius(0); // mobile
       } else if (window.innerWidth < 1024) {
         setRadius(200); // tablet
       } else {
@@ -56,7 +56,7 @@ export default function Home() {
       <Navbar />
       <section>
         <header className="header relative text-center" data-aos="fade-in" data-aos-delay="">
-          <h1 className="text" data-aos="fade-in" data-aos-delay="2000">[Portfolio]</h1>
+          <h1 className="text" data-aos="fade-in" data-aos-delay="1500">[Portfolio]</h1>
 
           <div className="globe-container">
             <svg
@@ -180,6 +180,28 @@ export default function Home() {
 
       {/* 3D Art Carousel */}
       <div className="d-card relative mt-10 min-h-screen flex flex-col items-center justify-center overflow-hidde">
+        {radius === 0 ? (
+          // --- MOBILE: Linear carousel ---
+          <div className="flex w-full overflow-x-auto space-x-4 px-4 snap-x snap-mandatory">
+            {artworks.map((art, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg  backdrop-blur-sm p-4"
+              >
+                <ArtCard
+                  title={art.title}
+                  imageUrl={art.imageUrl}
+                  description={art.description}
+                  slug={art.slug}
+                  aosDelay={index * 250}
+                />
+              </div>
+            ))}
+          </div>
+          
+        ) : (
+
+        // --- DESKTOP/TABLET: 3D Circular carousel ---
         <div
           ref={galleryRef}
           className="relative w-full max-w-6xl h-[500px] perspective"
@@ -202,7 +224,8 @@ export default function Home() {
               return (
                 <motion.div
                   key={index}
-                  className="absolute w-[60vw] sm:w-[40vw] md:w-64 h-auto aspect-[2/3] p-2 sm:p-4 text-center rounded-xl shadow-lg bg-black/30 backdrop-blur-sm"
+                  className="absolute w-[90vw] sm:w-[40vw] md:w-65 h-auto aspect-[3/3] p-2 sm:p-2 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm"
+                  
                   style={{
                     transform: `
                       translateX(${x}px)
@@ -210,7 +233,7 @@ export default function Home() {
                       rotate(${angle}deg)
                       scale(${index === activeIndex ? 1 : 0.4})
                     `,
-                    opacity: isActive ? 1 : 0.4,
+                    opacity: isActive ? 1 : 0.3,
                     filter: isActive ? 'brightness(1)' : 'brightness(0.5)',
 
                     zIndex: total - Math.abs(index - activeIndex),
@@ -229,23 +252,38 @@ export default function Home() {
               )
             })}
           </motion.div>
+
           <motion.button
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            whileTap={{ scale: 0.6 }}
+            whileTap={{ scale: 0.8 }}
             onClick={prevArt}
-            className="absolute left-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-black text-white rounded "
+            className="hidden sm:flex absolute left-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
           >
             ‹ Prev
           </motion.button>
 
           <motion.button
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            whileTap={{ scale: 0.6 }}
+            whileTap={{ scale: 0.8 }}
             onClick={nextArt}
-            className="absolute right-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-black text-white rounded"
+            className="hidden sm:flex absolute right-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
           >
             Next ›
           </motion.button>
+        </div>
+        )}
+
+        {/* Dots */}
+
+        <div className="absolute hidden sm:flex  justify-center mt-8 gap-5">
+          {artworks.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              className={`w-3 h-3 rounded-full ${i === activeIndex ? 'bg-[#E85002]' : 'bg-gray-400'}`}
+              aria-label={`Go to artwork ${i + 1}`}
+            />
+          ))}
         </div>
 
       </div>
