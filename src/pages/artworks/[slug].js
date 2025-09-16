@@ -57,7 +57,7 @@ export default function ArtworkDetail() {
     }
 
     return (
-        <div ref={ref} className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-lg ${animationClass}`}>
+        <div ref={ref} className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
             {/* Header with title + close */}
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1>
@@ -89,7 +89,7 @@ export default function ArtworkDetail() {
                 {/* Right: Details with Parallax */}
                 <motion.div 
                     // style={{ y: yDetails, opacity: opacityDetails }} 
-                    className="flex flex-col justify-start main-index | sticky top-8 h-fit"
+                    className="flex flex-col justify-start main-index | sticky top-8 h-fit rounded-xl"
                 >
                     <p className="modal-text-1 text-sm text-gray-700 leading-relaxed mb-6"
                         data-aos="fade-in" data-aos-delay="600"

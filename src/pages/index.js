@@ -4,9 +4,36 @@ import artworks from '../data/artworks'
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function Home() {
+
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [selectedArt, setSelectedArt] = useState(null);
+  const galleryRef = useRef(null)
+  const [radius, setRadius] = useState(300);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setRadius(10); // mobile
+      } else if (window.innerWidth < 1024) {
+        setRadius(200); // tablet
+      } else {
+        setRadius(300); // desktop
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const nextArt = () =>
+    setActiveIndex((prev) => (prev + 1) % artworks.length)
+  const prevArt = () =>
+    setActiveIndex((prev) =>
+      prev === 0 ? artworks.length - 1 : prev - 1
+    )
 
   const svg =
     <svg xmlns="http://www.w3.org/2000/svg"
@@ -22,26 +49,7 @@ export default function Home() {
       <polyline points="7 7 17 7 17 17" />
     </svg>
 
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  // Parallax for hero
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const globeY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-
-  // Parallax for "Turning Ideas Into Reality"
   const headingRef = useRef(null);
-  const { scrollYProgress: headingScroll } = useScroll({
-    target: headingRef,
-    offset: ["start center", "end start"],
-  });
-
-  const line1Y = useTransform(headingScroll, [0, 1], [0, -50]);   // "Turning Ideas"
-  const line2Y = useTransform(headingScroll, [0, 1], [0, -100]);
-
 
   return (
     <div>
@@ -82,7 +90,7 @@ export default function Home() {
       </section>
 
       <section ref={headingRef} className="px-4 py-8 mb-4">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 main-inde rounded-lg">
+        {/* <div className="grid grid-cols-1 md:grid-cols-12 gap-6 main-inde rounded-lg">
           <div className="md:col-span-6 main-ind">
             <h1 className="logo-3 text-2xl md:text-8xl font-bold leading-tight mb-6">
               <motion.span style={{ y: line1Y }} className="block">
@@ -92,11 +100,11 @@ export default function Home() {
                 Into Reality
               </motion.span>
             </h1>
-          </div>
+          </div> */}
 
-          {/* Right Column (Details + Text + Link) */}
-          <div className="md:col-span-6 flex flex-col gap-4 mb-5">
-            {/* Project Details */}
+        {/* Right Column (Details + Text + Link) */}
+
+        {/* <div className="md:col-span-6 flex flex-col gap-4 mb-5">
             <div className="main-index-2 border-gray-300 pt-4 desc-details" data-aos="fade-in" data-aos-delay="200">
               <h2 className="text-sm uppercase tracking-wide font-semibold mb-2" >
                 Details
@@ -119,7 +127,6 @@ export default function Home() {
 
             <br />
 
-            {/* Description */}
             <p className="text-base leading-relaxed text-gray-300 desc-intro" data-aos="fade-up" data-aos-delay="200">
               This website showcases a modern  <span className="font-semibold">art gallery</span>
               that brings together creativity and technology, offering a seamless experience .
@@ -142,11 +149,12 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
-        </div>
+        </div> */}
+
       </section>
 
       <div className="logo-3 border-t border-gray-500 border-b border-gray-500 marquee" role="marquee" aria-label="art projects scrolling">
-        <ul className="marquee__content">
+        <ul className="marquee__content" >
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
@@ -170,17 +178,76 @@ export default function Home() {
         </ul>
       </div>
 
-      <div className="p-6 columns-1 sm:columns-2 md:columns-4 gap-6 [column-fill:_balance]">
-        {artworks.map((art, i) => (
-          <ArtCard
-            key={i}
-            title={art.title}
-            imageUrl={art.imageUrl}
-            description={art.description}
-            slug={art.slug}
-            aosDelay={i * 250}
-          />
-        ))}
+      {/* 3D Art Carousel */}
+      <div className="d-card relative mt-10 min-h-screen flex flex-col items-center justify-center overflow-hidde">
+        <div
+          ref={galleryRef}
+          className="relative w-full max-w-6xl h-[500px] perspective"
+        >
+          <motion.div
+            className="flex items-center justify-center w-full h-full"
+          >
+            {artworks.map((art, index) => {
+              const total = artworks.length
+              const angleStep = -360 / total
+              // shift based on activeIndex so carousel rotates
+              const angle = (index - activeIndex) * angleStep
+              const rad = (angle * Math.PI) / 180
+              // const radius = 300 
+              const x = radius * Math.cos(rad)
+              const y = radius * Math.sin(rad)
+
+              const isActive = index === activeIndex
+
+              return (
+                <motion.div
+                  key={index}
+                  className="absolute w-[60vw] sm:w-[40vw] md:w-64 h-auto aspect-[2/3] p-2 sm:p-4 text-center rounded-xl shadow-lg bg-black/30 backdrop-blur-sm"
+                  style={{
+                    transform: `
+                      translateX(${x}px)
+                      translateY(${y}px)
+                      rotate(${angle}deg)
+                      scale(${index === activeIndex ? 1 : 0.4})
+                    `,
+                    opacity: isActive ? 1 : 0.4,
+                    filter: isActive ? 'brightness(1)' : 'brightness(0.5)',
+
+                    zIndex: total - Math.abs(index - activeIndex),
+                    // opacity: 1,
+                    transition: 'transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease',
+                  }}
+                >
+                  <ArtCard
+                    title={art.title}
+                    imageUrl={art.imageUrl}
+                    description={art.description}
+                    slug={art.slug}
+                    aosDelay={index * 250}
+                  />
+                </motion.div>
+              )
+            })}
+          </motion.div>
+          <motion.button
+            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+            whileTap={{ scale: 0.6 }}
+            onClick={prevArt}
+            className="absolute left-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-black text-white rounded "
+          >
+            ‹ Prev
+          </motion.button>
+
+          <motion.button
+            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+            whileTap={{ scale: 0.6 }}
+            onClick={nextArt}
+            className="absolute right-0 top-1/2 -translate-y-1/2 px-4 py-2 bg-black text-white rounded"
+          >
+            Next ›
+          </motion.button>
+        </div>
+
       </div>
 
     </div>

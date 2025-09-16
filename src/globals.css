@@ -11,8 +11,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --background: #0a0a0a; */
-    --background: #f9f7eb;
+    --background: #0a0a0a;
+    /* --background: #f9f7eb; */
     --foreground: #ededed;
   }
 }
@@ -208,8 +208,8 @@ font-family: 'Supreme', sans-serif;
 
 .line-arrow {
   border-radius: 50%;
-  border: 2px solid #feb47b;
-  background-color: #ff0000;
+  border: 2px solid #ffffff;
+  background-color: #090909;
 }
 
 .line-arrow-b {
@@ -234,6 +234,10 @@ font-family: 'Supreme', sans-serif;
 }
 
 .arrow-l-button:hover .arrow-icon {
+  animation: slideLeftReset 0.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+.carousel-button-prev:hover {
   animation: slideLeftReset 0.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 }
 
@@ -297,7 +301,9 @@ font-family: 'Supreme', sans-serif;
 .arrow-r-button:hover .arrow-icon {
   animation: slideRightReset 0.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
 }
-
+.carousel-button-next:hover{
+  animation: slideRightReset 0.7s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
 @keyframes slideRightReset {
   0% {
     opacity: 0;
@@ -384,9 +390,10 @@ main {
 /* index */
 .header {
   /* background: linear-gradient(60deg, #fac094, #feb47b, #ff7e5f, #ff613a); */
-  background: linear-gradient(270deg, #ff0000, #fb1919, #ef3535, #f34c4c);
+  background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
+  /* background: linear-gradient(60deg, #000000, #C10801, #F16001, #D9C3AB); */
 
-  background-size: 1100% 800%;
+  background-size: 250% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
@@ -407,13 +414,13 @@ main {
   font-style: bold;
   padding: 125px 10px;
   /* background: linear-gradient(90deg, #fb5228, #ff613a, #ff7e5f, #feb47b, #fac094); */
-  /* background: linear-gradient(90deg, black, gray, white); */
-  background: linear-gradient(45deg, #ffffff, #000000, white);
+  /* background: linear-gradient(45deg, #ffffff, #000000, white); */
+  /* background: linear-gradient(45deg, #D9C3AB, #F16001, #C10801, #000000); */
   background-size: 1000% 200%;
   animation: gradientWave 30s ease infinite;
   transition: background-color 0.3s, color 0.3s;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-background-clip: text; */
+  -webkit-text-fill-color: white;
   background-clip: text;
 
 }
@@ -473,12 +480,12 @@ main {
 }
 
 .main-index {
+  background-color: #E85002;
+  backdrop-filter: blur(10px);
   padding: 20px;
   outline-offset: 1px;
   outline: 1px solid #000000c5;
   outline-style: solid;
-  background-color: #ffffff;
-
 }
 
 .main-index-2 {
@@ -589,7 +596,7 @@ main {
 .art-card {
   background-color: #1e1d1d;
   color: #010101;
-  filter: grayscale(100%);
+  /* filter: grayscale(100%); */
   margin: auto;
   transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, filter 1s ease-in-out;
   cursor: pointer;
@@ -627,7 +634,7 @@ main {
 }
 
 .modal-heading {
-  color: #ff0000;
+  color: white;
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -641,14 +648,14 @@ main {
 }
 
 .modal-text-1 {
-  color: #000000;
+  color: white;
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 200;
   font-style: normal;
 }
 
 .modal-text-2 {
-  color: #ff0000;
+  color: #ffffff;
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 200;
   font-style: normal;
@@ -662,14 +669,14 @@ main {
 .m-button {
   font-weight: 800;
   padding: 10px;
-  background-color: #ff0000;
-  color: #ffffff;
+  background-color: white;
+  color: #646464;
   transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
 
 }
 
 .m-button:hover {
-  background-color: #f34c4c;
+  background-color: #646464;
   color: #000000;
   transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
 
@@ -691,7 +698,9 @@ main {
 }
 
 .slug {
-  background-color: #FAE4CF;
+  /* background-color: #FAE4CF; */
+  backdrop-filter: blur(8px);
+  background-color: #64646430;
   font-weight: 500;
   padding: 20px;
   border: 2px solid #3c3c3c;
@@ -700,14 +709,16 @@ main {
 
 .slug-image {
   margin: auto;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center;
+  justify-content: center; */
+  box-shadow: 0 4px 8px #00000086;
+
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .slug-image:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 8px #00000086;
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px #00000086;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
@@ -721,14 +732,14 @@ main {
 
 /* About */
 .a-heading {
-  color: #ff0000;
+  color: #ffffff;
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .a-content {
-  color: #000000;
+  color: #ffffff;
 }
 
 .a-link {
@@ -800,7 +811,7 @@ button.gradient-text {
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
-  color: #ff0000
+  /* color: linear-gradient(45deg, #F16001, #C10801); */
 }
 
 .logo-pic {
@@ -850,6 +861,10 @@ button.gradient-text {
   .m-button {
     padding: 0.5rem;
     margin: auto;
+  }
+
+  .d-card {
+    height: 100px;
   }
 }
 
@@ -911,7 +926,7 @@ button.gradient-text {
 }
 
 .navbar.expanded {
-  background-color: #ffffff;
+  background-color: #070707;
   border: 2px solid #070707;
   max-width: 90%;
   max-height: 100%;
@@ -1000,10 +1015,10 @@ button.gradient-text {
 }
 
 .footer:hover {
-  color: #feb47b;
-  background-color: #ff0000;
+  color: black;
+  background-color: #E85002;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
-  border: 1px solid #ff0000
+  border: 1px solid #E85002;
 }
 
 /*  */
@@ -1016,9 +1031,16 @@ button.gradient-text {
 
 }
 
-.wavy-text span {
-  display: inline-block;
-  animation: wave 4s ease-in-out infinite;
-  font-variation-settings: "wght" 100, "wdth" 25;
-  transition: font-weight 2s ease-in-out, font-width 2s ease-in-out;
+.perspective {
+  position: relative;
+  perspective: 1500px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.d-card {
+  height: 800px;
+
 }
