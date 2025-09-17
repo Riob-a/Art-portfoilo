@@ -182,12 +182,15 @@ export default function Home() {
       <div className="d-card relative mt-10 min-h-screen flex flex-col items-center justify-center overflow-hidde">
         {radius === 0 ? (
           // --- MOBILE: Linear carousel ---
-          <div className="flex w-full overflow-x-auto space-x-4 px-4 snap-x snap-mandatory">
-            {artworks.map((art, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg  backdrop-blur-sm p-4"
-              >
+          <div className="flex w-full overflow-x-auto space-x-4 px-4  snap-x snap-mandatory">
+            {artworks.map((art, index) => {
+              const isActive = index === activeIndex
+              return (
+                <div
+                  key={index}
+                  className={`flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm p-4 relative  ${isActive ? 'glint-effect' : ''}`}
+                  // className="flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg  backdrop-blur-sm p-4"
+                >
                 <ArtCard
                   title={art.title}
                   imageUrl={art.imageUrl}
@@ -196,91 +199,95 @@ export default function Home() {
                   aosDelay={index * 250}
                 />
               </div>
-            ))}
+            )})}
           </div>
-          
+
         ) : (
 
-        // --- DESKTOP/TABLET: 3D Circular carousel ---
-        <div
-          ref={galleryRef}
-          className="relative w-full max-w-6xl h-[500px] perspective"
-        >
-          <motion.div
-            className="flex items-center justify-center w-full h-full"
+          // --- DESKTOP/TABLET: 3D Circular carousel ---
+          <div
+            ref={galleryRef}
+            className="relative w-full max-w-6xl h-[500px] perspective"
           >
-            {artworks.map((art, index) => {
-              const total = artworks.length
-              const angleStep = -360 / total
-              // shift based on activeIndex so carousel rotates
-              const angle = (index - activeIndex) * angleStep
-              const rad = (angle * Math.PI) / 180
-              // const radius = 300 
-              const x = radius * Math.cos(rad)
-              const y = radius * Math.sin(rad)
+            <motion.div
+              className="flex items-center justify-center w-full h-full"
+            >
+              {artworks.map((art, index) => {
+                const total = artworks.length
+                const angleStep = -360 / total
+                // shift based on activeIndex so carousel rotates
+                const angle = (index - activeIndex) * angleStep
+                const rad = (angle * Math.PI) / 180
+                // const radius = 300 
+                const x = radius * Math.cos(rad)
+                const y = radius * Math.sin(rad)
 
-              const isActive = index === activeIndex
+                const isActive = index === activeIndex
 
-              return (
-                <motion.div
-                  key={index}
-                  className="absolute w-[90vw] sm:w-[40vw] md:w-65 h-auto aspect-[3/3] p-2 sm:p-2 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm"
-                  
-                  style={{
-                    transform: `
+                return (
+                  <motion.div
+                    key={index}
+                    className="absolute w-[90vw] sm:w-[40vw] md:w-70 h-auto aspect-[2/1] p-2 sm:p-3 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm
+                    flex items-center justify-center"
+
+                    style={{
+                      transform: `
                       translateX(${x}px)
                       translateY(${y}px)
                       rotate(${angle}deg)
                       scale(${index === activeIndex ? 1 : 0.4})
                     `,
-                    opacity: isActive ? 1 : 0.3,
-                    filter: isActive ? 'brightness(1)' : 'brightness(0.5)',
+                      opacity: isActive ? 1 : 0.3,
+                      filter: isActive ? 'brightness(1)' : 'brightness(0.7)',
 
-                    zIndex: total - Math.abs(index - activeIndex),
-                    // opacity: 1,
-                    transition: 'transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease',
-                  }}
-                >
-                  <ArtCard
-                    title={art.title}
-                    imageUrl={art.imageUrl}
-                    description={art.description}
-                    slug={art.slug}
-                    aosDelay={index * 250}
-                  />
-                </motion.div>
-              )
-            })}
-          </motion.div>
+                      zIndex: total - Math.abs(index - activeIndex),
+                      // opacity: 1,
+                      transition: 'transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease',
+                    }}
+                  >
+                    <div className={`relative  ${isActive ? 'glint-effect' : ''}`}>
+                      <ArtCard
+                        title={art.title}
+                        imageUrl={art.imageUrl}
+                        description={art.description}
+                        slug={art.slug}
+                        aosDelay={index * 250}
+                      />
+                    </div>
 
-          <motion.button
-            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            whileTap={{ scale: 0.8 }}
-            onClick={prevArt}
-            className="hidden sm:flex absolute left-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
-          >
-            ‹ Prev
-          </motion.button>
+                  </motion.div>
+                )
+              })}
+            </motion.div>
 
-          <motion.button
-            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            whileTap={{ scale: 0.8 }}
-            onClick={nextArt}
-            className="hidden sm:flex absolute right-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
-          >
-            Next ›
-          </motion.button>
-        </div>
+            <motion.button
+              transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+              whileTap={{ scale: 0.8 }}
+              onClick={prevArt}
+              className=" carousel-buttons hidden sm:flex absolute left-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
+            >
+              ‹ Prev
+            </motion.button>
+
+            <motion.button
+              transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+              whileTap={{ scale: 0.8 }}
+              onClick={nextArt}
+              className=" carousel-buttons hidden sm:flex absolute right-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
+            >
+              Next ›
+            </motion.button>
+          </div>
         )}
 
         {/* Dots */}
 
-        <div className="absolute hidden sm:flex  justify-center mt-8 gap-5">
+        <div className="absolute hidden sm:flex  justify-center mt-8 gap-5 " role="tablist" aria-label="Select artwork">
           {artworks.map((_, i) => (
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className={`w-3 h-3 rounded-full ${i === activeIndex ? 'bg-[#E85002]' : 'bg-gray-400'}`}
+              className={`w-3 h-3 rounded-full ${i === activeIndex ? 'bg-[#E85002]' : 'bg-gray-400'} cursor-pointer`}
               aria-label={`Go to artwork ${i + 1}`}
             />
           ))}

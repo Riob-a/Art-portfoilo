@@ -43,14 +43,14 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                 whileHover={{ scale: 1.05, y: -10, x: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 onClick={() => setIsModalOpen(true)}
-                className="mb-6 break-inside-avoid"
+                className="break-inside-avoid rounded-xl //"
 
             >
                 <div
                     data-aos="fade-in" data-aos-delay={aosDelay}
                 >
                     <div
-                        className="art-card rounded-xl overflow-hidden  cursor-pointer"
+                        className="art-card rounded-xl overflow-hidden flex items-center justify-center cursor-pointer"
                     >
                         <Image
                             loading="lazy"
@@ -58,9 +58,9 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                             alt={title}
                             width={600}
                             height={300}
-                            // className="w-full image h-80 object-cover"
-                            className="w-full  rounded-xl object-cover"
-                        // sizes="(max-width: 768px) 100vw, 33vw"
+                            // className="w-full rounded-xl object-cover"
+                            className="mx-auto object-cover object-center"
+                            sizes="(max-width: 768px) 100vw, 33vw"
                         />
                     </div>
                 </div>
