@@ -38,14 +38,13 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
 
     return (
         <>
-            {/* 🔹 Card */}
+            {/*  Card */}
             <motion.div
-                whileHover={{ scale: 1.05, y: -10, x: 0 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                // whileHover={{ scale: 1.05, y: -10, x: 0 }}
+                // transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 onClick={() => setIsModalOpen(true)}
-                className="break-inside-avoid rounded-xl //"
-
-            >
+                className="relative break-inside-avoid rounded-xl mt-15  p-1.5 bg-black/20  //"
+            >    
                 <div
                     data-aos="fade-in" data-aos-delay={aosDelay}
                 >
@@ -58,15 +57,14 @@ export default function ArtCard({ title, imageUrl, description, slug, aosDelay =
                             alt={title}
                             width={600}
                             height={300}
-                            // className="w-full rounded-xl object-cover"
-                            className="mx-auto object-cover object-center"
-                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="image mx-auto object-cover object-center"
+                            // sizes="(max-width: 768px) 100vw, 33vw"
                         />
                     </div>
                 </div>
             </motion.div>
 
-            {/* 🔹 Modal (via portal) */}
+            {/* Modal (via portal) */}
             {isModalOpen &&
                 createPortal(
                     <div

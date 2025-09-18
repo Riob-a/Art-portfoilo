@@ -56,7 +56,7 @@ export default function Home() {
       <Navbar />
       <section>
         <header className="header relative text-center" data-aos="fade-in" data-aos-delay="">
-          <h1 className="text" data-aos="fade-in" data-aos-delay="1500">[Portfolio]</h1>
+          <h1 className="text rotating-3d" data-aos="fade-in" data-aos-delay="1500">[Portfolio]</h1>
 
           <div className="globe-container">
             <svg
@@ -89,71 +89,7 @@ export default function Home() {
         </header>
       </section>
 
-      <section ref={headingRef} className="px-4 py-8 mb-4">
-        {/* <div className="grid grid-cols-1 md:grid-cols-12 gap-6 main-inde rounded-lg">
-          <div className="md:col-span-6 main-ind">
-            <h1 className="logo-3 text-2xl md:text-8xl font-bold leading-tight mb-6">
-              <motion.span style={{ y: line1Y }} className="block">
-                Turning Ideas
-              </motion.span>
-              <motion.span style={{ y: line2Y }} className="block text-red-500">
-                Into Reality
-              </motion.span>
-            </h1>
-          </div> */}
-
-        {/* Right Column (Details + Text + Link) */}
-
-        {/* <div className="md:col-span-6 flex flex-col gap-4 mb-5">
-            <div className="main-index-2 border-gray-300 pt-4 desc-details" data-aos="fade-in" data-aos-delay="200">
-              <h2 className="text-sm uppercase tracking-wide font-semibold mb-2" >
-                Details
-              </h2>
-              <div className="border-t border-gray-500 text-sm grid grid-cols-3 gap-y-4">
-                <span className="font-medium">Category</span>
-                <span className="col-span-2">Art gallery</span>
-
-                <span className="font-medium border-t border-gray-500">Services</span>
-                <span className="col-span-2 border-t border-gray-500">
-                  Art Direction <br />
-                  Web Design <br />
-                  Visual Design
-                </span>
-
-                <span className="font-medium border-t border-gray-500  border-b border-gray-500">Year</span>
-                <span className="col-span-2 border-t border-gray-500  border-b border-gray-500">2024 - Present</span>
-              </div>
-            </div>
-
-            <br />
-
-            <p className="text-base leading-relaxed text-gray-300 desc-intro" data-aos="fade-up" data-aos-delay="200">
-              This website showcases a modern  <span className="font-semibold">art gallery</span>
-              that brings together creativity and technology, offering a seamless experience .
-              Learn about the creative process,
-              and connect with my vision.
-
-            </p>
-            <motion.div
-              className="text-1xl"
-              whileHover={{ scale: 1.08, y: 10, x: -10 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              <Link
-                href="/gallery"
-                className="g-link rounded-md"
-                data-aos="fade-right"
-                data-aos-delay="400"
-              >
-                [ View Gallery {svg}]
-              </Link>
-            </motion.div>
-          </div>
-        </div> */}
-
-      </section>
-
-      <div className="logo-3 border-t border-gray-500 border-b border-gray-500 marquee" role="marquee" aria-label="art projects scrolling">
+      <div className="logo-3 border-t border-gray-500 border-b border-gray-500 marquee" role="marquee" aria-label="art projects scrolling" data-aos="fade-in" data-aos-delay="2000s">
         <ul className="marquee__content" >
           <li>art projects</li><li>•</li>
           <li>art projects</li><li>•</li>
@@ -179,7 +115,7 @@ export default function Home() {
       </div>
 
       {/* 3D Art Carousel */}
-      <div className="d-card relative mt-10 min-h-screen flex flex-col items-center justify-center overflow-hidde">
+      <div className="d-card relative min-h-screen flex flex-col items-center justify-center overflow-hidde">
         {radius === 0 ? (
           // --- MOBILE: Linear carousel ---
           <div className="flex w-full overflow-x-auto space-x-4 px-4  snap-x snap-mandatory">
@@ -188,18 +124,19 @@ export default function Home() {
               return (
                 <div
                   key={index}
-                  className={`flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm p-4 relative  ${isActive ? 'glint-effect' : ''}`}
-                  // className="flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg  backdrop-blur-sm p-4"
+                  className={`art-motion-card-2 relative  ${isActive ? 'glint-effect-2' : ''}`}
+                // className="flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg  backdrop-blur-sm p-4"
                 >
-                <ArtCard
-                  title={art.title}
-                  imageUrl={art.imageUrl}
-                  description={art.description}
-                  slug={art.slug}
-                  aosDelay={index * 250}
-                />
-              </div>
-            )})}
+                  <ArtCard
+                    title={art.title}
+                    imageUrl={art.imageUrl}
+                    description={art.description}
+                    slug={art.slug}
+                    aosDelay={index * 250}
+                  />
+                </div>
+              )
+            })}
           </div>
 
         ) : (
@@ -227,9 +164,9 @@ export default function Home() {
                 return (
                   <motion.div
                     key={index}
-                    className="absolute w-[90vw] sm:w-[40vw] md:w-70 h-auto aspect-[2/1] p-2 sm:p-3 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm
-                    flex items-center justify-center"
-
+                    // className=" absolute w-[90vw] sm:w-[40vw] md:w-70 h-auto aspect-[2/1] p-2 sm:p-3 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm
+                    // flex items-center justify-center"
+                    className="art-motion-card "
                     style={{
                       transform: `
                       translateX(${x}px)
@@ -237,15 +174,16 @@ export default function Home() {
                       rotate(${angle}deg)
                       scale(${index === activeIndex ? 1 : 0.4})
                     `,
-                      opacity: isActive ? 1 : 0.3,
-                      filter: isActive ? 'brightness(1)' : 'brightness(0.7)',
+                      opacity: isActive ? 1 : 0.6,
+                      filter: isActive ? 'brightness(1)' : 'brightness(0.6)',
 
                       zIndex: total - Math.abs(index - activeIndex),
                       // opacity: 1,
                       transition: 'transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease',
                     }}
                   >
-                    <div className={`relative  ${isActive ? 'glint-effect' : ''}`}>
+
+                    <div className={`relative rounded-xl ${isActive ? 'glint-effect' : ''}`}>
                       <ArtCard
                         title={art.title}
                         imageUrl={art.imageUrl}

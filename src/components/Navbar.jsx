@@ -18,7 +18,7 @@ export default function Navbar() {
     `link ${pathname === path ? 'active-link' : ''}`
 
   return (
-    <div className="nav-wrapper">
+    <div className="nav-wrapper" data-aos="fade-in" data-aos-delay="">
       <nav
         className={`navbar w-full z-50 p-2 flex items-center rounded-lg ${expanded ? 'expanded' : 'collapsed'}`}
       >
