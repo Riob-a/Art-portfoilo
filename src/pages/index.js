@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import ThreeDText from '../components/ThreeDText';
+import ThreeDModel from '../components/ThreeDModel';
 
 export default function Home() {
 
@@ -57,6 +59,10 @@ export default function Home() {
       <section>
         <header className="header relative text-center" data-aos="fade-in" data-aos-delay="">
           <h1 className="text rotating-3d" data-aos="fade-in" data-aos-delay="1500">[Portfolio]</h1>
+
+          {/* <div className="w-full flex justify-center">
+            <ThreeDText />
+          </div> */}
 
           <div className="globe-container">
             <svg
@@ -230,9 +236,10 @@ export default function Home() {
             />
           ))}
         </div>
-
       </div>
-
+      <div className="w-full flex justify-center" aria-hidden="true" data-aos="fade-in" data-aos-delay="1500">
+            <ThreeDModel />
+          </div>
     </div>
   )
 }

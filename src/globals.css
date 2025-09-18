@@ -512,7 +512,7 @@ main {
 .header {
   /* background: linear-gradient(60deg, #fac094, #feb47b, #ff7e5f, #ff613a); */
   background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
-  background-size: 200% 100%;
+  background-size: 120% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;
   background-position: center;
@@ -533,7 +533,7 @@ main {
   font-size: 4rem;
   font-weight: 900;
   color: #fff;
-  text-shadow: 0 5px 10px rgba(0,0,0,0.5);
+  /* text-shadow: 0 5px 10px rgba(0,0,0,0.5); */
   transform-style: preserve-3d;        
   animation: rotate3D 10s linear infinite;
 }
