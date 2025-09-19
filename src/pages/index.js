@@ -12,7 +12,7 @@ import { useRef, useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import dynamic from "next/dynamic";
 
-const ThreeDModel = dynamic(() => import("../components/ThreeDModel"), {
+const TelevisionCanvas = dynamic(() => import("../components/TelevisionCanvas"), {
   ssr: false,
 });
 
@@ -268,7 +268,7 @@ export default function Home() {
         data-aos-delay="1500"
       >
         {inView ? (
-          <ThreeDModel />
+          <TelevisionCanvas />
         ) : (
           <div className="text-gray-400 flex items-center justify-center">
             Loading 3D model...
