@@ -25,6 +25,7 @@ export default function Home() {
 
   // const MemoizedArtCard = React.memo(ArtCard);
   const visibleRange = 4;
+  const visibleRangeTwo = 2;
   const [ref, inView] = useInView({ triggerOnce: true, rootMargin: "200px" });
 
   useEffect(() => {
@@ -138,12 +139,12 @@ export default function Home() {
           // --- MOBILE: Linear carousel ---
           <div className="flex w-full overflow-x-auto space-x-4 px-4  snap-x snap-mandatory">
             {artworks.map((art, index) => {
-              const isVisible =
-                Math.abs(index - activeIndex) <= visibleRange ||
+              const isVisibleTwo =
+                Math.abs(index - activeIndex) <= visibleRangeTwo ||
                 Math.abs(index - activeIndex) >= artworks.length - visibleRange; // wrap around
 
-              if (!isVisible) return null;
-              
+              if (!isVisibleTwo) return null;
+
               const isActive = index === activeIndex
               return (
                 <div
