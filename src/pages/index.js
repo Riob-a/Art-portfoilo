@@ -2,11 +2,19 @@ import Navbar from '../components/Navbar'
 import ArtCard from '../components/ArtCard';
 import artworks from '../data/artworks'
 import Image from 'next/image';
-import Link from 'next/link';
+import { SafeMotionDiv } from '@/components/SafeMotionDiv';
+// import Link from 'next/link';
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import ThreeDText from '../components/ThreeDText';
-import ThreeDModel from '../components/ThreeDModel';
+// import ThreeDText from '../components/ThreeDText';
+// import ThreeDModel from '../components/ThreeDModel';
+
+import { useInView } from "react-intersection-observer";
+import dynamic from "next/dynamic";
+
+const ThreeDModel = dynamic(() => import("../components/ThreeDModel"), {
+  ssr: false,
+});
 
 export default function Home() {
 
@@ -14,6 +22,10 @@ export default function Home() {
   const [selectedArt, setSelectedArt] = useState(null);
   const galleryRef = useRef(null)
   const [radius, setRadius] = useState(300);
+
+  // const MemoizedArtCard = React.memo(ArtCard);
+  const visibleRange = 4;
+  const [ref, inView] = useInView({ triggerOnce: true, rootMargin: "200px" });
 
   useEffect(() => {
     const handleResize = () => {
@@ -121,11 +133,17 @@ export default function Home() {
       </div>
 
       {/* 3D Art Carousel */}
-      <div className="d-card relative min-h-screen flex flex-col items-center justify-center overflow-hidde">
+      <div className="d-card relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
         {radius === 0 ? (
           // --- MOBILE: Linear carousel ---
           <div className="flex w-full overflow-x-auto space-x-4 px-4  snap-x snap-mandatory">
             {artworks.map((art, index) => {
+              const isVisible =
+                Math.abs(index - activeIndex) <= visibleRange ||
+                Math.abs(index - activeIndex) >= artworks.length - visibleRange; // wrap around
+
+              if (!isVisible) return null;
+              
               const isActive = index === activeIndex
               return (
                 <div
@@ -152,23 +170,28 @@ export default function Home() {
             ref={galleryRef}
             className="relative w-full max-w-6xl h-[500px] perspective"
           >
-            <motion.div
+            <SafeMotionDiv
               className="flex items-center justify-center w-full h-full"
             >
               {artworks.map((art, index) => {
+                const isVisible =
+                  Math.abs(index - activeIndex) <= visibleRange ||
+                  Math.abs(index - activeIndex) >= artworks.length - visibleRange; // wrap around
+
+                if (!isVisible) return null;
+
                 const total = artworks.length
                 const angleStep = -360 / total
                 // shift based on activeIndex so carousel rotates
                 const angle = (index - activeIndex) * angleStep
                 const rad = (angle * Math.PI) / 180
-                // const radius = 300 
                 const x = radius * Math.cos(rad)
                 const y = radius * Math.sin(rad)
 
                 const isActive = index === activeIndex
 
                 return (
-                  <motion.div
+                  <SafeMotionDiv
                     key={index}
                     // className=" absolute w-[90vw] sm:w-[40vw] md:w-70 h-auto aspect-[2/1] p-2 sm:p-3 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm
                     // flex items-center justify-center"
@@ -199,10 +222,10 @@ export default function Home() {
                       />
                     </div>
 
-                  </motion.div>
+                  </SafeMotionDiv>
                 )
               })}
-            </motion.div>
+            </SafeMotionDiv>
 
             <motion.button
               transition={{ type: 'spring', stiffness: 500, damping: 20 }}
@@ -237,9 +260,22 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="w-full flex justify-center" aria-hidden="true" data-aos="fade-in" data-aos-delay="1500">
-            <ThreeDModel />
+
+      <div
+        ref={ref}
+        className="w-full flex justify-center min-h-[300px]"
+        data-aos="fade-in"
+        data-aos-delay="1500"
+      >
+        {inView ? (
+          <ThreeDModel />
+        ) : (
+          <div className="text-gray-400 flex items-center justify-center">
+            Loading 3D model...
           </div>
-    </div>
+        )}
+      </div>
+
+    </div >
   )
 }

@@ -4,23 +4,28 @@ import { Environment } from '@react-three/drei'
 import { useGLTF, OrbitControls } from '@react-three/drei'
 
 function PolyHavenModel({ path }) {
-  // path = '/models/wooden_crate.glb'
   const { scene } = useGLTF(path)
-  return <primitive object={scene} scale={6} /> // scale it up/down as needed
+  return <primitive object={scene} scale={3} /> // scale it up/down as needed
 }
 
 // Preload the model for faster loading:
-useGLTF.preload('/models/Television_01_4k.gltf')
+useGLTF.preload('/models/Television_01_4k.gltf/Television_01_4k.gltf')
 
 export default function PolyHavenExample() {
   return (
-    <Canvas className="canvas rounded-xl" style={{ width: '30%', height: '500px', background: '#000000' }}>
-      <ambientLight intensity={0.5} />
+    <Canvas
+      className="canvas rounded-xl justify-center"
+      // camera={{ position: [0, 0, 5], fov: 30 }}
+      style={{ width: '50%', height: '300px', background: '#080808ff' , margin: 'auto'}}
+      frameloop="demand"
+      dpr={[1, 1.5]}
+    >
+      <ambientLight intensity={0.1} />
       <Environment preset="sunset" />
-      <directionalLight position={[5, 10, 5]} intensity={4} />
+      <directionalLight position={[ 10 ]} intensity={2} />
 
       {/* Add orbit controls so you can rotate/zoom */}
-      <OrbitControls />
+      <OrbitControls makeDefault enableDamping dampingFactor={0.05} enableZoom={false} enablePan={true}/>
 
       {/* Load the model */}
       <PolyHavenModel path="/models/Television_01_4k.gltf/Television_01_4k.gltf" />

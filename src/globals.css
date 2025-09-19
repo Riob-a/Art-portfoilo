@@ -748,9 +748,8 @@ main {
   width: 95vw;
   scroll-snap-align: center;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.2);
+ 
+  background-color: #ffffff33;
   backdrop-filter: blur(4px);
   padding: 1rem;
 
@@ -779,7 +778,7 @@ main {
   padding: 0.5rem;
   text-align: center;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
+  
   background-color: #ffffff33;
   backdrop-filter: blur(4px);
   display: flex;
@@ -830,10 +829,6 @@ main {
   margin: auto;
   transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, filter 1s ease-in-out;
   cursor: pointer;
-  /* border: #ffffff48 1px solid; */
-  box-shadow:
-    0 10px 20px #00000026,
-    inset 0 0 12px #ffffff33;
 }
 
 .active-card:hover {
@@ -1269,7 +1264,7 @@ button.gradient-text {
 /*  */
 .perspective {
   position: relative;
-  perspective: 200px;
+  perspective: 1000px;
   perspective-origin: center;
 }
 
