@@ -262,7 +262,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div
+      {/* <div
         ref={ref}
         className="w-full flex justify-center min-h-[300px]"
         data-aos="fade-in"
@@ -275,7 +275,7 @@ export default function Home() {
             Loading 3D model...
           </div>
         )}
-      </div>
+      </div> */}
 
     </div >
   )
