@@ -2,24 +2,35 @@
 import React, { useEffect, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-// import Spots from "../textures/Spots.jpg";
 
 export default function PolyHavenTV({ path, screenTextureUrl }) {
   const { scene } = useGLTF(path);
 
-  // Load the screen texture once
-  const texture = useMemo(() => new THREE.TextureLoader().load(screenTextureUrl), [screenTextureUrl]);
-  // const texture = useMemo(() => new THREE.TextureLoader().load(Spots), []);
+  const texture = useMemo(
+    () => new THREE.TextureLoader().load(screenTextureUrl),
+    [screenTextureUrl]
+  );
 
   useEffect(() => {
     scene.traverse((child) => {
-      if (child.isMesh && child.name.toLowerCase().includes("screen")) {
-        child.material = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false });
+      if (child.isMesh && child.name.toLowerCase().includes("tv_screen")) {
+        child.material = new THREE.MeshPhysicalMaterial({
+          map: texture,
+          metalness: 0.7,           
+          roughness: 0.2,           
+          clearcoat: 1,             
+          clearcoatRoughness: 0.05,  
+          reflectivity: 1,           
+          transmission: 0,           
+          ior: 1.45,
+          toneMapped: false,
+        });
       }
     });
   }, [scene, texture]);
 
-  return <primitive object={scene} scale={3} />;
+  return <primitive object={scene} scale={4} />;
 }
 
-useGLTF.preload("/models/Television_01_4k.gltf/Television_01_4k.gltf");
+useGLTF.preload("/models/Television_01_custom.glb");
+
