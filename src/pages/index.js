@@ -169,7 +169,7 @@ export default function Home() {
           // --- DESKTOP/TABLET: 3D Circular carousel ---
           <div
             ref={galleryRef}
-            className="relative w-full max-w-6xl h-[500px] perspective"
+            className="absolute z-20 w-full max-w-6xl h-[500px] perspective"
           >
             <SafeMotionDiv
               className="flex items-center justify-center w-full h-full"
@@ -247,10 +247,33 @@ export default function Home() {
             </motion.button>
           </div>
         )}
+        {/* Circular Boundaries */}
+        <div
+          className="absolute z-10 rounded-full border border-gray-400/50"
+          style={{
+            width: `${radius * 2.25 + 100}px`, // outside circle
+            height: `${radius * 2.25 + 100}px`,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        ></div>
+
+        <div
+          className="absolute z-10 rounded-full border border-gray-400/40"
+          style={{
+            width: `${radius * 1.75 - 100}px`, // inside circle
+            height: `${radius * 1.75 - 100}px`,
+            left: '50%',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        ></div>
+
 
         {/* Dots */}
 
-        <div className="absolute hidden sm:flex  justify-center mt-8 gap-5 " role="tablist" aria-label="Select artwork">
+        {/* <div className="absolute hidden sm:flex  justify-center mt-8 gap-5 " role="tablist" aria-label="Select artwork">
           {artworks.map((_, i) => (
             <button
               key={i}
@@ -259,10 +282,35 @@ export default function Home() {
               aria-label={`Go to artwork ${i + 1}`}
             />
           ))}
+        </div> */}
+        <div className="absolute z-30 w-40 h-40 mx-auto " role="tablist" aria-label="Select artwork" data-aos="fade-in"data-aos-delay="1500">
+          {artworks.map((_, i) => {
+            const total = artworks.length;
+            const angle = (i / total) * 2 * Math.PI;
+
+            const dotRadius = 130; // radius of the dots circle
+            const x = dotRadius * Math.cos(angle);
+            const y = dotRadius * Math.sin(angle);
+
+            return (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i)}
+                className={`absolute w-3 h-3 rounded-full ${i === activeIndex ? 'bg-[#E85002] scale-160' : 'bg-gray-400 '
+                  } cursor-pointer`}
+                style={{
+                  left: `calc(50% + ${x}px - 6px)`,
+                  top: `calc(50% + ${y}px - 6px)`,
+                }}
+                aria-label={`Go to artwork ${i + 1}`}
+              />
+            );
+          })}
         </div>
+
       </div>
 
-      {/* <div
+      <div
         ref={ref}
         className="w-full flex justify-center min-h-[300px]"
         data-aos="fade-in"
@@ -275,7 +323,7 @@ export default function Home() {
             Loading 3D model...
           </div>
         )}
-      </div> */}
+      </div>
 
     </div >
   )

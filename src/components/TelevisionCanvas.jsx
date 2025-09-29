@@ -17,7 +17,7 @@ export default function TelevisionCanvas() {
       <PolyHavenTV
         // path="/models/Television_01_4k.gltf/Television_01_4k.gltf"
         path="/models/Television_01_custom.glb"
-        screenTextureUrl="models/Television_01_4k.gltf/textures/Spots.jpg"
+        screenTextureUrl="models/Television_01_4k.gltf/textures/S.jpg"
       />
     </Canvas>
   );
