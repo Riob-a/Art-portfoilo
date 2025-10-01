@@ -7,10 +7,11 @@ import PolyHavenTV from "./PolyHavenTV";
 export default function TelevisionCanvas() {
   return (
     <Canvas
-      style={{ width: "50%", height: "300px", margin: "auto", background: "#080808ff" }}
+      className="rounded-lg cursor-grab"
+      style={{ width: "15%", height: "215px", margin: "auto", background: "#141414ff", }}
     >
-      <ambientLight intensity={0.2} />
-      <directionalLight position={[ 5, 5]} intensity={1.2} />
+      <ambientLight intensity={0.1} />
+      {/* <directionalLight position={[5, 5]} intensity={1.2} /> */}
       <Environment preset="sunset" />
       <OrbitControls makeDefault enableDamping dampingFactor={0.05} enablePan enableZoom={false} />
 
