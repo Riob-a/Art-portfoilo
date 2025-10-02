@@ -11,8 +11,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
-    /* --background: #e7e2d5; */
+    /* --background: #000000; */
+    --background: #e7e2d5;
     --foreground: #ededed;
   }
 }
@@ -208,8 +208,8 @@ font-family: 'Supreme', sans-serif;
 
 .line-arrow {
   border-radius: 50%;
-  border: 2px solid #ffffff;
-  background-color: #090909;
+  border: 2px solid #060606;
+  background-color: #f69b13ff;
 }
 
 .line-arrow-b {
@@ -530,12 +530,12 @@ main {
 }
 
 .header h1 {
-  display: inline-block;               
+  display: inline-block;
   font-size: 4rem;
   font-weight: 900;
   color: #fff;
   /* text-shadow: 0 5px 10px rgba(0,0,0,0.5); */
-  transform-style: preserve-3d;        
+  transform-style: preserve-3d;
   animation: rotate3D 10s linear infinite;
 }
 
@@ -699,6 +699,7 @@ main {
   position: relative;
   width: 100%;
   user-select: none;
+  color: #000000;
 }
 
 .marquee__content {
@@ -731,7 +732,8 @@ main {
 /*  */
 .marquee:hover .marquee__content {
   animation-play-state: paused;
-  color: #E85002;
+  /* color: #E85002; */
+  color: #f69b13ff;
   transition: color 0.5s ease-in-out;
 }
 
@@ -749,7 +751,7 @@ main {
   width: 95vw;
   scroll-snap-align: center;
   border-radius: 0.75rem;
- 
+
   background-color: #ffffff33;
   backdrop-filter: blur(4px);
   padding: 1rem;
@@ -779,8 +781,10 @@ main {
   padding: 0.5rem;
   text-align: center;
   border-radius: 0.75rem;
-  
-  background-color: #ffffff33;
+
+  background-color: #a5bcc77a;
+  /* background-color: #f69b138e; */
+
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -885,7 +889,7 @@ main {
 }
 
 .modal-text-1 {
-  color: white;
+  color: rgb(4, 4, 4);
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 200;
   font-style: normal;
@@ -907,13 +911,13 @@ main {
   font-weight: 800;
   padding: 10px;
   background-color: white;
-  color: #646464;
+  color: #0b0b0b;
   transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
 
 }
 
 .m-button:hover {
-  background-color: #646464;
+  background-color: #f69b13ff;
   color: #000000;
   transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
 
@@ -937,7 +941,7 @@ main {
 .slug {
   /* background-color: #FAE4CF; */
   backdrop-filter: blur(8px);
-  background-color: #FFFFFF33;
+  background-color: #f69b13ff;
   font-weight: 500;
   padding: 20px;
   border: 2px solid #3c3c3c;
@@ -972,7 +976,7 @@ main {
 }
 
 .a-content {
-  color: #ffffff;
+  color: #090909;
 }
 
 .a-link {
@@ -1045,6 +1049,12 @@ button.gradient-text {
   font-weight: 400;
   font-style: normal;
   /* color: linear-gradient(45deg, #F16001, #C10801); */
+}
+
+.druk {
+  font-family: 'Druk Wide Bold', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .logo-pic {
@@ -1276,14 +1286,16 @@ button.gradient-text {
 .d-card {
   height: 800px;
 }
-.carousel-section{
+
+.carousel-section {
   /* background-color: #f16101; */
   padding: 5px;
   margin-bottom: 5rem;
   /* border-radius: 1rem; */
 }
-.canvas{
-    background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
+
+.canvas {
+  background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
   background-size: 120% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;

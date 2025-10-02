@@ -40,7 +40,7 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="#ffffff"       
+          color="#ffffffff"       
           metalness={1}        
           roughness={0.05}         
           reflectivity={1}      
@@ -57,11 +57,11 @@ function ChromeText() {
 export default function ThreeDTextWithPlatform() {
   return (
     <Canvas
-      className="rounded-xl"
+      className="rounde"
       style={{
         width: "100%",
         height: "550px",
-        background: "#000000ff", // dark bg makes chrome stand out
+        background: "#f69b13ff", 
       }}
       gl={{ antialias: true }}
       camera={{ position: [0, 5, 40], fov: 60 }}

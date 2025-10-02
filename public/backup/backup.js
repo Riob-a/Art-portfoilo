@@ -303,3 +303,59 @@ About
 //             />
 //           ))}
 //         </div>
+
+        {/* <motion.div
+          style={{ scale: scaleCarousel }}
+          className="hidden md:flex relativ min-h-screen flex-col items-center justify-center overflow-hidde ||"
+        >
+          <div
+            ref={galleryRef}
+            className="absolut z-20 w-full max-w-6xl h-screen perspective"
+          >
+            <SafeMotionDiv className="flex items-center justify-center w-full h-full">
+              {artworks.map((art, index) => {
+                const isVisible =
+                  Math.abs(index - activeIndex) <= visibleRange ||
+                  Math.abs(index - activeIndex) >= artworks.length - visibleRange;
+
+                if (!isVisible) return null;
+
+                const total = artworks.length;
+                const angleStep = -360 / total;
+                const angle = (index - activeIndex) * angleStep;
+                const rad = (angle * Math.PI) / 180;
+                const x = radius * Math.cos(rad);
+                const y = radius * Math.sin(rad);
+                const isActive = index === activeIndex;
+
+                return (
+                  <SafeMotionDiv
+                    key={index}
+                    className="art-motion-card"
+                    style={{
+                      transform: `
+                  translateX(${x}px)
+                  translateY(${y}px)
+                  rotate(${angle}deg)
+                  scale(${isActive ? 1 : 0.2})
+                `,
+                      opacity: isActive ? 1 : 0.3,
+                      filter: isActive ? "brightness(1)" : "brightness(0.9)",
+                      zIndex: total - Math.abs(index - activeIndex),
+                      transition:
+                        "transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease",
+                    }}
+                  >
+                    <div className={`relative rounded-xl ${isActive ? "glint-effect" : ""}`}>
+                      <ArtCard
+                        title={art.title}
+                        imageUrl={art.imageUrl}
+                        description={art.description}
+                        slug={art.slug}
+                        aosDelay={index * 250}
+                      />
+                    </div>
+                  </SafeMotionDiv>
+                );
+              })}
+            </SafeMotionDiv> */}

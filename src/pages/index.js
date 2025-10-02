@@ -32,7 +32,7 @@ export default function Home() {
 
   // const MemoizedArtCard = React.memo(ArtCard);
   const visibleRange = 4;
- 
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -76,9 +76,9 @@ export default function Home() {
       <Navbar />
       <section>
         <motion.header
-          className="header relative text-center"
-          // data-aos="fade-in"
-          // data-aos-delay=""
+          className="heade relative text-center"
+          data-aos="fade-in"
+          data-aos-delay=""
         // style={{ scale: scaleHeader, opacity: opacityHeader }}
         >
           {/* <h1 className="text rotating-3d" data-aos="fade-in" data-aos-delay="1500">[Portfolio]</h1> */}
@@ -113,7 +113,41 @@ export default function Home() {
 
         </motion.header>
       </section>
+      <div className="logo-3 border-t border-gray-500 border-b border-gray-500 marquee" role="marquee" aria-label="art projects scrolling" data-aos="fade-in" data-aos-delay="2000s">
+        <ul className="marquee__content" >
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
 
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+        </ul>
+
+        <ul className="marquee__content" aria-hidden="true">
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+          <li>art </li><li>•</li>
+        </ul>
+      </div>
       {/* 3D Art Carousel */}
       <section className="carousel-section mb-5 mt-20">
         {/* --- MOBILE VIEW (scroll feed) --- */}
@@ -134,11 +168,36 @@ export default function Home() {
         {/* --- DESKTOP/TABLET VIEW (3D carousel) --- */}
         <motion.div
           style={{ scale: scaleCarousel }}
-          className="hidden md:flex relativ min-h-screen flex-col items-center justify-center overflow-hidde ||"
+          className="hidden md:flex relative min-h-screen flex-col items-center justify-center overflow-hidde"
         >
+          {/* Background Circle */}
+          <div
+            className="absolute rounded-full b-[#f69b13ff] bg-black border border-black"
+            style={{
+              width: `${radius * 2.5}px`,   // double the radius to match orbit
+              height: `${radius * 2.5}px`,
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 5,                  // keep behind artworks but above page bg
+            }}
+          />
+
+          <div
+            className="absolute rounded-full bg-[#e7e2d5] border border-black"
+            style={{
+              width: `${radius * 1.5}px`,   // double the radius to match orbit
+              height: `${radius * 1.5}px`,
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 5,                  // keep behind artworks but above page bg
+            }}
+          />
+
           <div
             ref={galleryRef}
-            className="absolut z-20 w-full max-w-6xl h-screen perspective"
+            className="absolute z-20 w-full max-w-6xl h-screen perspective"
           >
             <SafeMotionDiv className="flex items-center justify-center w-full h-full">
               {artworks.map((art, index) => {
@@ -162,19 +221,22 @@ export default function Home() {
                     className="art-motion-card"
                     style={{
                       transform: `
-                  translateX(${x}px)
-                  translateY(${y}px)
-                  rotate(${angle}deg)
-                  scale(${isActive ? 1 : 0.4})
-                `,
-                      opacity: isActive ? 1 : 0.6,
-                      filter: isActive ? "brightness(1)" : "brightness(0.6)",
+                translateX(${x}px)
+                translateY(${y}px)
+                rotate(${angle}deg)
+                scale(${isActive ? 1 : 0.3})
+              `,
+                      opacity: isActive ? 1 : 0.5,
+                      filter: isActive ? "brightness(1)" : "brightness(0.5)",
                       zIndex: total - Math.abs(index - activeIndex),
                       transition:
                         "transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease",
                     }}
                   >
-                    <div className={`relative rounded-xl ${isActive ? "glint-effect" : ""}`}>
+                    <div
+                      className={`relative rounded-xl ${isActive ? "glint-effect" : ""
+                        }`}
+                    >
                       <ArtCard
                         title={art.title}
                         imageUrl={art.imageUrl}
@@ -187,6 +249,7 @@ export default function Home() {
                 );
               })}
             </SafeMotionDiv>
+
 
             {/* Prev/Next buttons */}
             <motion.button
@@ -221,8 +284,8 @@ export default function Home() {
                 <motion.button
                   key={i}
                   animate={{
-                    scale: i === activeIndex ? 1.6 : 1,
-                    backgroundColor: i === activeIndex ? "#E85002" : "#9ca3af",
+                    scale: i === activeIndex ? 1.5 : 1,
+                    backgroundColor: i === activeIndex ? "#E85002" : "#0b0b0bff",
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   onClick={() => setActiveIndex(i)}
