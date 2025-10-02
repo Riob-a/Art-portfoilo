@@ -515,6 +515,7 @@ main {
   background-size: 120% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s; */
+  transform-origin: center top;
   background-position: center;
   background-repeat: space;
   height: 550px;
@@ -1278,6 +1279,12 @@ button.gradient-text {
 .carousel-section{
   /* background-color: #f16101; */
   padding: 5px;
-  margin: 0.2rem;
+  margin-bottom: 5rem;
   /* border-radius: 1rem; */
+}
+.canvas{
+    background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
+  background-size: 120% 100%;
+  animation: gradientWave 20s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
 }

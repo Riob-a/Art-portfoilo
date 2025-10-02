@@ -1,7 +1,7 @@
-
 import React, { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text3D, Environment, Center, Bounds } from "@react-three/drei";
+import { a, useSpring } from "@react-spring/three";
 
 function RotatingPlatform({ children }) {
   const platformRef = useRef();
@@ -14,19 +14,25 @@ function RotatingPlatform({ children }) {
 function ChromeText() {
   const textRef = useRef();
   const { viewport } = useThree();
-
   const textSize = Math.max(1.5, viewport.width / 6);
+
+  const { opacity } = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: { duration: 1500 }, // fade duration (ms)
+  });
 
   return (
     <Center>
       <Text3D
+
         ref={textRef}
         font="/fonts/Panchang_Bold.json"
         size={4}
         height={3}
         bevelEnabled
         bevelThickness={0.1}
-        bevelSize={0.5}
+        bevelSize={0.4}
         bevelSegments={10}
         curveSegments={24}
         scale={[1, 1, 1]}
@@ -34,12 +40,14 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="#ffffff"       // base white, reflections do the rest
-          metalness={1}         // fully metallic
-          roughness={0.05}         // perfectly smooth surface
-          reflectivity={1}      // strong reflections
-          clearcoat={1}         // extra shiny layer
+          color="#ffffff"       
+          metalness={1}        
+          roughness={0.05}         
+          reflectivity={1}      
+          clearcoat={1}         
           clearcoatRoughness={0}
+          // transparent
+          opacity={opacity}
         />
       </Text3D>
     </Center>

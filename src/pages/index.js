@@ -19,7 +19,7 @@ export default function Home() {
   const { scrollY } = useScroll();
 
   // Scale goes from 1 → 0
-  const scaleHeader = useTransform(scrollY, [0, 600], [1, 0]);
+  const scaleHeader = useTransform(scrollY, [0, 200], [1, 0]);
   const opacityHeader = useTransform(scrollY, [0, 250], [1, 0]);
   const scaleTitle = useTransform(scrollY, [150, 300], [1, 0]);
 
@@ -32,9 +32,7 @@ export default function Home() {
 
   // const MemoizedArtCard = React.memo(ArtCard);
   const visibleRange = 4;
-  const visibleRangeTwo = 2;
-  const [ref, inView] = useInView({ triggerOnce: true, rootMargin: "200px" });
-
+ 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -79,10 +77,10 @@ export default function Home() {
       <section>
         <motion.header
           className="header relative text-center"
-          data-aos="fade-in"
-          data-aos-delay=""
-          // style={{ scale: scaleHeader, opacity: opacityHeader }}
-          >
+          // data-aos="fade-in"
+          // data-aos-delay=""
+        // style={{ scale: scaleHeader, opacity: opacityHeader }}
+        >
           {/* <h1 className="text rotating-3d" data-aos="fade-in" data-aos-delay="1500">[Portfolio]</h1> */}
           <ThreeDText />
           <div className="globe-container">
@@ -117,144 +115,118 @@ export default function Home() {
       </section>
 
       {/* 3D Art Carousel */}
-      <section className='carousel-section'>
+      <section className="carousel-section mb-5 mt-20">
+        {/* --- MOBILE VIEW (scroll feed) --- */}
+        <div className="block md:hidden w-full px-4 py-6 space-y-6">
+          {artworks.map((art, index) => (
+            <div key={index} className="w-full">
+              <ArtCard
+                title={art.title}
+                imageUrl={art.imageUrl}
+                description={art.description}
+                slug={art.slug}
+                aosDelay={index * 150}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* --- DESKTOP/TABLET VIEW (3D carousel) --- */}
         <motion.div
-          style={{ scale: scaleCarousel, }}
-          className="d-card relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+          style={{ scale: scaleCarousel }}
+          className="hidden md:flex relativ min-h-screen flex-col items-center justify-center overflow-hidde ||"
         >
-          {radius === 0 ? (
-            // --- MOBILE: Linear carousel ---
-            <div className="flex w-full overflow-x-auto space-x-4 px-4  snap-x snap-mandatory">
+          <div
+            ref={galleryRef}
+            className="absolut z-20 w-full max-w-6xl h-screen perspective"
+          >
+            <SafeMotionDiv className="flex items-center justify-center w-full h-full">
               {artworks.map((art, index) => {
-                const isVisibleTwo =
-                  Math.abs(index - activeIndex) <= visibleRangeTwo ||
-                  Math.abs(index - activeIndex) >= artworks.length - visibleRange; // wrap around
+                const isVisible =
+                  Math.abs(index - activeIndex) <= visibleRange ||
+                  Math.abs(index - activeIndex) >= artworks.length - visibleRange;
 
-                if (!isVisibleTwo) return null;
+                if (!isVisible) return null;
 
-                const isActive = index === activeIndex
+                const total = artworks.length;
+                const angleStep = -360 / total;
+                const angle = (index - activeIndex) * angleStep;
+                const rad = (angle * Math.PI) / 180;
+                const x = radius * Math.cos(rad);
+                const y = radius * Math.sin(rad);
+                const isActive = index === activeIndex;
+
                 return (
-                  <div
+                  <SafeMotionDiv
                     key={index}
-                    className={`art-motion-card-2 relative  ${isActive ? 'glint-effect-2' : ''}`}
-                  // className="flex-shrink-0 w-[100vw] snap-center rounded-xl shadow-lg  backdrop-blur-sm p-4"
+                    className="art-motion-card"
+                    style={{
+                      transform: `
+                  translateX(${x}px)
+                  translateY(${y}px)
+                  rotate(${angle}deg)
+                  scale(${isActive ? 1 : 0.4})
+                `,
+                      opacity: isActive ? 1 : 0.6,
+                      filter: isActive ? "brightness(1)" : "brightness(0.6)",
+                      zIndex: total - Math.abs(index - activeIndex),
+                      transition:
+                        "transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease",
+                    }}
                   >
-                    <ArtCard
-                      title={art.title}
-                      imageUrl={art.imageUrl}
-                      description={art.description}
-                      slug={art.slug}
-                      aosDelay={index * 250}
-                    />
-                  </div>
-                )
+                    <div className={`relative rounded-xl ${isActive ? "glint-effect" : ""}`}>
+                      <ArtCard
+                        title={art.title}
+                        imageUrl={art.imageUrl}
+                        description={art.description}
+                        slug={art.slug}
+                        aosDelay={index * 250}
+                      />
+                    </div>
+                  </SafeMotionDiv>
+                );
               })}
-            </div>
+            </SafeMotionDiv>
 
-          ) : (
-
-            // --- DESKTOP/TABLET: 3D Circular carousel ---
-            <div
-              ref={galleryRef}
-              className="absolute z-20 w-full max-w-6xl h-screen perspective"
+            {/* Prev/Next buttons */}
+            <motion.button
+              transition={{ type: "spring", stiffness: 500, damping: 20 }}
+              whileTap={{ scale: 0.8 }}
+              onClick={prevArt}
+              className="carousel-buttons hidden sm:flex absolute left-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
             >
-              <SafeMotionDiv
-                className="flex items-center justify-center w-full h-full"
-              >
-                {artworks.map((art, index) => {
-                  const isVisible =
-                    Math.abs(index - activeIndex) <= visibleRange ||
-                    Math.abs(index - activeIndex) >= artworks.length - visibleRange; // wrap around
+              Prev
+            </motion.button>
 
-                  if (!isVisible) return null;
+            <motion.button
+              transition={{ type: "spring", stiffness: 500, damping: 20 }}
+              whileTap={{ scale: 0.8 }}
+              onClick={nextArt}
+              className="carousel-buttons hidden sm:flex absolute right-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
+            >
+              Next
+            </motion.button>
+          </div>
 
-                  const total = artworks.length
-                  const angleStep = -360 / total
-                  // shift based on activeIndex so carousel rotates
-                  const angle = (index - activeIndex) * angleStep
-                  const rad = (angle * Math.PI) / 180
-                  const x = radius * Math.cos(rad)
-                  const y = radius * Math.sin(rad)
-
-                  const isActive = index === activeIndex
-
-                  return (
-                    <SafeMotionDiv
-                      key={index}
-                      // className=" absolute w-[90vw] sm:w-[40vw] md:w-70 h-auto aspect-[2/1] p-2 sm:p-3 text-center rounded-xl shadow-lg bg-white/20 backdrop-blur-sm
-                      // flex items-center justify-center"
-                      className="art-motion-card "
-                      style={{
-                        transform: `
-                      translateX(${x}px)
-                      translateY(${y}px)
-                      rotate(${angle}deg)
-                      scale(${index === activeIndex ? 1 : 0.4})
-                    `,
-                        opacity: isActive ? 1 : 0.6,
-                        filter: isActive ? 'brightness(1)' : 'brightness(0.6)',
-
-                        zIndex: total - Math.abs(index - activeIndex),
-                        // opacity: 1,
-                        transition: 'transform 0.6s ease, opacity 0.6s ease, filter 0.6s ease',
-                      }}
-                    >
-
-                      <div className={`relative rounded-xl ${isActive ? 'glint-effect' : ''}`}>
-                        <ArtCard
-                          title={art.title}
-                          imageUrl={art.imageUrl}
-                          description={art.description}
-                          slug={art.slug}
-                          aosDelay={index * 250}
-                        />
-                      </div>
-
-                    </SafeMotionDiv>
-                  )
-                })}
-              </SafeMotionDiv>
-
-              <motion.button
-                transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-                whileTap={{ scale: 0.8 }}
-                onClick={prevArt}
-                className=" carousel-buttons hidden sm:flex absolute left-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
-              >
-                Prev
-              </motion.button>
-
-              <motion.button
-                transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-                whileTap={{ scale: 0.8 }}
-                onClick={nextArt}
-                className=" carousel-buttons hidden sm:flex absolute right-12 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#64646430] text-white rounded-full"
-              >
-                Next
-              </motion.button>
-            </div>
-          )}
-          {/* Dots */}
-          <div className="absolute hidden sm:flex  z-30 w-40 h-40 mx-auto " role="tablist" aria-label="Select artwork">
+          {/* Dots navigation */}
+          <div className="absolute hidden sm:flex z-30 w-40 h-40 mx-auto" role="tablist" aria-label="Select artwork">
             {artworks.map((_, i) => {
               const total = artworks.length;
               const angle = (i / total) * 2 * Math.PI;
-
-              const dotRadius = 130; // radius of the dots circle
+              const dotRadius = 130;
               const x = dotRadius * Math.cos(angle).toFixed(2);
               const y = dotRadius * Math.sin(angle).toFixed(2);
 
               return (
                 <motion.button
+                  key={i}
                   animate={{
                     scale: i === activeIndex ? 1.6 : 1,
-                    backgroundColor: i === activeIndex ? "#E85002" : "#9ca3af"
+                    backgroundColor: i === activeIndex ? "#E85002" : "#9ca3af",
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-
-                  key={i}
                   onClick={() => setActiveIndex(i)}
-                  className={`absolute w-3 h-3 rounded-full cursor-pointer`}
+                  className="absolute w-3 h-3 rounded-full cursor-pointer"
                   style={{
                     left: `calc(50% + ${x}px - 6px)`,
                     top: `calc(50% + ${y}px - 6px)`,
@@ -264,9 +236,9 @@ export default function Home() {
               );
             })}
           </div>
-
         </motion.div>
       </section>
+
 
       {/* <div
         ref={ref}
