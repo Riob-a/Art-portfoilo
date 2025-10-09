@@ -1,7 +1,8 @@
 import Navbar from '../components/Navbar'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import ThreeDHeader from '../components/ThreeDHeader'
 
 const arrow = (
   <svg
@@ -23,55 +24,72 @@ const arrow = (
 )
 
 export default function About() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
+  const [isLowPowerDevice, setIsLowPowerDevice] = useState(null)
 
-  // Parallax transforms
-  const yHeading = useTransform(scrollYProgress, [0, 1], [0, -150])
-  const yText = useTransform(scrollYProgress, [0, 1], [0, 120])
-  const yArrow = useTransform(scrollYProgress, [0, 1], [0, -60])
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 768
+      const gl = document.createElement('canvas').getContext('webgl2')
+      const weakGPU = !gl
+      setIsLowPowerDevice(isMobile || weakGPU)
+    }
+  }, [])
+
+  if (isLowPowerDevice === null) return null
 
   return (
     <div>
-      {/* <Navbar /> */}
       <section
-        ref={ref}
         className="p-8 max-w-2xl mx-auto animate-fadeInLeft a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center"
       >
         <div className="flex items-center justify-between mb-18">
-          <motion.h2
-            style={{ y: yHeading }}
-            className="text-2xl md:text-8xl font-bold mb-18 a-heading"
-          >
-            About Me
-          </motion.h2>
+          {/* Conditional rendering: 3D header only for high-power devices */}
+          {isLowPowerDevice ? (
+            <motion.h2
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-3xl md:text-8xl font-bold mb-18 a-heading"
+            >
+              About Me
+            </motion.h2>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <ThreeDHeader heading="About Me" />
+            </motion.div>
+          )}
+
           <motion.div
             className="line-arrow"
-            style={{ y: yArrow }}
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            whileTap={{ scale: 0.6 }}>
-            <Link href="/" >
-              <button className="arrow-l-button">
-                {arrow}
-              </button>
+            whileTap={{ scale: 0.6 }}
+          >
+            <Link href="/">
+              <button className="arrow-l-button">{arrow}</button>
             </Link>
           </motion.div>
         </div>
 
-        <motion.div style={{ y: yText }} className="space-y-6 text-lg leading-relaxed">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="space-y-6 text-lg leading-relaxed"
+        >
           <p>
             I am a visual artist comfortable with both paint and pencil,
-            preferrably pencil, specializing in creating intricate compositions
+            preferably pencil, specializing in creating intricate compositions
             that combine both pencil and paint, with the occasional still life.
           </p>
 
           <p>
             I also have a background in web development, which facilitated the
             design and creation of this very website. Hope you enjoy my work and
-            feel free to reach out and check out my other web projects
+            feel free to reach out and check out my other web projects.
           </p>
 
           <p>

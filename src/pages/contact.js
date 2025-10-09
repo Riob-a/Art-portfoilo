@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import Navbar from '../components/Navbar'
+"use client"
+import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import { FaGithub, FaLinkedin, FaGoogle } from 'react-icons/fa'
+import ThreeDHeader from '../components/ThreeDHeader';
 
 export default function Contact() {
   const arrow = (
@@ -31,8 +32,23 @@ export default function Contact() {
   })
 
   const [status, setStatus] = useState('')
+  const [canRender3D, setCanRender3D] = useState(false)
 
-  // Track scroll position
+  // Detect device capability (simple GPU & width check)
+  useEffect(() => {
+    try {
+      const canvas = document.createElement('canvas')
+      const gl =
+        canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+      if (gl && window.innerWidth > 768) {
+        setCanRender3D(true)
+      }
+    } catch {
+      setCanRender3D(false)
+    }
+  }, [])
+
+  // Track scroll position for motion heading
   const { scrollY } = useScroll()
   const ySlow = useTransform(scrollY, [0, 500], [0, 50])
   const yMedium = useTransform(scrollY, [0, 500], [0, 100])
@@ -73,49 +89,52 @@ export default function Contact() {
 
   return (
     <div className='animate-fadeInLeft'>
-      {/* <Navbar /> */}
-      <section className="p-8 max-w-xl mx-auto a-content min-h-screen md:min-h-[180vh] | flex flex-col justify-center">
+      <section className="p-8 max-w-2xl mx-auto a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center">
         <div className="flex items-center justify-between mb-18 ">
-          <div className="flex flex-col gap-2">
-            <motion.h2
-              style={{ y: ySlow }}
-              className="text-2xl md:text-8xl font-bold a-heading "
-            >
-              Get
-            </motion.h2>
-            <motion.h2
-              style={{ y: yMedium }}
-              className="text-2xl md:text-8xl font-bold a-heading"
-
-            >
-              in
-            </motion.h2>
-            <motion.h2
-              style={{ y: yFast }}
-              className="text-2xl md:text-8xl font-bold a-heading"
-
-            >
-              Touch
-            </motion.h2>
-          </div>
+          {/*Conditional heading: 3D for capable devices, 2D for others */}
+          {canRender3D ? (
+            <div>
+              <ThreeDHeader heading="Get in Touch" />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <motion.h2
+                style={{ y: ySlow }}
+                className="text-2xl md:text-8xl font-bold a-heading"
+              >
+                Get
+              </motion.h2>
+              <motion.h2
+                style={{ y: yMedium }}
+                className="text-2xl md:text-8xl font-bold a-heading"
+              >
+                in
+              </motion.h2>
+              <motion.h2
+                style={{ y: yFast }}
+                className="text-2xl md:text-8xl font-bold a-heading"
+              >
+                Touch
+              </motion.h2>
+            </div>
+          )}
 
           <motion.div
             className='line-arrow'
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
             whileTap={{ scale: 0.6 }}
           >
-            <Link href="/" className="">
+            <Link href="/">
               <button className="arrow-l-button">{arrow}</button>
             </Link>
-
           </motion.div>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6 mt-30">
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6 mt-10">
           <motion.input
             whileHover={{ scale: 1.05, color: '#ff7e5f' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-
             type="text"
             name="name"
             value={formData.name}
@@ -127,7 +146,6 @@ export default function Contact() {
           <motion.input
             whileHover={{ scale: 1.05, color: '#ff7e5f' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-
             type="email"
             name="email"
             value={formData.email}
@@ -139,7 +157,6 @@ export default function Contact() {
           <motion.textarea
             whileHover={{ scale: 1.05, color: '#ff7e5f' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-
             name="message"
             value={formData.message}
             onChange={handleChange}
@@ -151,7 +168,6 @@ export default function Contact() {
           <motion.button
             whileHover={{ scale: 1.05, color: '#ff7e5f' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-
             type="submit"
             className="form-input gradient-text py-2 px-4 animate-fadeInLeftDelay delay-4"
           >
@@ -161,6 +177,7 @@ export default function Contact() {
         </form>
       </section>
 
+      {/* Contact Info */}
       <section
         className="contact h-[80vh] p-8 mt-8 mb-8 max-w-xl mx-auto text-center"
         data-aos="fade-in"
@@ -200,11 +217,6 @@ export default function Contact() {
           </motion.a>
         </p>
       </section>
-
-      {/* Spacer so scrolling/parallax is visible */}
-      {/* <section className="h-[80vh] flex items-center justify-center text-gray-500">
-        <p>Scroll ↑ to see the parallax effect</p>
-      </section> */}
     </div>
   )
 }

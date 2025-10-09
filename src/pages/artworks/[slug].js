@@ -57,40 +57,38 @@ export default function ArtworkDetail() {
     }
 
     return (
-        <div ref={ref} className={`slug p-8 mt-8 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
+        <div ref={ref} className={`slug p-8 mt-5 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
             {/* Header with title + close */}
-            <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1>
+            <div className="flex float-end mb-1">
+                {/* <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1> */}
                 <button
                     className="x-button text-3xl"
                     onClick={() => {
                         setAnimationClass('animate-scaleOut');
-                        setTimeout(() => router.push('/'), 200);
+                        setTimeout(() => router.push('/gallery'), 200);
                     }}
                 >
                     {svg}
                 </button>
             </div>
 
-            {/* Two-column layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                {/* Left: Static Artwork Image */}
-                <div className="w-full">
-                    <Image
-                        src={artwork.imageUrl}
-                        alt={artwork.title}
-                        width={800}
-                        height={600}
-                        className="slug-image rounded-lg shadow-md w-full object-cover"
-                        data-aos="fade-in" data-aos-delay="1200"
-                    />
-                </div>
+            <div className="relative w-full h-[80vh] md:h-[80vh] overflow-hidden rounded-2xl shadow-xl">
+                {/* Background Image */}
+                <Image
+                    src={artwork.imageUrl}
+                    alt={artwork.title}
+                    fill
+                    className="object-cover object-center"
+                    data-aos="fade-in"
+                    data-aos-delay="1200"
+                />
 
                 {/* Right: Details with Parallax */}
-                <motion.div 
+                <motion.div
                     // style={{ y: yDetails, opacity: opacityDetails }} 
-                    className="flex flex-col justify-start main-index | sticky top-8 h-fit rounded-xl"
+                    className="absolute left-160 top-0 h-[60vh] w-full md:w-[40%] flex flex-col justify-center p-8 main-index | sticky top-8  rounded-xl "
                 >
+                    <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1><br />
                     <p className="modal-text-1 text-sm text-gray-700 leading-relaxed mb-6"
                         data-aos="fade-in" data-aos-delay="600"
                     >
