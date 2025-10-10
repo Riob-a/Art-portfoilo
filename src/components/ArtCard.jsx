@@ -45,10 +45,12 @@ function ArtCardComponent({ title, imageUrl, description, slug, aosDelay = 0 }) 
       {/* Card */}
       <motion.div
         onClick={() => setIsModalOpen(true)}
-        className="relative break-inside-avoid rounded-xl mb-5 p-2 bg-black/20 "
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        className="relative break-inside-avoid rounded-xl mb-5 p-2 bg-gray-00/15"
       >
         <div data-aos="fade-in" data-aos-delay={aosDelay}>
-          <div className="art-card rounded-xl overflow-hidden flex items-center justify-center cursor-pointer glint-effect">
+          <motion.div className="rounded-xl overflow-hidden flex items-center justify-center cursor-pointer">
             <Image
               loading="lazy"
               src={imageUrl}
@@ -57,7 +59,7 @@ function ArtCardComponent({ title, imageUrl, description, slug, aosDelay = 0 }) 
               height={300}
               className="image mx-auto object-cover object-center"
             />
-          </div>
+          </motion.div>
         </div>
       </motion.div>
 
@@ -70,7 +72,7 @@ function ArtCardComponent({ title, imageUrl, description, slug, aosDelay = 0 }) 
             onClick={handleClose}
           >
             <div
-              className="relative max-w-[50vw] w-full max-h-[90vh] overflow-auto rounded-lg p-1 animate-scaleIn"
+              className="relative max-w-[50vw] w-full max-h-[100vh] overflow-auto rounded-lg p-1 animate-scaleIn"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
@@ -97,7 +99,7 @@ function ArtCardComponent({ title, imageUrl, description, slug, aosDelay = 0 }) 
                 {/* Buttons */}
                 <div className="flex gap-4 mt-2">
                   <Link href={`/artworks/${slug}`}>
-                    <button className="m-button rounded-sm">More...</button>
+                    <button className="m-button rounded-lg">More...</button>
                   </Link>
                   <a
                     href={imageUrl}
