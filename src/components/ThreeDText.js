@@ -40,7 +40,7 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="black"
+          color="#14213d"
           metalness={1}
           roughness={0.05}
           reflectivity={1}
@@ -60,7 +60,7 @@ export default function ThreeDTextWithPlatform() {
       className="rounde"
       style={{
         width: "100%",
-        height: "600px",
+        height: "500px",
         background: "transparent",
         // background: "#f69b13ff",
         //  background: 'radial-gradient(circle at center, #b7ff3a 0%, #7ed02a 35%, #3cb043 65%, #003300 100%)',

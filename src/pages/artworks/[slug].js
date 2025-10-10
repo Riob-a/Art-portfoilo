@@ -57,8 +57,7 @@ export default function ArtworkDetail() {
     }
 
     return (
-        <div ref={ref} className={`slug p-8 mt-5 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
-            {/* Header with title + close */}
+        <div>
             <div className="flex float-end mb-1">
                 {/* <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1> */}
                 <button
@@ -71,48 +70,50 @@ export default function ArtworkDetail() {
                     {svg}
                 </button>
             </div>
+            <div ref={ref} className={`slug p-2 mt-5 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
+                {/* Header with title + close */}
+                <div className="relative w-full h-[80vh] md:h-[80vh] overflow-hidden rounded-2xl shadow-xl">
+                    {/* Background Image */}
+                    <Image
+                        src={artwork.imageUrl}
+                        alt={artwork.title}
+                        fill
+                        className="object-cover object-center"
+                        data-aos="fade-in"
+                        data-aos-delay="1200"
+                    />
 
-            <div className="relative w-full h-[80vh] md:h-[80vh] overflow-hidden rounded-2xl shadow-xl">
-                {/* Background Image */}
-                <Image
-                    src={artwork.imageUrl}
-                    alt={artwork.title}
-                    fill
-                    className="object-cover object-center"
-                    data-aos="fade-in"
-                    data-aos-delay="1200"
-                />
-
-                {/* Right: Details with Parallax */}
-                <motion.div
-                    // style={{ y: yDetails, opacity: opacityDetails }} 
-                    className="absolute left-160 top-0 h-[60vh] w-full md:w-[40%] flex flex-col justify-center p-8 main-index | sticky top-8  rounded-xl "
-                >
-                    <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1><br />
-                    <p className="modal-text-1 text-sm text-gray-700 leading-relaxed mb-6"
-                        data-aos="fade-in" data-aos-delay="600"
+                    {/* Right: Details with Parallax */}
+                    <motion.div
+                        // style={{ y: yDetails, opacity: opacityDetails }} 
+                        className="absolute left-160 top-0 h-[60vh] w-full md:w-[40%] flex flex-col justify-center p-8 main-index | sticky top-8  rounded-xl "
                     >
-                        {artwork.description}
-                    </p>
-
-                    <div className="border-t border-gray-300 pt-4 mt-4 space-y-2 text-sm"
-                        data-aos="fade-in" data-aos-delay="1000"
-                    >
-                        <p><span className="font-semibold modal-text-2">Category: </span> <span className="modal-text-1">{artwork.category}</span></p>
-                        <p><span className="font-semibold modal-text-2">Year: </span> <span className="modal-text-1">{artwork.year}</span></p>
-                    </div>
-
-                    {/* CTA Links */}
-                    <div className="flex gap-4 mt-6">
-                        <a
-                            href={artwork.imageUrl}
-                            download
-                            className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
+                        <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1><br />
+                        <p className="modal-text-1 text-sm text-gray-700 leading-relaxed mb-6"
+                            data-aos="fade-in" data-aos-delay="600"
                         >
-                            <FaDownload /> Download
-                        </a>
-                    </div>
-                </motion.div>
+                            {artwork.description}
+                        </p>
+
+                        <div className="border-t border-gray-300 pt-4 mt-4 space-y-2 text-sm"
+                            data-aos="fade-in" data-aos-delay="1000"
+                        >
+                            <p><span className="font-semibold modal-text-2">Category: </span> <span className="modal-text-1">{artwork.category}</span></p>
+                            <p><span className="font-semibold modal-text-2">Year: </span> <span className="modal-text-1">{artwork.year}</span></p>
+                        </div>
+
+                        {/* CTA Links */}
+                        <div className="flex gap-4 mt-6">
+                            <a
+                                href={artwork.imageUrl}
+                                download
+                                className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
+                            >
+                                <FaDownload /> Download
+                            </a>
+                        </div>
+                    </motion.div>
+                </div>
             </div>
         </div>
     );

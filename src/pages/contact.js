@@ -133,7 +133,7 @@ export default function Contact() {
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex flex-col form space-y-6 mt-10">
           <motion.input
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="text"
             name="name"
@@ -144,7 +144,7 @@ export default function Contact() {
             required
           />
           <motion.input
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="email"
             name="email"
@@ -155,7 +155,7 @@ export default function Contact() {
             required
           />
           <motion.textarea
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             name="message"
             value={formData.message}
@@ -166,7 +166,7 @@ export default function Contact() {
             required
           />
           <motion.button
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="submit"
             className="form-input gradient-text py-2 px-4 animate-fadeInLeftDelay delay-4"
@@ -190,7 +190,7 @@ export default function Contact() {
           <motion.a
             href="mailto: riobad74@gmail.com"
             className="p-link flex items-center gap-1 text-sm"
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
             <FaGoogle size={14} /> riobad74@gmail.com
@@ -200,7 +200,7 @@ export default function Contact() {
             href="https://github.com/Riob-a"
             title="Github"
             className="p-link flex items-center gap-1 text-sm"
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
             <FaGithub size={14} /> Riob-a
@@ -210,7 +210,7 @@ export default function Contact() {
             href="https://www.linkedin.com/in/derrick-r-ongwae-1530142bb/"
             title="LinkedIn"
             className="p-link flex items-center gap-1 text-sm"
-            whileHover={{ scale: 1.05, color: '#ff7e5f' }}
+            whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
           >
             <FaLinkedin size={14} /> Derrick Ongwae

@@ -12,7 +12,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background:#38383A; */
-    --background: #ff7e5f;
+    /* --background: #ff7e5f; */
+    --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
     --foreground: #ededed;
   }
 }
@@ -61,7 +62,7 @@ font-family: 'Supreme', sans-serif;
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #f00 #0a0a0a;
+  scrollbar-color: #007f8c #000000;
 
 }
 
@@ -446,7 +447,12 @@ font-family: 'Supreme', sans-serif;
 /* end */
 
 body {
-  background: var(--background);
+  /* background: var(--background); */
+  background: linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480);
+  background-size: 170% 100%;
+  animation: gradientWave 20s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
+
   color: var(--foreground);
 
   font-family: 'Technor', sans-serif;
@@ -519,12 +525,12 @@ main {
 
 .globe-container {
   position: absolute;
-  bottom: 10px;
+  bottom: 250px;
   right: 50%;
   left: 50%;
   width: 20px;
   height: 20px;
-  z-index: 1;
+  z-index: 11;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -583,11 +589,16 @@ main {
 }
 
 .intro {
-  background-color: #ff7e5f;
+  /* background-color: #ff7e5f; */
   /* border: #0000008e 1.5px solid; */
   /* padding: 1rem; */
+  /* z-index: 10;
+  position: absolute;
+  right: 0%;
+  left: 0%;
+  bottom: 10px; */
   margin: 1rem;
-
+  
 }
 
 .main-index:hover {
@@ -635,7 +646,7 @@ main {
 }
 
 .g-link:hover {
-  background: radial-gradient(circle at center, #f69b13ff, #f9f9f9);
+  background: radial-gradient(circle at center, #3deab8, #007f8c);
   background-size: 200% 100%;
   animation: gradientWave 5s ease infinite;
   transition: background-color 0.3s, color 0.3s;
@@ -818,7 +829,7 @@ main {
 }
 
 .modal-text {
-  color: #608561;
+  /* color: #608561; */
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -853,9 +864,9 @@ main {
 }
 
 .m-button:hover {
-  background-color: #f69b13ff;
-  color: #000000;
-  transition: color 0.5s ease-in-out, background-color 1s ease-in-out;
+  background-color: #007f8c;
+  color: #3deab8;
+  transition: color 0.5s ease-in-out, background-color 0.8s ease-in-out;
 
 }
 
@@ -877,7 +888,7 @@ main {
 .slug {
   /* background-color: #FAE4CF; */
   backdrop-filter: blur(8px);
-  background-color: #f69b13ff;
+  background-color: #ffffff76;
   font-weight: 500;
   padding: 20px;
   /* border: 2px solid #3c3c3c; */
@@ -937,7 +948,7 @@ main {
 /* Contact */
 button.gradient-text {
   cursor: pointer;
-  background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b);
+  background: linear-gradient(90deg, #3deab8, #007f8c);
   background-size: 200% 200%;
   animation: gradientWave 2.5s ease infinite;
   -webkit-background-clip: text;
@@ -946,7 +957,7 @@ button.gradient-text {
   font-family: 'Panchang', sans-serif;
   font-optical-sizing: auto;
   font-weight: 900;
-  border: 1.5px dashed #feb47b;
+  /* border: 1.5px dashed ; */
   animation:
     fadeInLeft 1s ease-out both,
     gradientWave 2.5s ease infinite;
@@ -996,7 +1007,7 @@ button.gradient-text {
 .logo-pic {
   flex-shrink: 0;
 
-  background: linear-gradient(90deg, #f69b13ff, #d88911);
+  background: linear-gradient(90deg, #3deab8, #007f8c);
   background-size: 200% 100%;
   animation: gradientWave 4s ease infinite;
 
@@ -1017,7 +1028,7 @@ button.gradient-text {
 
 .logo-transition {
   border-radius: 50%;
-  background: linear-gradient(90deg, #f69b13ff, #d88911);
+  background: linear-gradient(90deg, #3deab8, #007f8c);
   background-size: 200% 100%;
   animation: gradientWave 1s ease infinite;
 }
@@ -1075,7 +1086,7 @@ button.gradient-text {
   font-family: 'Technor', sans-serif;
   font-weight: 500;
   transition: color 1s ease, border-color 1s ease, background-color 0.3s ease, transform 0.3s;
-  color: #f69b13ff;
+  color: #007f8c;
   display: flex;
   height: 45px;
   /* color: white; */
@@ -1096,7 +1107,7 @@ button.gradient-text {
 } */
 
 .link:hover {
-  color: rgb(197, 125, 16);
+  color: #3deab8;
   transform: scale(1.1);
   transition: color 0.3s, transform 0.3s;
 }
