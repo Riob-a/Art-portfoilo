@@ -143,7 +143,7 @@ export default function Home() {
       {/* --- Hero/Header Section --- */}
       <section>
         <motion.header
-          className="heade relative text-center mb-10"
+          className="heade relative text-cente mb-10"
           data-aos="fade-in"
           // style={{ scale: scaleHeader, opacity: opacityHeader }}
         >
@@ -162,13 +162,13 @@ export default function Home() {
           </div>
 
           {/* --- Welcome Section moved inside header --- */}
-          <div className="p-8  intro rounded-xl">
+          {/* <div className="p-8  intro rounded-xl">
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
               <div>
-                <h1 className="text-2xl font-bold mb-1" data-aos="fade-right">
+                <h1 className="text-1xl font-bold mb-1" data-aos="fade-right">
                   <b className="logo-3">Welcome.</b>
                 </h1>
-                <p className="text-base logo-3" data-aos="fade-right" data-aos-delay="200">
+                <p className="text-1xl text-base logo-3" data-aos="fade-right" data-aos-delay="200">
                   Feel free to explore.
                 </p>
               </div>
@@ -186,8 +186,35 @@ export default function Home() {
                 </Link>
               </motion.div>
             </div>
-          </div>
+          </div> */}
         </motion.header>
+        </section>
+        <section className='mb-18'>
+         <div className="p-2 intro rounded-xl">
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+              <div>
+                <h1 className="text-1xl font-bold mb-1" data-aos="fade-right">
+                  <b className="logo-3">Welcome.</b>
+                </h1>
+                <p className="text-1xl text-base logo-3" data-aos="fade-right" data-aos-delay="200">
+                  Feel free to explore.
+                </p>
+              </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              >
+                <Link
+                  href="/gallery"
+                  className="g-link text-1xl inline-block px-6 py-1 rounded-md"
+                  data-aos="fade-right"
+                  data-aos-delay="400"
+                >
+                  [ View Projects ]
+                </Link>
+              </motion.div>
+            </div>
+          </div>
       </section>
     </div>
   );

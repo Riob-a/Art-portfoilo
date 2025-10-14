@@ -47,7 +47,7 @@ function ArtCardComponent({ title, imageUrl, description, slug, aosDelay = 0 }) 
         onClick={() => setIsModalOpen(true)}
         whileHover={{ scale: 1.05 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="relative break-inside-avoid rounded-xl mb-5 p-2 bg-gray-00/15"
+        className="relative break-inside-avoid rounded-xl mb-5 p-1 bg-black/15"
       >
         <div data-aos="fade-in" data-aos-delay={aosDelay}>
           <motion.div className="rounded-xl overflow-hidden flex items-center justify-center cursor-pointer">

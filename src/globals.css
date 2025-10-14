@@ -11,9 +11,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --background:#38383A; */
+    --background:#38383A;
     /* --background: #ff7e5f; */
-    --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
     --foreground: #ededed;
   }
 }
@@ -447,11 +447,11 @@ font-family: 'Supreme', sans-serif;
 /* end */
 
 body {
-  /* background: var(--background); */
-  background: linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480);
+  background: var(--background);
+  /* background: linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480);
   background-size: 170% 100%;
   animation: gradientWave 20s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s; */
 
   color: var(--foreground);
 
@@ -525,12 +525,13 @@ main {
 
 .globe-container {
   position: absolute;
-  bottom: 250px;
-  right: 50%;
-  left: 50%;
+  bottom: 1.5%;
+  right: 2%;
+  /* left: 0%; */
   width: 20px;
   height: 20px;
-  z-index: 11;
+  /* z-index: 11; */
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -803,7 +804,7 @@ main {
 
 .image {
   /* border: solid #ffffff4f 2px; */
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   transition: filter 0.3s ease-in-out;
 }
 
@@ -1073,7 +1074,7 @@ button.gradient-text {
 .nav-wrapper {
   position: absolute;
 
-  top: 5;
+  top: 10;
   left: 0;
   width: 100%;
   z-index: 999;
@@ -1094,7 +1095,7 @@ button.gradient-text {
   display: flex;
   height: 45px;
 
-   box-shadow: #0000008e 10px 10px 10px;
+   /* box-shadow: #0000008e 5px 5px 5px; */
   /* color: white; */
 }
 
