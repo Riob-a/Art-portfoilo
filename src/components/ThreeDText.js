@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text3D, Environment, Center, Bounds } from "@react-three/drei";
-import  '../globals.css' 
+// import  '../globals.css' 
 import { a, useSpring } from "@react-spring/three";
 
 function RotatingPlatform({ children }) {
