@@ -131,7 +131,7 @@ export default function Contact() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6 mt-10">
+        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6  mt-5 a-content">
           <motion.input
             whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -140,7 +140,7 @@ export default function Contact() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Your Name"
-            className="form-input border p-2 animate-fadeInLeftDelay delay-1"
+            className="form-input border p-2 "
             required
           />
           <motion.input
@@ -151,7 +151,7 @@ export default function Contact() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Your Email"
-            className="form-input border p-2 animate-fadeInLeftDelay delay-2"
+            className="form-input border p-2 "
             required
           />
           <motion.textarea
@@ -161,7 +161,7 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
             placeholder="Your Message"
-            className="form-input border p-2 animate-fadeInLeftDelay delay-3"
+            className="form-input border p-2 "
             rows="5"
             required
           />
@@ -169,7 +169,7 @@ export default function Contact() {
             whileHover={{ scale: 1.05, color: '#007f8c' }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="submit"
-            className="form-input gradient-text py-2 px-4 animate-fadeInLeftDelay delay-4"
+            className="form-input gradient-text py-2 px-4 "
           >
             Send Message
           </motion.button>

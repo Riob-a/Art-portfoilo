@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text3D, Environment, Center, Bounds } from "@react-three/drei";
+import  '../globals.css' 
 import { a, useSpring } from "@react-spring/three";
 
 function RotatingPlatform({ children }) {
   const platformRef = useRef();
   useFrame((_, delta) => {
-    platformRef.current.rotation.y += delta * 0.3; // slow rotation
+    platformRef.current.rotation.y += delta * 0.3;
+    // platformRef.current.rotation.x += delta * 0.2;
   });
   return <group ref={platformRef}>{children}</group>;
 }
@@ -16,11 +18,11 @@ function ChromeText() {
   const { viewport } = useThree();
   const textSize = Math.max(1.5, viewport.width / 6);
 
-  const { opacity } = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    config: { duration: 1500 }, // fade duration (ms)
-  });
+  // const { opacity } = useSpring({
+  //   from: { opacity: 0 },
+  //   to: { opacity: 1 },
+  //   config: { duration: 1500 }, 
+  // });
 
   return (
     <Center>
@@ -40,7 +42,6 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          // color="#14213d"
           color="black"
           metalness={1}
           roughness={0.05}
@@ -48,7 +49,7 @@ function ChromeText() {
           clearcoat={1}
           clearcoatRoughness={0}
           // transparent
-          opacity={opacity}
+          // opacity={opacity}
         />
       </Text3D>
     </Center>
@@ -58,7 +59,7 @@ function ChromeText() {
 export default function ThreeDTextWithPlatform() {
   return (
     <Canvas
-      className="rounde"
+      className="canvas"
       style={{
         width: "99%",
         height: "550px",
@@ -67,8 +68,7 @@ export default function ThreeDTextWithPlatform() {
         display: "block",
         borderRadius: "15px",
         // background: "transparent",
-        background: " linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480)"
-        // background: "#f69b13ff",
+        // background: " linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480)"
       }}
       gl={{ antialias: true }}
       camera={{ position: [0, 5, 40], fov: 60 }}

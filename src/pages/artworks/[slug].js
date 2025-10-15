@@ -41,16 +41,6 @@ export default function ArtworkDetail() {
         };
     }, [router]);
 
-    // 🔹 Ref + parallax motion values for details card
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["0 1", "1 1"]
-    });
-
-    // Details move slightly down while scrolling
-    const yDetails = useTransform(scrollYProgress, [0, 1], [0, 60]);
-    const opacityDetails = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
 
     if (!slug || !artwork) {
         return <div className="p-8">Loading...</div>;
@@ -60,19 +50,19 @@ export default function ArtworkDetail() {
         <div>
             <div className="flex float-end mb-1">
                 {/* <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1> */}
-                <button
-                    className="x-button text-3xl"
-                    onClick={() => {
-                        setAnimationClass('animate-scaleOut');
-                        setTimeout(() => router.push('/gallery'), 200);
-                    }}
-                >
-                    {svg}
-                </button>
             </div>
-            <div ref={ref} className={`slug p-2 mt-5 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
+            <div className={`slug p-1 mt-5 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
                 {/* Header with title + close */}
                 <div className="relative w-full h-[80vh] md:h-[80vh] overflow-hidden rounded-2xl shadow-xl">
+                    <button
+                        className="x-button text-3xl z-100 absolute"
+                        onClick={() => {
+                            setAnimationClass('animate-scaleOut');
+                            setTimeout(() => router.push('/gallery'), 200);
+                        }}
+                    >
+                        {svg}
+                    </button>
                     {/* Background Image */}
                     <Image
                         src={artwork.imageUrl}
@@ -85,8 +75,9 @@ export default function ArtworkDetail() {
 
                     {/* Right: Details with Parallax */}
                     <motion.div
-                        // style={{ y: yDetails, opacity: opacityDetails }} 
-                        className="absolute left-160 top-0 h-[60vh] w-full md:w-[40%] flex flex-col justify-center p-8 main-index | sticky top-8  rounded-xl "
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        className="absolute left-160 top-0 h-[70vh] w-full md:w-[40%] flex flex-col justify-center p-8 main-index | sticky top-8  rounded-xl "
                     >
                         <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1><br />
                         <p className="modal-text-1 text-sm text-gray-700 leading-relaxed mb-6"

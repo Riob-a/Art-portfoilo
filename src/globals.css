@@ -11,7 +11,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background:#38383A;
+    --background: #38383A;
     /* --background: #ff7e5f; */
     /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
     --foreground: #ededed;
@@ -580,13 +580,13 @@ main {
 }
 
 .main-index {
-  background-color: #e84f028a;
+  /* background-color: #02e88c8a; */
+  background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%);
 
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(3px);
   padding: 20px;
-  box-shadow: #0000008e 10px 10px 10px;
-  transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
-
+  box-shadow: #0000008e 5px 5px 10px;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .intro {
@@ -601,13 +601,13 @@ main {
   bottom: 10px; */
   /* border: #000000 1px solid; */
   margin: 1rem;
-  
+
 }
 
 .main-index:hover {
-  transform: scale(1.02);
+  /* transform: scale(1.02); */
   box-shadow: #000000ae 10px 15px 20px;
-  transition: box-shadow 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .main-index-2 {
@@ -789,6 +789,8 @@ main {
 .art-card {
   /* background-color: #1e1d1d; */
   /* color: #010101; */
+  background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%);
+
   margin: auto;
   transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, transform 0.8s ease-in-out;
   cursor: pointer;
@@ -893,9 +895,10 @@ main {
 .slug {
   /* background-color: #FAE4CF; */
   backdrop-filter: blur(8px);
-  background-color: #ffffff76;
+  background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%);
   font-weight: 500;
-  padding: 20px;
+  padding: 2.5px;
+
   /* border: 2px solid #3c3c3c; */
 }
 
@@ -928,7 +931,7 @@ main {
 }
 
 .a-content {
-  color: #090909;
+  color: #ffffff;
 }
 
 .a-link {
@@ -1095,7 +1098,7 @@ button.gradient-text {
   display: flex;
   height: 45px;
 
-   /* box-shadow: #0000008e 5px 5px 5px; */
+  /* box-shadow: #0000008e 5px 5px 5px; */
   /* color: white; */
 }
 
@@ -1220,7 +1223,7 @@ button.gradient-text {
 }
 
 .footer:hover {
-  color: black;
+  color: #007f8c;
   background-color: #000000ab;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
   border: 1px solid #040404;
@@ -1241,25 +1244,9 @@ button.gradient-text {
   height: 800px;
 }
 
-.carousel-section {
-  /* background: radial-gradient(circle at center, #E7E2D5 30%, #d9d2c0 100%); */
-  position: relative;
-  padding: 5px;
-  margin-bottom: 5rem;
-}
-
-.carousel-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url('/noise-texture.png');
-  opacity: 0.05;
-  pointer-events: none;
-}
-
 .canvas {
-  background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
-  background-size: 120% 100%;
+  background: linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480);
+  background-size: 170% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;
 }
