@@ -132,7 +132,7 @@ function ChromeText({ text, scale = [3, 3, 3] }) {
         size={4}            // bigger font geometry
         height={4}           // thicker depth
         bevelEnabled
-        bevelThickness={0.1}
+        bevelThickness={0.5}
         bevelSize={0.4}
         bevelSegments={10}
         curveSegments={24}
@@ -142,7 +142,7 @@ function ChromeText({ text, scale = [3, 3, 3] }) {
         {text}
         <meshPhysicalMaterial
           color="black"
-          metalness={1}
+          metalness={0}
           roughness={0.05}
           reflectivity={1}
           clearcoat={1}

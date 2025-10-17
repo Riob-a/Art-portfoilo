@@ -27,7 +27,7 @@ export default function TransitionOverlay() {
             animate="animate"
             exit="exit"
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed top-0 left-0 w-full h-full bg-white z-50 "
+            className="fixed top-0 left-0 w-full h-full bg-[#1d709dac] z-50 "
         >
             <motion.div
                 className="absolute inset-0 flex items-center justify-center"

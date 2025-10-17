@@ -51,7 +51,7 @@ export default function ArtworkDetail() {
             <div className="flex float-end mb-1">
                 {/* <h1 className="text-3xl font-bold modal-heading">/. {artwork.title}</h1> */}
             </div>
-            <div className={`slug p-1 mt-5 mb-8 max-w-6xl mx-auto rounded-xl ${animationClass}`}>
+            <div className={`slug p-1 mt-5 mb-8 max-w-6xl mx-auto rounded-2xl ${animationClass}`}>
                 {/* Header with title + close */}
                 <div className="relative w-full h-[80vh] md:h-[80vh] overflow-hidden rounded-2xl shadow-xl">
                     <button

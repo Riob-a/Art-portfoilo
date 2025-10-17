@@ -11,7 +11,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #38383A;
+    /* --background: #e6d0a7; */
     /* --background: #ff7e5f; */
     /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
     --foreground: #ededed;
@@ -581,8 +581,8 @@ main {
 
 .main-index {
   /* background-color: #02e88c8a; */
-  background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%);
-
+  /* background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%); */
+  background: linear-gradient(135deg, #218d809e, #2e988c90, #38b4a69e, #63bdde84, #1d709d);
   backdrop-filter: blur(3px);
   padding: 20px;
   box-shadow: #0000008e 5px 5px 10px;
@@ -730,34 +730,20 @@ main {
 /* gallery */
 .art-motion-card {
   border: #a5bcc77a 1.5px solid;
-  /* position: absolute; */
-
-  /* width: 90vw; */
-  /* height: auto; */
-  /* aspect-ratio: 2 / 1; */
-
-  /* padding: 0.5rem; */
+  position: absolute;
+  width: 90vw;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  padding: 0.5rem;
   text-align: center;
   border-radius: 0.75rem;
-
   background-color: #a5bcc77a;
   /* background-color: #f69b138e; */
-
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
 
-  position: absolute;
-
-  -webkit-mask-image: radial-gradient(circle 60px at center, transparent 60px, black 61px);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-composite: destination-out;
-
-  mask-image: radial-gradient(circle 40px at 50% 7%, transparent 12px, #232222 15px);
-  mask-repeat: no-repeat;
-  mask-position: center;
 }
 
 @media (min-width: 640px) {
@@ -775,16 +761,6 @@ main {
   }
 }
 
-.art-motion-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 15%;
-  background: #ffffff20;
-  border-bottom: 1.5px solid #a5bcc759;
-}
 
 .art-card {
   /* background-color: #1e1d1d; */
@@ -895,7 +871,9 @@ main {
 .slug {
   /* background-color: #FAE4CF; */
   backdrop-filter: blur(8px);
-  background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%);
+  /* background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%); */
+    background: linear-gradient(135deg,  #2e988b 0%, #38b4a5 20%, #63bdde 50%, #1d709dac 100% );
+
   font-weight: 500;
   padding: 2.5px;
 
@@ -924,14 +902,14 @@ main {
 
 /* About */
 .a-heading {
-  color: #ffffff;
+  color: #000000;
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .a-content {
-  color: #ffffff;
+  color: #000000;
 }
 
 .a-link {
@@ -1070,6 +1048,9 @@ button.gradient-text {
 
   .d-card {
     height: 100px;
+  }
+  .canvas{
+  background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d);
   }
 }
 
@@ -1245,8 +1226,9 @@ button.gradient-text {
 }
 
 .canvas {
-  background: linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480);
+  background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d);
   background-size: 170% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;
 }
+

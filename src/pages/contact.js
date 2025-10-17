@@ -97,7 +97,7 @@ export default function Contact() {
               <ThreeDHeader heading="Get in Touch" />
             </div>
           ) : (
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 ">
               <motion.h2
                 style={{ y: ySlow }}
                 className="text-2xl md:text-8xl font-bold a-heading"

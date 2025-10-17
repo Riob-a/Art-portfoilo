@@ -7,8 +7,10 @@ import { a, useSpring } from "@react-spring/three";
 function RotatingPlatform({ children }) {
   const platformRef = useRef();
   useFrame((_, delta) => {
-    platformRef.current.rotation.y += delta * 0.3;
+    platformRef.current.rotation.y += delta * 0.2;
     // platformRef.current.rotation.x += delta * 0.2;
+    platformRef.current.rotation.z += delta * 0.1;
+
   });
   return <group ref={platformRef}>{children}</group>;
 }
@@ -42,14 +44,14 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="black"
+          color="teal"
           metalness={1}
           roughness={0.05}
           reflectivity={1}
           clearcoat={1}
           clearcoatRoughness={0}
-          // transparent
-          // opacity={opacity}
+        // transparent
+        // opacity={opacity}
         />
       </Text3D>
     </Center>
@@ -61,14 +63,14 @@ export default function ThreeDTextWithPlatform() {
     <Canvas
       className="canvas"
       style={{
-        width: "99%",
-        height: "550px",
+        // width: "99%",
+        height: "600px",
         padding: "0px",
-        margin: "0.3rem auto",
+        margin: "auto",
         display: "block",
-        borderRadius: "15px",
+        borderBottomLeftRadius: "15px",
+        borderBottomRightRadius: "15px",
         // background: "transparent",
-        // background: " linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480)"
       }}
       gl={{ antialias: true }}
       camera={{ position: [0, 5, 40], fov: 60 }}
@@ -80,12 +82,13 @@ export default function ThreeDTextWithPlatform() {
       <Environment preset="studio" />
 
       <Bounds fit clip observe>
-          <RotatingPlatform>
-            <group scale={[2, 2, 2]}>
-              <ChromeText />
-            </group>
-          </RotatingPlatform>
-        </Bounds>
+        {/* <Bounds> */}
+        <RotatingPlatform>
+          <group scale={[2, 2, 2]}>
+            <ChromeText />
+          </group>
+        </RotatingPlatform>
+      </Bounds>
     </Canvas>
   );
 }
