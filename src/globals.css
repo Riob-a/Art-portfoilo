@@ -210,9 +210,14 @@ font-family: 'Supreme', sans-serif;
 .line-arrow {
   border-radius: 50%;
   border: 2px solid #060606;
-  background-color: #f69b13ff;
-}
+  background-color: #007f8c;
+  transition: background-color 0.5s ease-in-out;
 
+}
+.line-arrow:hover{
+  background-color: #3deab8;
+  transition: background-color 0.5s ease-in-out;
+}
 .line-arrow-b {
   border-radius: 50%;
   border: 2px solid #171717;
@@ -1226,7 +1231,9 @@ button.gradient-text {
 }
 
 .canvas {
-  background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d);
+  background: linear-gradient(135deg, #f69b13, #f8a529);
+  /* background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
+  /* background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d); */
   background-size: 170% 100%;
   animation: gradientWave 20s ease infinite;
   transition: background-color 0.3s, color 0.3s;

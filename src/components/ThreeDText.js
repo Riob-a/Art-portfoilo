@@ -44,7 +44,7 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="teal"
+          color="black"
           metalness={1}
           roughness={0.05}
           reflectivity={1}
@@ -63,13 +63,13 @@ export default function ThreeDTextWithPlatform() {
     <Canvas
       className="canvas"
       style={{
-        // width: "99%",
-        height: "600px",
+        // width: "99.5%",
+        height: "800px",
         padding: "0px",
         margin: "auto",
         display: "block",
-        borderBottomLeftRadius: "15px",
-        borderBottomRightRadius: "15px",
+        // borderBottomLeftRadius: "25px",
+        // borderBottomRightRadius: "25px",
         // background: "transparent",
       }}
       gl={{ antialias: true }}

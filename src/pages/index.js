@@ -53,7 +53,7 @@ export default function Home() {
       {/* --- Hero/Header Section --- */}
       <section>
         <motion.header
-          className="heade relative text-cente mb-10"
+          className="heade relative text-cente "
           data-aos="fade-in"
         // style={{ scale: scaleHeader, opacity: opacityHeader }}
         >
@@ -73,7 +73,30 @@ export default function Home() {
         </motion.header>
       </section>
 
-      <section className="mb-4 px-4 sm:px-8 h-[25vh] text-black">
+      <div className="logo-3 border-t border-black border-b border-black marquee mt-0.6" role="marquee" aria-label="art projects scrolling" data-aos="fade-in" data-aos-delay="2000s">
+        <ul className="marquee__content">
+          {Array(20).fill("art •").map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+        <ul className="marquee__content" aria-hidden="true">
+          {Array(20).fill("art •").map((item, i) => <li key={i}>{item}</li>)}
+        </ul>
+      </div>
+      
+      {/* <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6"> */}
+      <div className="p-4 columns-1 sm:columns-2 md:columns-5 gap-4 [column-fill:_balance]">
+        {artworks.map((art, i) => (
+          <ArtCard
+            key={i}
+            title={art.title}
+            imageUrl={art.imageUrl}
+            description={art.description}
+            slug={art.slug}
+            aosDelay={i * 250}
+          />
+        ))}
+      </div>
+
+      {/* <section className="mb-4 px-4 sm:px-8 h-[25vh] text-black">
         <div className="intro rounded-xl">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 text-center sm:text-left">
             <div className="space-y-1">
@@ -108,7 +131,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* <section className="relative bg-[#d5bc8d] flex flex-col items-center justify-center h-[100vh]  overflow-hidden">
         <button
