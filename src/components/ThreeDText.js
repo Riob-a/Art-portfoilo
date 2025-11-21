@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text3D, Environment, Center, Bounds } from "@react-three/drei";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 // import  '../globals.css' 
 import { a, useSpring } from "@react-spring/three";
 
@@ -9,7 +10,7 @@ function RotatingPlatform({ children }) {
   useFrame((_, delta) => {
     platformRef.current.rotation.y += delta * 0.2;
     // platformRef.current.rotation.x += delta * 0.2;
-    platformRef.current.rotation.z += delta * 0.1;
+    // platformRef.current.rotation.z += delta * 0.3;
 
   });
   return <group ref={platformRef}>{children}</group>;
@@ -44,7 +45,7 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="black"
+          color="white"
           metalness={1}
           roughness={0.05}
           reflectivity={1}
@@ -84,11 +85,20 @@ export default function ThreeDTextWithPlatform() {
       <Bounds fit clip observe>
         {/* <Bounds> */}
         <RotatingPlatform>
-          <group scale={[2, 2, 2]}>
+          <group scale={[1, 1, 1]}>
             <ChromeText />
           </group>
         </RotatingPlatform>
       </Bounds>
+
+       <EffectComposer>
+        <Bloom
+          intensity={0.05}
+          luminanceThreshold={1}
+          luminanceSmoothing={0.5}
+          mipmapBlur
+        />
+      </EffectComposer>
     </Canvas>
   );
 }
