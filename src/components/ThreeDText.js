@@ -45,7 +45,7 @@ function ChromeText() {
       >
         [ PORTFOLIO. ]
         <meshPhysicalMaterial
-          color="white"
+          color="black"
           metalness={1}
           roughness={0.05}
           reflectivity={1}
@@ -73,6 +73,7 @@ export default function ThreeDTextWithPlatform() {
         // borderBottomRightRadius: "25px",
         // background: "transparent",
       }}
+      dpr={[1, 1.5]}
       gl={{ antialias: true }}
       camera={{ position: [0, 5, 40], fov: 60 }}
     >
@@ -91,14 +92,16 @@ export default function ThreeDTextWithPlatform() {
         </RotatingPlatform>
       </Bounds>
 
-       <EffectComposer>
+       {/* <EffectComposer>
         <Bloom
-          intensity={0.05}
-          luminanceThreshold={1}
-          luminanceSmoothing={0.5}
-          mipmapBlur
+            intensity={0.5}
+            luminanceThreshold={0.1}
+            luminanceSmoothing={0.5}
+            resolutionScale={0.5}
+          // mipmapBlur
+
         />
-      </EffectComposer>
+      </EffectComposer> */}
     </Canvas>
   );
 }
