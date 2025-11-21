@@ -75,7 +75,7 @@ export default function ThreeDTextWithPlatform() {
       }}
       dpr={[1, 1.5]}
       gl={{ antialias: true }}
-      camera={{ position: [0, 5, 40], fov: 60 }}
+      camera={{ position: [0, -10, 40], fov: 60 }}
     >
       {/* Lighting */}
       {/* <ambientLight intensity={0.3} /> */}
