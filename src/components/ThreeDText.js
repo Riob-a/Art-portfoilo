@@ -36,9 +36,9 @@ function ChromeText() {
         size={4}
         height={4}
         bevelEnabled
-        bevelThickness={0.5}
+        bevelThickness={0.9}
         bevelSize={0.5}
-        bevelSegments={10}
+        bevelSegments={15}
         curveSegments={24}
         scale={[1, 1, 1]}
         position={[0, 0, 0]}
@@ -79,9 +79,9 @@ export default function ThreeDTextWithPlatform() {
     >
       {/* Lighting */}
       {/* <ambientLight intensity={0.3} /> */}
-      {/* <directionalLight position={[10, 15, 10]} intensity={1.2} /> */}
+      {/* <directionalLight position={[0, 10, 40]} intensity={5} /> */}
 
-      <Environment preset="studio" />
+      <Environment preset="sunset" blur={0.9} />
 
       <Bounds fit clip observe>
         {/* <Bounds> */}
@@ -94,11 +94,11 @@ export default function ThreeDTextWithPlatform() {
 
        {/* <EffectComposer>
         <Bloom
-            intensity={0.5}
-            luminanceThreshold={0.1}
-            luminanceSmoothing={0.5}
-            resolutionScale={0.5}
-          // mipmapBlur
+            intensity={0.01}
+            luminanceThreshold={0.09}
+            luminanceSmoothing={0.9}
+            resolutionScale={0.2}
+          mipmapBlur
 
         />
       </EffectComposer> */}

@@ -70,7 +70,7 @@ font-family: 'Supreme', sans-serif;
 
 /* animations |key frames */
 @keyframes gradientWave {
-  0% {
+  /* 0% {
     background-position: 0% 50%;
   }
 
@@ -80,7 +80,24 @@ font-family: 'Supreme', sans-serif;
 
   100% {
     background-position: 0% 50%;
+  } */
+
+  0% {
+    background-position: 0% 50%;
   }
+  25% {
+    background-position: 50% 60%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 40%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+
 }
 
 @keyframes fadeIn {
@@ -1209,8 +1226,8 @@ button.gradient-text {
 }
 
 .footer:hover {
-  color: #007f8c;
-  background-color: #000000ab;
+  color: #05c3d8;
+  background-color: #000000;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
   border: 1px solid #040404;
 }
@@ -1231,11 +1248,37 @@ button.gradient-text {
 }
 
 .canvas {
-  background: linear-gradient(135deg, #f69b13, #f8a529);
-  /* background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
-  /* background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d); */
-  background-size: 170% 100%;
-  animation: gradientWave 20s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
+/* Option 1 — Smooth Linear Gradient (center dominant) */
+/* background: linear-gradient(135deg, #fdb140, #f09206 40%, #f69b13); */
+
+/* Option 2 — Symmetrical Center Gradient */
+ /* background: linear-gradient(135deg, 
+      #fdb140 0%, 
+      #f69b13 30%, 
+      #f09206 50%, 
+      #f69b13 70%, 
+      #fdb140 100%); */
+
+/* Option 3 — Radial Gradient (center glow) */
+ /* background: radial-gradient(circle at center, 
+      #f09206 40%, 
+      #f69b13 70%, 
+      #fdb140 100%); */
+
+/* Option 4 — Polished Premium Gradient */
+ background: linear-gradient(135deg, 
+      #fdb140 0%, 
+      #f69b13 35%, 
+      #f09206 60%, 
+      #f69b13 85%, 
+      #fdb140 100%);
+
+background-size: 130% 100%;
+animation: gradientWave 15s ease infinite;
+transition: background-color 0.3s, color 0.3s;
+
 }
 
+.parallax-mask {
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
