@@ -84,7 +84,7 @@ export default function Home() {
       </div>
       
       {/* <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6"> */}
-      <div className="p-4 columns-1 sm:columns-2 md:columns-5 gap-4 [column-fill:_balance]">
+      {/* <div className="p-4 columns-1 sm:columns-2 md:columns-5 gap-4 [column-fill:_balance]">
         {artworks.map((art, i) => (
           <ArtCard
             key={i}
@@ -95,9 +95,9 @@ export default function Home() {
             aosDelay={i * 250}
           />
         ))}
-      </div>
+      </div> */}
 
-      {/* <ThreeDGallery artworks={artworks} /> */}
-    </div>
+      <ThreeDGallery artworks={artworks} />
+          </div>
   );
 }

@@ -9,7 +9,7 @@ const artworks = [
   { title: "Touch", imageUrl: "/images/Touch.jpg", description: "Stylized version of Hands of god .", category: "Digital", year: "2025" },
 
   { title: "Spots", imageUrl: "/images/Spots.jpg", description: "Spots and patterns.", category: "Digital", year: "2025" },
-  { title: "still-life", imageUrl: "/images/still life.jpg", description: "Simple still life of a fiew bottles and an apple", category: "Pencil", year: "2021" },
+  { title: "still-life", imageUrl: "/images/still-life.jpg", description: "Simple still life of a fiew bottles and an apple", category: "Pencil", year: "2021" },
   { title: "Rose", imageUrl: "/images/Rose.jpg", description: "A beautiful rose drawn with intricate details.", category: "Digital", year: "2025" },
   { title: "Cyclops", imageUrl: "/images/Cyclops.jpg", description: "Cyclops .", category: "Digital", year: "2025" },
 
