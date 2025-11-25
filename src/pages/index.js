@@ -7,6 +7,7 @@ import { SafeMotionDiv } from '@/components/SafeMotionDiv';
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import ThreeDText from '../components/ThreeDText';
+import CombinedHeaderGallery from '../components/CombinedHeaderGallery'
 import { useInView } from "react-intersection-observer";
 import dynamic from "next/dynamic";
 import ThreeDGallery from "../components/ThreeDGallery";
@@ -60,6 +61,7 @@ export default function Home() {
         >
           {/* 3D Text + Globe */}
           <ThreeDText />
+          {/* <CombinedHeaderGallery/> */}
           <div className="globe-container">
             <svg viewBox="-2 -15 150 150" className="svg-text-arc" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -98,6 +100,6 @@ export default function Home() {
       </div> */}
 
       <ThreeDGallery artworks={artworks} />
-          </div>
+   </div>
   );
 }
