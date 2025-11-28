@@ -58,7 +58,7 @@ export default function ArtworkDetail() {
                         className="x-button text-3xl z-100 absolute"
                         onClick={() => {
                             setAnimationClass('animate-scaleOut');
-                            setTimeout(() => router.push('/'), 200);
+                            setTimeout(() => router.push('/gallery'), 200);
                         }}
                     >
                         {svg}

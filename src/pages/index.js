@@ -18,22 +18,6 @@ const TelevisionCanvas = dynamic(() => import("../components/TelevisionCanvas"),
 
 export default function Home() {
   // const [activeIndex, setActiveIndex] = useState(5);
-  const [activeIndex, setActiveIndex] = useState(() => {
-    return Math.floor(artworks.length / 2);
-  });
-  const handleNext = () =>
-    setActiveIndex((prev) => (prev + 1) % artworks.length);
-
-  const handlePrev = () =>
-    setActiveIndex(
-      (prev) => (prev - 1 + artworks.length) % artworks.length
-    );
-
-  const { scrollY } = useScroll();
-  const scaleHeader = useTransform(scrollY, [0, 200], [1, 0]);
-  const opacityHeader = useTransform(scrollY, [0, 250], [1, 0]);
-  const scaleCarousel = useTransform(scrollY, [0, 300], [0.9, 1]);
-
   const svg = (
     <svg xmlns="http://www.w3.org/2000/svg"
       width="30" height="30"
@@ -55,13 +39,13 @@ export default function Home() {
       {/* --- Hero/Header Section --- */}
       <section>
         <motion.header
-          className="heade relative text-cente "
+          className="canvas relative text-cente "
           data-aos="fade-in"
         // style={{ scale: scaleHeader, opacity: opacityHeader }}
         >
           {/* 3D Text + Globe */}
           <ThreeDText />
-          {/* <CombinedHeaderGallery/> */}
+
           <div className="globe-container">
             <svg viewBox="-2 -15 150 150" className="svg-text-arc" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -73,33 +57,18 @@ export default function Home() {
             </svg>
             <Image alt="logo" src="/globe-2.svg" className="globe-icon" height={30} width={30} />
           </div>
+
+            <Link
+              href="/gallery"
+              className="text-center p-5 text-lg font-medium cursor-pointer block g-link"
+            >
+              <div data-aos="fade-up" >
+              View gallery
+              </div>
+            </Link>
         </motion.header>
       </section>
-
-      <div className="logo-3 border-t border-black border-b border-black marquee mt-0.6" role="marquee" aria-label="art projects scrolling" data-aos="fade-in" data-aos-delay="2000s">
-        <ul className="marquee__content">
-          {Array(20).fill("art •").map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-        <ul className="marquee__content" aria-hidden="true">
-          {Array(20).fill("art •").map((item, i) => <li key={i}>{item}</li>)}
-        </ul>
-      </div>
-      
-      {/* <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6"> */}
-      {/* <div className="p-4 columns-1 sm:columns-2 md:columns-5 gap-4 [column-fill:_balance]">
-        {artworks.map((art, i) => (
-          <ArtCard
-            key={i}
-            title={art.title}
-            imageUrl={art.imageUrl}
-            description={art.description}
-            slug={art.slug}
-            aosDelay={i * 250}
-          />
-        ))}
-      </div> */}
-
-      <ThreeDGallery artworks={artworks} />
-   </div>
+      {/*<ThreeDGallery artworks={artworks} />*/}
+    </div>
   );
 }

@@ -5,7 +5,7 @@
 
 
 :root {
-  --background: #ffffff;
+  --background: #070707;
   --foreground: #171717;
 }
 
@@ -662,6 +662,7 @@ main {
 
 .g-link {
   /* background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b); */
+  color:#000000;
   background-size: 200% 100%;
   transition: all 0.3s ease;
   font-family: 'Panchang', sans-serif;
@@ -671,13 +672,14 @@ main {
 }
 
 .g-link:hover {
-  background: radial-gradient(circle at center, #3deab8, #007f8c);
-  background-size: 200% 100%;
-  animation: gradientWave 5s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  /* background: radial-gradient(circle at center, #3deab8, #007f8c); */
+  /* background-size: 200% 100%; */
+  /* animation: gradientWave 5s ease infinite; */
+  /* transition: background-color 0.3s, color 0.3s; */
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+  /* background-clip: text; */
+  color:#007f8c;
   transition: all 0.3s ease;
 }
 
@@ -1227,9 +1229,9 @@ button.gradient-text {
 
 .footer:hover {
   color: #05c3d8;
+  border: 1px solid #05c3d8;
   background-color: #000000;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
-  border: 1px solid #040404;
 }
 
 /*  */

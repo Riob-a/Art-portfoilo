@@ -51,7 +51,7 @@ function ChromeText() {
           reflectivity={1}
           clearcoat={1}
           clearcoatRoughness={0}
-        // transparent
+          transparent
         // opacity={opacity}
         />
       </Text3D>
@@ -62,10 +62,10 @@ function ChromeText() {
 export default function ThreeDTextWithPlatform() {
   return (
     <Canvas
-      className="canvas"
+      className="canva"
       style={{
         // width: "99.5%",
-        height: "800px",
+        height: "710px",
         padding: "0px",
         margin: "auto",
         display: "block",
@@ -92,7 +92,7 @@ export default function ThreeDTextWithPlatform() {
         </RotatingPlatform>
       </Bounds>
 
-       {/* <EffectComposer>
+      {/* <EffectComposer>
         <Bloom
             intensity={0.01}
             luminanceThreshold={0.09}
