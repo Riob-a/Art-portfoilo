@@ -5,7 +5,7 @@
 
 
 :root {
-  --background: #070707;
+  --background: #161515;
   --foreground: #171717;
 }
 
@@ -704,7 +704,7 @@ main {
   position: relative;
   width: 100%;
   user-select: none;
-  color: #000000;
+  color: #fffdfd;
   /* background-color: #C10801; */
 }
 

@@ -29,7 +29,7 @@ export default function ThreeDFloatingGallery() {
 
   return (
     <div className="relative h-[100vh] w-full">
-      <Canvas shadows camera={{ position: [0, 0, 10], fov: 60 ,  margin: "auto",  display: "block"}}>
+      <Canvas shadows camera={{ position: [0, 0, 10], fov: 60, margin: "auto", display: "block" }}>
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
         <directionalLight position={[-5, 2, -5]} intensity={0.6} />
@@ -58,45 +58,54 @@ function GalleryScene({ artworks, sizes = [] }) {
     textures?.forEach((t) => { if (t) t.flipY = false; });
   }, [textures]);
 
-  const positions = useMemo(() => {
-    const cols = 3;
-    const spacingX = 4;
-    const spacingZ = 4;
-    const yPlane = 3;
+const positions = useMemo(() => {
+  const cols = 3;
+  const spacingX = 4;
+  const spacingY = 4;
+  const startY = 3; // top row height
 
-    return artworks.map((_, i) => {
-      const col = i % cols;
-      const row = Math.floor(i / cols);
-      const x = (col - (cols - 1) / 2) * spacingX;
-      const z = -row * spacingZ;
-      return [x, yPlane, z];
-    });
-  }, [artworks]);
+  return artworks.map((_, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+
+    const x = (col - (cols - 1) / 2) * spacingX; // 3-column grid
+    const y = startY - row * spacingY;           // rows go downward
+    const z = 0;                                 // all cards on same plane
+
+    return [x, y, z];
+  });
+}, [artworks]);
+
+const basePositions = useMemo(() => positions, [positions]);
+
 
   const springs = useSprings(
     artworks.length,
     artworks.map((_, i) => ({
-      from: { scale: 0, opacity: 0 },
-      to: { scale: 1, opacity: 1 },
-      delay: i * 150,
-      config: { mass: 1, tension: 170, friction: 26 },
+      scale: hovered === i ? 1.1 : 1,
+      rotation: hovered === i ? [0.1, 0.4, 0] : [0, 0, 0],
+      opacity: 1,
+      config: { mass: 1, tension: 170, friction: 20 },
     }))
   );
 
   useFrame(({ clock }) => {
-    if (!groupRef.current) return;
-    groupRef.current.rotation.y += 0.0016;
+  if (!groupRef.current) return;
 
-    groupRef.current.children.forEach((child, i) => {
-      const floatY = Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
-      child.position.y += (floatY - child.position.y) * 0.1;
+  groupRef.current.children.forEach((child, i) => {
+    const floatY = Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
 
-      const targetScale = hovered === i ? 1.1 : 1;
-      child.scale.x += (targetScale - child.scale.x) * 0.1;
-      child.scale.y += (targetScale - child.scale.y) * 0.1;
-      child.scale.z += (targetScale - child.scale.z) * 0.1;
-    });
+    // keep each card on its own row, then add floating
+    const baseY = basePositions[i][1];
+    child.position.y = baseY + floatY;
+
+    const targetScale = hovered === i ? 1.1 : 1;
+    child.scale.x += (targetScale - child.scale.x) * 0.1;
+    child.scale.y += (targetScale - child.scale.y) * 0.1;
+    child.scale.z += (targetScale - child.scale.z) * 0.1;
   });
+});
+
 
   return (
     <group ref={groupRef}>
@@ -112,6 +121,9 @@ function GalleryScene({ artworks, sizes = [] }) {
             key={i}
             position={positions[i]}
             scale={springs[i].scale.to(s => [s, s, s])}
+
+            rotation={springs[i].rotation}
+
             onPointerOver={() => setHovered(i)}
             onPointerOut={() => setHovered(null)}
           >
