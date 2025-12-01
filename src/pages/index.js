@@ -63,7 +63,7 @@ export default function Home() {
               className="text-center p-5 text-lg font-medium cursor-pointer block g-link"
             >
               <div data-aos="fade-up" >
-              View gallery
+              View gallery{svg}
               </div>
             </Link>
         </motion.header>

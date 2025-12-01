@@ -642,13 +642,13 @@ main {
 }
 
 .svg {
-  stroke: #ff7e5f;
+  stroke: #000000;
   width: 1.5rem;
   height: 1.5rem;
 }
 
 .svg:hover {
-  stroke: #feb47b;
+  stroke: #007f8c;
   transition: stroke 0.5s ease-in-out;
 }
 
@@ -926,14 +926,14 @@ main {
 
 /* About */
 .a-heading {
-  color: #000000;
+  color: #007f8c;
   font-family: 'Druk Wide Bold', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .a-content {
-  color: #000000;
+  color: #f69b13ff;
 }
 
 .a-link {

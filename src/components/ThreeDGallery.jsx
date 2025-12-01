@@ -194,6 +194,25 @@ function GalleryScene({ artworks, sizes = [] }) {
                 <meshStandardMaterial color="#333" />
               </mesh>
             )}
+
+            {/* GLASS PANE OVER ART */}
+            <mesh position={[0, 0, 0.72]}>
+              <planeGeometry args={[cardWidth, cardHeight]} />
+              <meshPhysicalMaterial
+                transmission={1}
+                transparent={true}
+                color="#e5f7ff"   // faint blue anti-reflection tint
+                opacity={0.12}
+                roughness={0.05}
+                thickness={0.1}
+                ior={1.05}
+                clearcoat={1}
+                clearcoatRoughness={0}
+                reflectivity={1}
+                depthWrite={false}
+              />
+            </mesh>
+
           </a.group>
         );
       })}

@@ -93,9 +93,12 @@ export default function Contact() {
         <div className="flex items-center justify-between mb-18 ">
           {/*Conditional heading: 3D for capable devices, 2D for others */}
           {canRender3D ? (
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}>
               <ThreeDHeader heading="Get in Touch" />
-            </div>
+            </motion.div>
           ) : (
             <div className="flex flex-col gap-2 ">
               <motion.h2
