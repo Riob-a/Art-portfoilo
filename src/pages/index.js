@@ -58,14 +58,14 @@ export default function Home() {
             <Image alt="logo" src="/globe-2.svg" className="globe-icon" height={30} width={30} />
           </div>
 
-            <Link
+            {/* <Link
               href="/gallery"
               className="text-center p-5 text-lg font-medium cursor-pointer block g-link"
             >
               <div data-aos="fade-up" >
               View gallery{svg}
               </div>
-            </Link>
+            </Link> */}
         </motion.header>
       </section>
       {/*<ThreeDGallery artworks={artworks} />*/}
