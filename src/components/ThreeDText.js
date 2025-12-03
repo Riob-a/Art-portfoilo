@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { Text3D, Environment, Center, Bounds, RoundedBox } from "@react-three/drei";
+import { Text3D, Environment, Center, Bounds, RoundedBox, Edges } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
@@ -49,6 +49,14 @@ function SwappableTextCube() {
     config: { tension: 150, friction: 20 },
   });
 
+  const sphereRef = useRef();
+
+  useFrame((_, delta) => {
+    if (sphereRef.current) {
+      sphereRef.current.rotation.y += delta * 0.6;  // smooth spin
+    }
+  });
+
   return (
     <group
       onPointerOver={() => {
@@ -87,37 +95,38 @@ function SwappableTextCube() {
       </a.group>
 
       {/* --- CUBE (grows massively on hover) --- */}
-      <a.mesh
-        scale={cubeScale.to(s => [s, s, s])}
-      // onClick={() => router.push("/gallery")}
-      >
-        {/* <boxGeometry args={[3, 3, 3]} />
-        <meshPhysicalMaterial
-          color="#007f8c"
-          // metalness={1}
-          roughness={1}
-          clearcoat={1}
-          clearcoatRoughness={1}
-          reflectivity={1}
-        /> */}
+      <a.group ref={sphereRef} scale={cubeScale.to(s => [s, s, s])}>
 
-        <RoundedBox
-          args={[3, 3, 3]}     // width, height, depth
-          radius={0.1}         // curve size
-          smoothness={1}       // how smooth the edges are
-          onClick={() => router.push("/gallery")}
-        >
+        {/* Main visible sphere */}
+        <mesh>
+          <sphereGeometry args={[2, 64, 64]} />
           <meshPhysicalMaterial
-            // map={texture}
-            
             color="#007f8c"
             roughness={0.5}
             clearcoat={1}
             clearcoatRoughness={1}
             reflectivity={1}
           />
-        </RoundedBox>
-      </a.mesh>
+        </mesh>
+
+        {/* Subtle rotating wireframe overlay */}
+        <mesh>
+          {/* <sphereGeometry args={[2.02, 24, 24]} /> */}
+          <sphereGeometry args={[2.02, 24, 12]} />
+          <meshBasicMaterial
+            color="black"
+            wireframe
+            transparent
+            opacity={0.5}
+            depthWrite={false}
+          />
+          {/* <Edges
+            threshold={2}          // removes diagonal triangles
+          /> */}
+        </mesh>
+
+      </a.group>
+
     </group>
   );
 }
