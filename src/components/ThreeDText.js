@@ -27,20 +27,20 @@ function RotatingPlatform({ children }) {
 function SwappableTextCube() {
   const router = useRouter();
   const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
-  const svgString = `
-     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
-      viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path d="M7 17L17 7" />
-      <polyline points="7 7 17 7 17 17" />
-    </svg>
-    `;
+  const { clickScale } = useSpring({
+    clickScale: clicked ? 1.2 : 1,
+    config: { tension: 400, friction: 10 },
+    reset: true,
+    onRest: () => setClicked(false)   // auto-reset
+  });
 
-  const svgDataUrl = `data:image/svg+xml;base64,${btoa(svgString)}`;
+  const { color } = useSpring({
+    color: clicked ? "rgba(240, 146, 6, 1)" : "rgba(0, 127, 140, 1)",
+    config: { tension: 200, friction: 20 },
+  });
 
-  const texture = useLoader(THREE.TextureLoader, svgDataUrl);
-  texture.colorSpace = THREE.SRGBColorSpace;
 
   // Smooth animation for BOTH text and cube
   const { textScale, cubeScale } = useSpring({
@@ -83,9 +83,10 @@ function SwappableTextCube() {
           >
             [ PORTFOLIO. ]
             <meshPhysicalMaterial
-              color="black"
+              color="rgba(0, 127, 140, 1)"
+              // color='black'
               metalness={1}
-              roughness={0.05}
+              roughness={0.5}
               reflectivity={1}
               clearcoat={1}
               clearcoatRoughness={0}
@@ -95,16 +96,27 @@ function SwappableTextCube() {
       </a.group>
 
       {/* --- CUBE (grows massively on hover) --- */}
-      <a.group ref={sphereRef} scale={cubeScale.to(s => [s, s, s])}>
+      <a.group
+        ref={sphereRef}
+        scale={cubeScale.to(s => [s, s, s])}
+        // scale={cubeScale.to(s => [s, s, s]).to((s, cs) => [s * clickScale.get(), s * clickScale.get(), s * clickScale.get()])}
+        onClick={() => {
+          setClicked(true);
+          setTimeout(() => setClicked(false), 350);
+          router.push("/gallery");
+        }}>
 
         {/* Main visible sphere */}
         <mesh>
           <sphereGeometry args={[2, 64, 64]} />
-          <meshPhysicalMaterial
-            color="#007f8c"
+          <a.meshPhysicalMaterial
+            // color="rgba(0, 127, 140, 1)"
+            // color={clicked ? "black" : "rgba(0, 127, 140, 1)"}
+            color={color}
+            metalness={1}
             roughness={0.5}
             clearcoat={1}
-            clearcoatRoughness={1}
+            clearcoatRoughness={0}
             reflectivity={1}
           />
         </mesh>
@@ -112,7 +124,7 @@ function SwappableTextCube() {
         {/* Subtle rotating wireframe overlay */}
         <mesh>
           {/* <sphereGeometry args={[2.02, 24, 24]} /> */}
-          <sphereGeometry args={[2.02, 24, 12]} />
+          <sphereGeometry args={[2.05, 24, 12]} />
           <meshBasicMaterial
             color="black"
             wireframe
@@ -121,7 +133,7 @@ function SwappableTextCube() {
             depthWrite={false}
           />
           {/* <Edges
-            threshold={2}          // removes diagonal triangles
+            threshold={30}          // removes diagonal triangles
           /> */}
         </mesh>
 
