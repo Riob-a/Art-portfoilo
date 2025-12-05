@@ -9,7 +9,7 @@ export default function Gallery() {
   return (
     <div>
       {/* <Navbar /> */}
-      <div className="logo-3 border-t border-black border-b border-black marquee mt-0.6" role="marquee" aria-label="art projects scrolling" data-aos="fade-in" data-aos-delay="2000s">
+      <div className="logo-3 border-t border-black border-b border-black marquee mt-0.6 relative z-0" role="marquee" aria-label="art projects scrolling" data-aos="fade-in" data-aos-delay="2000s">
         <ul className="marquee__content">
           {Array(20).fill("art •").map((item, i) => <li key={i}>{item}</li>)}
         </ul>
@@ -17,7 +17,7 @@ export default function Gallery() {
           {Array(20).fill("art •").map((item, i) => <li key={i}>{item}</li>)}
         </ul>
       </div>
-      
+
       {/* <div className="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6"> */}
       {/* <div className="p-4 columns-1 sm:columns-2 md:columns-4 gap-4 [column-fill:_balance]">
         {artworks.map((art, i) => (
@@ -31,8 +31,8 @@ export default function Gallery() {
           />
         ))}
       </div> */}
+      <div className=""> <ThreeDGallery artworks={artworks} /></div>
 
-      <ThreeDGallery artworks={artworks} />
     </div>
   );
 }
