@@ -349,9 +349,9 @@ export default function ThreeDFloatingGallery() {
 
                 {/* Buttons */}
                 <div className="flex gap-4 mt-2">
-                  <Link href={`/artworks/${selectedArt.slug}`}>
+                  {/* <Link href={`/artworks/${selectedArt.slug}`}>
                     <button className="m-button rounded-lg">More...</button>
-                  </Link>
+                  </Link> */}
                   <a
                     href={selectedArt.imageUrl}
                     download
