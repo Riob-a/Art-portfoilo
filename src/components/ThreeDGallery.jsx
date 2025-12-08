@@ -531,11 +531,10 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
                 transparent
                 color="#e5f7ff"
                 opacity={0.12}
-                roughness={0.05}
+                roughness={0.1}
                 thickness={0.1}
                 ior={1.05}
                 clearcoat={1}
-                clearcoatRoughness={0}
                 reflectivity={1}
                 depthWrite={false}
               />
