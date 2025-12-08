@@ -103,7 +103,7 @@ function SwappableTextCube() {
         ref={sphereRef}
         scale={cubeScale.to(s => [s, s, s])}
         onPointerOver={(e) => {
-          e.stopPropagation();          // prevents text hover triggering
+          // e.stopPropagation();          // prevents text hover triggering
           setHovered(true);
           setShowTooltip(true);
           document.body.style.cursor = "pointer";
@@ -124,6 +124,7 @@ function SwappableTextCube() {
         {showTooltip && (
           <Html position={[0, 3.2, 0]} center>
             <div
+            className="logo-3"
               style={{
                 background: "rgba(0,0,0,0.7)",
                 color: "white",
@@ -180,7 +181,7 @@ export default function ThreeDTextWithPlatform() {
   return (
     <Canvas
       style={{
-        height: "800px",
+        height: "725px",
         margin: "auto",
         display: "block",
       }}
