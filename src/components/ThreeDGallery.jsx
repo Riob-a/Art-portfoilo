@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  Suspense,
-  useMemo,
-} from "react";
+import React, { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Html } from "@react-three/drei";
 import { TextureLoader } from "three";
@@ -68,7 +62,7 @@ export default function ThreeDFloatingGallery() {
         <div
           style={{
             padding: "12px 16px",
-            background: "rgba(0,0,0,0.7)",
+            // background: "rgba(255, 255, 255, 0.7)",
             color: "white",
             fontSize: "16px",
             borderRadius: "8px",
@@ -78,26 +72,42 @@ export default function ThreeDFloatingGallery() {
             gap: "10px",
           }}
         >
-          <span className="loader"></span>
-          <p className="logo-3">Loading artwork…</p>
+          {/* <span className="loader"></span> */}
+          {/* SVG replaces spinner */}
+          <img
+            src="/globe-2.svg"
+            alt="loading"
+            className="logo-pic"
+            style={{
+              width: "20px",
+              height: "20px",
+              animation: "spin 2s linear infinite",
+              opacity: 0.9,
+            }}
+          />
+          <p className="logo-3">Loading...</p>
         </div>
-
         <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+        {/* <style>{`
         .loader {
           width: 16px;
           height: 16px;
-          aspect-ratio: 1 / 1;       /* ensures perfect circle */
+          aspect-ratio: 1 / 1;       
           border: 3px solid #fff;
           border-top-color: transparent;
           border-radius: 50%;
           display: inline-block;
-          box-sizing: border-box;    /* prevents border from stretching */
+          box-sizing: border-box;   
           animation: spin 0.7s linear infinite;
         }
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
-      `}</style>
+      `}</style> */}
       </Html>
     );
   }
@@ -235,13 +245,25 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
   const [hovered, setHovered] = useState(null);
 
   const urls = useMemo(() => artworks.map((a) => a.imageUrl), [artworks]);
-  const textures = useLoader(TextureLoader, urls);
+  const textures = useLoader(TextureLoader, urls, (loader) => {
+    loader.setCrossOrigin('');
+  });
 
-  useEffect(() => {
-    textures?.forEach((t) => {
-      if (t) t.flipY = false;
+  useMemo(() => {
+    textures.forEach((tex) => {
+      if (tex) {
+        tex.flipY = true;     // **before attach**
+        tex.needsUpdate = true;
+      }
     });
   }, [textures]);
+
+  // const textures = useLoader(TextureLoader, urls);
+  // useEffect(() => {
+  //   textures?.forEach((t) => {
+  //     if (t) t.flipY = false;
+  //   });
+  // }, [textures]);
 
   /* -------- GRID POSITIONS -------- */
   const positions = useMemo(() => {
@@ -335,6 +357,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
               <mesh position={[0, 0, 0.61]}>
                 <planeGeometry args={[cardWidth, cardHeight]} />
                 <meshBasicMaterial map={tex} toneMapped={false} />
+                {/* <meshStandardMaterial map={tex} toneMapped={false} transparent={false} /> */}
               </mesh>
             ) : (
               <mesh position={[0, 0, 0.41]}>
@@ -364,5 +387,5 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
       })}
     </group>
   );
-  
+
 }
