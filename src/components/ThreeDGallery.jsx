@@ -364,4 +364,5 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
       })}
     </group>
   );
+  
 }
