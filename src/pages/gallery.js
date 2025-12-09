@@ -18,9 +18,9 @@ export default function Gallery() {
       <div className="fixed top-4 right-4 z-50">
         <button
           onClick={() => setLowPowerMode((prev) => !prev)}
-          className="px-4 py-2 bg-black text-white text-sm rounded-lg shadow-md hover:bg-neutral-800 transition"
+          className="px-4 py-2 bg-black text-white text-sm rounded-lg shadow-md hover:bg-neutral-800 transition logo-3"
         >
-          {lowPowerMode ? "Switch to High-Power Mode" : "Switch to Low-Power Mode"}
+          {lowPowerMode ? "Switch to High-Fidelity" : "Switch to Low-Fidelity"}
         </button>
       </div>
 

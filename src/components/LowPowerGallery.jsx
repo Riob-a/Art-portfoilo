@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { OrbitControls, Html } from "@react-three/drei";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { FaDownload } from "react-icons/fa";
+import { FaDownload, FaSearch } from "react-icons/fa";
 import { a, useSpring } from "@react-spring/three";
 
 // --- SINGLE BEVELED CARD ---
@@ -82,12 +82,12 @@ function LPSingleCard({ art, float = true }) {
                 <meshBasicMaterial map={texture} toneMapped={false} />
             </mesh>
 
-            <mesh position={[0, 0, 0.72]}>
+            <mesh position={[0, 0, 0.63]}>
                 <planeGeometry args={[cardWidth, cardHeight]} />
                 <meshPhysicalMaterial
-                    transmission={1}
+                    transmission={0}
                     transparent
-                    color="#e5f7ff"
+                    color="rgba(0, 0, 0, 1)"
                     opacity={0.12}
                     roughness={0.1}
                     thickness={0.1}
@@ -95,6 +95,8 @@ function LPSingleCard({ art, float = true }) {
                     clearcoat={1}
                     reflectivity={1}
                     depthWrite={false}
+                    samples={1}     // IMPORTANT: keeps it fast
+                    resolution={256}
                 />
             </mesh>
         </a.group>
@@ -154,7 +156,7 @@ export default function LowPowerGallery({ artworks }) {
                         style={{
                             width: "20px",
                             height: "20px",
-                            animation: "spin 2s linear infinite",
+                            animation: "spin 0.6s linear infinite",
                             opacity: 0.9,
                         }}
                     />
@@ -184,34 +186,70 @@ export default function LowPowerGallery({ artworks }) {
                     <LPSingleCard art={currentArt} />
                 </Suspense>
 
-
-                <Html center>
-                    <div className="flex justify-between w-full px-6 absolute bottom-10">
-                        <button onClick={prev} className="px-4 py-2 bg-black text-white rounded-lg">◀ Prev</button>
-                        <button onClick={next} className="px-4 py-2 bg-black text-white rounded-lg">Next ▶</button>
-                    </div>
-                </Html>
-                <OrbitControls enablePan  enabled={!isModalOpen} />
+                <OrbitControls enablePan enabled={!isModalOpen} />
             </Canvas>
+
+            <div className="flex justify-between w-full px-6 absolute bottom-10">
+                <button onClick={prev} className="px-4 py-2 bg-black text-white rounded-lg">◀ Prev</button>
+                <button onClick={openModal} className="px-4 py-2  text-white hover:text-[#007f8cff] transition">
+                    <FaSearch size={18} />
+                </button>
+                <button onClick={next} className="px-4 py-2 bg-black text-white rounded-lg">Next ▶</button>
+            </div>
 
             {isModalOpen && createPortal(
                 <div
-                    className={`modal fixed inset-0 z-50 flex items-center justify-center ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}
+                    className={`modal fixed inset-0 z-50 flex items-center justify-center ${isClosing ? "animate-fadeOut" : "animate-fadeIn"
+                        }`}
                     onClick={closeModal}
                 >
                     <div
-                        className="relative max-w-[90vw] max-h-[90vh] overflow-auto rounded-lg p-4 bg-black"
+                        className="relative max-w-[50vw] w-full max-h-[100vh] overflow-auto rounded-lg p-1 animate-scaleIn "
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <button className="absolute top-4 right-4 text-3xl text-white" onClick={closeModal}>✕</button>
-                        <Image src={currentArt.imageUrl} alt={currentArt.title} width={600} height={300} className="w-auto max-h-[80vh] object-contain rounded" />
-                        <h2 className="text-white text-2xl mt-4">{currentArt.title}</h2>
-                        <p className="text-white mt-2">{currentArt.description}</p>
-                        <a href={currentArt.imageUrl} download className="flex items-center gap-1 mt-4 px-2 py-2 bg-white text-black rounded">
-                            <FaDownload /> Download
-                        </a>
+                        {/* Close Button */}
+                        <button
+                            className="absolute top-4 right-6 text-3xl x-button"
+                            onClick={closeModal}
+                        >
+                            ✕
+                        </button>
+
+                        {/* Fullscreen Image */}
+                        <div className="max-w-full max-h-full p-4 flex flex-col items-center">
+                            <Image
+                                src={currentArt.imageUrl}
+                                alt={currentArt.title}
+                                width={600}
+                                height={300}
+                                className="w-auto max-h-[70vh] object-contain rounded"
+                            />
+
+                            <h2 className="modal-text-2 text-white text-2xl mt-4">
+                                {currentArt.title}
+                            </h2>
+
+                            <p className="text-white text-center max-w-[80%]">
+                                {currentArt.description}
+                            </p>
+
+                            {/* Buttons */}
+                            <div className="flex gap-4 mt-2">
+                                {/* <Link href={`/artworks/${selectedArt.slug}`}>
+                                    <button className="m-button rounded-lg">More...</button>
+                                  </Link> */}
+                                <a
+                                    href={currentArt.imageUrl}
+                                    download
+                                    className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
+                                >
+                                    <FaDownload /> Download
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>, document.body
+                </div>,
+                document.body
             )}
         </div>
     );

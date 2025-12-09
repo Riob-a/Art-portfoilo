@@ -81,7 +81,7 @@ export default function ThreeDFloatingGallery() {
             style={{
               width: "20px",
               height: "20px",
-              animation: "spin 2s linear infinite",
+              animation: "spin 0.6s linear infinite",
               opacity: 0.9,
             }}
           />
@@ -367,19 +367,20 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
             )}
 
             {/* GLASS PANE */}
-            <mesh position={[0, 0, 0.72]}>
+            <mesh position={[0, 0, 0.63]}>
               <planeGeometry args={[cardWidth, cardHeight]} />
               <meshPhysicalMaterial
                 transmission={1}
                 transparent
-                color="#e5f7ff"
+                color="rgba(0, 0, 0, 1)"
                 opacity={0.12}
                 roughness={0.1}
                 thickness={0.1}
-                ior={1.05}
-                clearcoat={1}
+                ior={1.3}
                 reflectivity={1}
                 depthWrite={false}
+                samples={1}     
+                resolution={256}
               />
             </mesh>
           </a.group>

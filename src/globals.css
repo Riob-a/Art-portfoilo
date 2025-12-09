@@ -85,15 +85,19 @@ font-family: 'Supreme', sans-serif;
   0% {
     background-position: 0% 50%;
   }
+
   25% {
     background-position: 50% 60%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   75% {
     background-position: 50% 40%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -231,10 +235,12 @@ font-family: 'Supreme', sans-serif;
   transition: background-color 0.5s ease-in-out;
 
 }
-.line-arrow:hover{
+
+.line-arrow:hover {
   background-color: #3deab8;
   transition: background-color 0.5s ease-in-out;
 }
+
 .line-arrow-b {
   border-radius: 50%;
   border: 2px solid #171717;
@@ -662,7 +668,7 @@ main {
 
 .g-link {
   /* background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b); */
-  color:#000000;
+  color: #000000;
   background-size: 200% 100%;
   transition: all 0.3s ease;
   font-family: 'Panchang', sans-serif;
@@ -679,7 +685,7 @@ main {
   /* -webkit-background-clip: text; */
   /* -webkit-text-fill-color: transparent; */
   /* background-clip: text; */
-  color:#007f8c;
+  color: #007f8c;
   transition: all 0.3s ease;
 }
 
@@ -896,7 +902,7 @@ main {
   /* background-color: #FAE4CF; */
   backdrop-filter: blur(8px);
   /* background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%); */
-    background: linear-gradient(135deg,  #2e988b 0%, #38b4a5 20%, #63bdde 50%, #1d709dac 100% );
+  background: linear-gradient(135deg, #2e988b 0%, #38b4a5 20%, #63bdde 50%, #1d709dac 100%);
 
   font-weight: 500;
   padding: 2.5px;
@@ -1073,8 +1079,9 @@ button.gradient-text {
   .d-card {
     height: 100px;
   }
-  .canvas{
-  background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d);
+
+  .canvas {
+    background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d);
   }
 }
 
@@ -1225,12 +1232,14 @@ button.gradient-text {
   color: #cfcdcd;
   border: 1px solid transparent;
   transition: color 1s ease, border-color 1s ease, background-color 2s ease;
+  background-color: #161515;
+
 }
 
 .footer:hover {
   color: #05c3d8;
   border: 1px solid #05c3d8;
-  background-color: #000000;
+  background-color: #161515;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
 }
 
@@ -1250,37 +1259,50 @@ button.gradient-text {
 }
 
 .canvas {
-/* Option 1 — Smooth Linear Gradient (center dominant) */
-/* background: linear-gradient(135deg, #fdb140, #f09206 40%, #f69b13); */
+  /* Option 1 — Smooth Linear Gradient (center dominant) */
+  /* background: linear-gradient(135deg, #fdb140, #f09206 40%, #f69b13); */
 
-/* Option 2 — Symmetrical Center Gradient */
- /* background: linear-gradient(135deg, 
+  /* Option 2 — Symmetrical Center Gradient */
+  /* background: linear-gradient(135deg, 
       #fdb140 0%, 
       #f69b13 30%, 
       #f09206 50%, 
       #f69b13 70%, 
       #fdb140 100%); */
 
-/* Option 3 — Radial Gradient (center glow) */
- /* background: radial-gradient(circle at center, 
+  /* Option 3 — Radial Gradient (center glow) */
+  /* background: radial-gradient(circle at center, 
       #f09206 40%, 
       #f69b13 70%, 
       #fdb140 100%); */
 
-/* Option 4 — Polished Premium Gradient */
- background: linear-gradient(135deg, 
-      #fdb140 0%, 
-      #f69b13 35%, 
-      #f09206 60%, 
-      #f69b13 85%, 
+  /* Option 4 — Polished Premium Gradient */
+  background: linear-gradient(135deg,
+      #fdb140 0%,
+      #f69b13 35%,
+      #f09206 60%,
+      #f69b13 85%,
       #fdb140 100%);
 
-background-size: 130% 100%;
-animation: gradientWave 15s ease infinite;
-transition: background-color 0.3s, color 0.3s;
+  background-size: 130% 100%;
+  animation: gradientWave 15s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
 
 }
 
 .parallax-mask {
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+.home {
+  background: linear-gradient(135deg,
+      #fdb140 0%,
+      #f69b13 35%,
+      #f09206 60%,
+      #f69b13 85%,
+      #fdb140 100%);
+
+  background-size: 130% 100%;
+  animation: gradientWave 15s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
 }

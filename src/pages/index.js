@@ -34,7 +34,7 @@ export default function Home() {
   );
 
   return (
-    <div>
+    <div className='home'>
       <Navbar />
       {/* --- Hero/Header Section --- */}
       <section>
@@ -58,14 +58,40 @@ export default function Home() {
             <Image alt="logo" src="/globe-2.svg" className="globe-icon" height={30} width={30} />
           </div>
 
-            {/* <Link
-              href="/gallery"
-              className="text-center p-5 text-lg font-medium cursor-pointer block g-link"
+          {/* ───────── FLOATING GALLERY BUTTON (Mobile Only) ───────── */}
+          <Link
+            href="/gallery"
+            className="fixed bottom-1 left-1 z-50 md:hidden"
+          >
+            <button
+              className="
+               p-4 
+               rounded-full 
+               bg-transparent 
+               text-black 
+               active:scale-95 
+               transition-transform
+             "
+              aria-label="Open gallery"
             >
-              <div data-aos="fade-up" >
-              View gallery{svg}
-              </div>
-            </Link> */}
+              {/* Magnifying glass icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="26"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
+          </Link>
+
+
         </motion.header>
       </section>
       {/*<ThreeDGallery artworks={artworks} />*/}
