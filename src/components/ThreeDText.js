@@ -6,6 +6,9 @@ import { Text3D, Environment, Center, Bounds, RoundedBox, Edges } from "@react-t
 import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import { Html } from "@react-three/drei";
+import { FaSearch } from "react-icons/fa";
+import Link from 'next/link';
+
 
 import * as THREE from "three";
 
@@ -32,13 +35,6 @@ function SwappableTextCube() {
   const [clicked, setClicked] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const { clickScale } = useSpring({
-    clickScale: clicked ? 1.2 : 1,
-    config: { tension: 400, friction: 10 },
-    reset: true,
-    onRest: () => setClicked(false)   // auto-reset
-  });
-
   const { color } = useSpring({
     color: clicked ? "rgba(240, 146, 6, 1)" : "rgba(0, 127, 140, 1)",
     config: { tension: 200, friction: 20 },
@@ -48,7 +44,7 @@ function SwappableTextCube() {
   // Smooth animation for BOTH text and cube
   const { textScale, cubeScale } = useSpring({
     textScale: hovered ? 0.2 : 1,   // shrink text smaller than cube
-    cubeScale: hovered ? 4.0 : 0,   // cube grows huge
+    cubeScale: hovered ? 3.0 : 0,   // cube grows 
     config: { tension: 150, friction: 20 },
   });
 
@@ -76,13 +72,13 @@ function SwappableTextCube() {
         <Center>
           <Text3D
             font="/fonts/Panchang_Bold.json"
-            size={4}
-            height={4}
+            size={2}
+            height={2}
             bevelEnabled
-            bevelThickness={0.9}
-            bevelSize={0.5}
-            bevelSegments={15}
-            curveSegments={24}
+            bevelThickness={0.8}
+            bevelSize={0.4}
+            bevelSegments={12}
+            curveSegments={12}
           >
             [ PORTFOLIO. ]
             <meshPhysicalMaterial
@@ -124,7 +120,7 @@ function SwappableTextCube() {
         {showTooltip && (
           <Html position={[0, 3.2, 0]} center>
             <div
-            className="logo-3"
+              className="logo-3"
               style={{
                 background: "rgba(0,0,0,0.7)",
                 color: "white",
@@ -197,6 +193,19 @@ export default function ThreeDTextWithPlatform() {
       <Bounds fit clip observe>
         <RotatingPlatform>
           <SwappableTextCube />
+          <Html>
+            <Link
+              href="/gallery"
+              className="fixed top-15  z-50 md:hidden"
+            >
+              <button
+                className=" p-1 text-white text-center "
+                aria-label="Open gallery"
+              >
+                <FaSearch />
+              </button>
+            </Link>
+          </Html>
         </RotatingPlatform>
       </Bounds>
     </Canvas>

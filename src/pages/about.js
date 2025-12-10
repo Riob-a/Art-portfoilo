@@ -44,7 +44,6 @@ export default function About() {
       >
         <div className="flex items-center justify-between mb-18">
           {/* Conditional rendering: 3D header only for high-power devices */}
-          {isLowPowerDevice ? (
             <motion.h2
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -53,16 +52,7 @@ export default function About() {
             >
               About Me
             </motion.h2>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <ThreeDHeader heading="About Me" />
-            </motion.div>
-          )}
-
+           
           <motion.div
             className="line-arrow"
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}

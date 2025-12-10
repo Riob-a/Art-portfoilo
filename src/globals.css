@@ -392,86 +392,6 @@ font-family: 'Supreme', sans-serif;
   }
 }
 
-/* Glint Effect */
-.glint-effect {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.glint-effect::after {
-  content: '';
-  position: absolute;
-  border-top: #ffffff80 0.8px solid;
-  border-bottom: #ffffff80 2px solid;
-  top: 0%;
-  left: -75%;
-  /* left: 0; */
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg,
-      #ffffff00 0%,
-      #ffffff80 50%,
-      #ffffff00 100%);
-  transform: skewX(-20deg);
-
-  animation: glint 4s infinite;
-  pointer-events: none;
-  /* mix-blend-mode: screen; */
-}
-
-@keyframes glint {
-  0% {
-    left: -75%;
-  }
-
-  40% {
-    left: 125%;
-  }
-
-  70% {
-    left: 175%;
-  }
-
-  100% {
-    left: 225%;
-  }
-}
-
-/* 3d rotate */
-@keyframes rotate3D {
-  0% {
-    transform: rotateX(10deg) rotateY(0deg);
-  }
-
-  100% {
-    transform: rotateX(10deg) rotateY(360deg);
-  }
-}
-
-
-@keyframes rotate3D-2 {
-  0% {
-    transform: rotateY(0deg);
-  }
-
-  25% {
-    transform: rotateY(45deg);
-  }
-
-  50% {
-    transform: rotateY(180deg);
-  }
-
-  75% {
-    transform: rotateY(270deg);
-  }
-
-  100% {
-    transform: rotateY(360deg);
-  }
-}
-
 /* end */
 
 body {
@@ -505,15 +425,10 @@ main {
 
 /* index */
 .header {
-  /* background: linear-gradient(60deg, #fac094, #feb47b, #ff7e5f, #ff613a); */
-  /* background: linear-gradient(60deg, #D9C3AB, #F16001, #C10801, #000000);
-  background-size: 120% 100%;
-  animation: gradientWave 20s ease infinite;
-  transition: background-color 0.3s, color 0.3s; */
   transform-origin: center top;
   background-position: center;
   background-repeat: space;
-  height: 550px;
+  height: 7250px;
   text-align: center;
   align-items: center;
   margin: 0.5rem;
@@ -617,21 +532,6 @@ main {
   transition: box-shadow 0.2s ease-in-out;
 }
 
-.intro {
-  /* background-color: #ff7e5f; */
-  /* box-shadow: #0000008e 10px 10px 10px; */
-  /* border: #0000008e 1.5px solid; */
-  /* padding: 1rem; */
-  /* z-index: 10;
-  position: absolute;
-  right: 0%;
-  left: 0%;
-  bottom: 10px; */
-  /* border: #000000 1px solid; */
-  margin: 1rem;
-
-}
-
 .main-index:hover {
   /* transform: scale(1.02); */
   box-shadow: #000000ae 10px 15px 20px;
@@ -678,13 +578,6 @@ main {
 }
 
 .g-link:hover {
-  /* background: radial-gradient(circle at center, #3deab8, #007f8c); */
-  /* background-size: 200% 100%; */
-  /* animation: gradientWave 5s ease infinite; */
-  /* transition: background-color 0.3s, color 0.3s; */
-  /* -webkit-background-clip: text; */
-  /* -webkit-text-fill-color: transparent; */
-  /* background-clip: text; */
   color: #007f8c;
   transition: all 0.3s ease;
 }
@@ -758,75 +651,6 @@ main {
 /* end */
 
 /* gallery */
-.art-motion-card {
-  border: #a5bcc77a 1.5px solid;
-  position: absolute;
-  width: 90vw;
-  height: auto;
-  aspect-ratio: 2 / 1;
-  padding: 0.5rem;
-  text-align: center;
-  border-radius: 0.75rem;
-  background-color: #a5bcc77a;
-  /* background-color: #f69b138e; */
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-}
-
-@media (min-width: 640px) {
-  .art-motion-card {
-    width: 40vw;
-    padding: 0.75rem;
-  }
-}
-
-@media (min-width: 768px) {
-
-  /* md: */
-  .art-motion-card {
-    width: 17.5rem;
-  }
-}
-
-
-.art-card {
-  /* background-color: #1e1d1d; */
-  /* color: #010101; */
-  background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%);
-
-  margin: auto;
-  transition: color 1s ease, border-color 1.5s ease, background-color 0.3s ease, transform 0.8s ease-in-out;
-  cursor: pointer;
-}
-
-.active-card:hover {
-  display: inline-block;
-  perspective: 1000px;
-  transform-style: preserve-3d-2;
-  /* keep child 3D transforms */
-
-}
-
-.image {
-  /* border: solid #ffffff4f 2px; */
-  /* border-radius: 1rem; */
-  transition: filter 0.3s ease-in-out;
-}
-
-.desc {
-  color: #3F4856;
-  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
-}
-
-.art-card:hover {
-  transform: scale(1.03);
-
-  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease, transform 1s ease-in-out;
-}
-
 .modal {
   background-color: #00000049;
   backdrop-filter: blur(8px);
@@ -939,7 +763,8 @@ main {
 }
 
 .a-content {
-  color: #f69b13ff;
+  color: #fdfdfd;
+  
 }
 
 .a-link {
@@ -988,6 +813,19 @@ button.gradient-text {
 /* end */
 
 /* Components */
+.home{
+  background: linear-gradient(135deg,
+      #fdb140 0%,
+      #f69b13 35%,
+      #f09206 60%,
+      #f69b13 85%,
+      #fdb140 100%);
+
+  background-size: 130% 100%;
+  animation: gradientWave 15s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
+}
+
 .logo {
   font-optical-sizing: auto;
   transition: transform 0.5s ease-in-out;
@@ -1081,7 +919,7 @@ button.gradient-text {
   }
 
   .canvas {
-    background: linear-gradient(135deg, #218D80, #2e988b, #38b4a5, #63bdde, #1d709d);
+    height:fit-content
   }
 }
 
@@ -1258,51 +1096,6 @@ button.gradient-text {
   height: 800px;
 }
 
-.canvas {
-  /* Option 1 — Smooth Linear Gradient (center dominant) */
-  /* background: linear-gradient(135deg, #fdb140, #f09206 40%, #f69b13); */
-
-  /* Option 2 — Symmetrical Center Gradient */
-  /* background: linear-gradient(135deg, 
-      #fdb140 0%, 
-      #f69b13 30%, 
-      #f09206 50%, 
-      #f69b13 70%, 
-      #fdb140 100%); */
-
-  /* Option 3 — Radial Gradient (center glow) */
-  /* background: radial-gradient(circle at center, 
-      #f09206 40%, 
-      #f69b13 70%, 
-      #fdb140 100%); */
-
-  /* Option 4 — Polished Premium Gradient */
-  background: linear-gradient(135deg,
-      #fdb140 0%,
-      #f69b13 35%,
-      #f09206 60%,
-      #f69b13 85%,
-      #fdb140 100%);
-
-  background-size: 130% 100%;
-  animation: gradientWave 15s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
-
-}
-
 .parallax-mask {
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-}
-
-.home {
-  background: linear-gradient(135deg,
-      #fdb140 0%,
-      #f69b13 35%,
-      #f09206 60%,
-      #f69b13 85%,
-      #fdb140 100%);
-
-  background-size: 130% 100%;
-  animation: gradientWave 15s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
 }

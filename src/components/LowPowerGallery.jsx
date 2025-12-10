@@ -30,7 +30,7 @@ function LPBeveledCard({ width, height, depth }) {
         bevelEnabled: true,
         bevelThickness: 0.1,
         bevelSize: 0.08,
-        bevelSegments: 5,
+        bevelSegments: 2,
     }), [depth]);
 
     return (
@@ -91,11 +91,10 @@ function LPSingleCard({ art, float = true }) {
                     opacity={0.12}
                     roughness={0.1}
                     thickness={0.1}
-                    ior={1.05}
-                    clearcoat={1}
+                    ior={1.01}
                     reflectivity={1}
                     depthWrite={false}
-                    samples={1}     // IMPORTANT: keeps it fast
+                    samples={1}    
                     resolution={256}
                 />
             </mesh>
@@ -185,8 +184,6 @@ export default function LowPowerGallery({ artworks }) {
                 <Suspense fallback={<LPLoadingFallback />}>
                     <LPSingleCard art={currentArt} />
                 </Suspense>
-
-                <OrbitControls enablePan enabled={!isModalOpen} />
             </Canvas>
 
             <div className="flex justify-between w-full px-6 absolute bottom-10">

@@ -91,15 +91,6 @@ export default function Contact() {
     <div className='animate-fadeInLeft'>
       <section className="p-8 max-w-2xl mx-auto a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center">
         <div className="flex items-center justify-between mb-18 ">
-          {/*Conditional heading: 3D for capable devices, 2D for others */}
-          {canRender3D ? (
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}>
-              <ThreeDHeader heading="Get in Touch" />
-            </motion.div>
-          ) : (
             <div className="flex flex-col gap-2 ">
               <motion.h2
                 style={{ y: ySlow }}
@@ -120,7 +111,6 @@ export default function Contact() {
                 Touch
               </motion.h2>
             </div>
-          )}
 
           <motion.div
             className='line-arrow'
