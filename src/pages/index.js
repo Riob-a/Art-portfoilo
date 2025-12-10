@@ -26,6 +26,7 @@ export default function Home() {
         <motion.header
           className="relative "
           data-aos="fade-in"
+          data-aos-delay="400"
         >
           <ThreeDText />
         </motion.header>
