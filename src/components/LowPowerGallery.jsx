@@ -162,10 +162,10 @@ export default function LowPowerGallery({ artworks }) {
                     <p className="logo-3">Loading...</p>
                 </div>
                 <style>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
+                  @keyframes spin {
+                  to { transform: rotate(360deg); }
+                  }
+              `}</style>
             </Html>
         );
     }
