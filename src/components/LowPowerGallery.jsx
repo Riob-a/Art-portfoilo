@@ -189,12 +189,12 @@ export default function LowPowerGallery({ artworks }) {
 
             </Canvas>
 
-            <div className="flex justify-between w-full px-6 absolute bottom-10">
-                <button onClick={prev} className="px-4 py-2 bg-black text-white rounded-lg">◀ Prev</button>
+            <div className="flex justify-between w-full px-6 absolute bottom-15">
+                <button onClick={prev} className="px-4 py-2 bg-black text-white rounded-lg logo-3">◀ Prev</button>
                 <button onClick={openModal} className="px-4 py-2  text-white hover:text-[#007f8cff] transition">
                     <FaSearch size={18} />
                 </button>
-                <button onClick={next} className="px-4 py-2 bg-black text-white rounded-lg">Next ▶</button>
+                <button onClick={next} className="px-4 py-2 bg-black text-white rounded-lg logo-3">Next ▶</button>
             </div>
 
             {isModalOpen && createPortal(

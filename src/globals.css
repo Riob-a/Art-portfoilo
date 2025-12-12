@@ -522,50 +522,10 @@ main {
   }
 }
 
-.main-index {
-  /* background-color: #02e88c8a; */
-  /* background: linear-gradient(135deg, #ff7f5f46 0%, #feb47b 100%); */
-  background: linear-gradient(135deg, #218d809e, #2e988c90, #38b4a69e, #63bdde84, #1d709d);
-  backdrop-filter: blur(3px);
-  padding: 20px;
-  box-shadow: #0000008e 5px 5px 10px;
-  transition: box-shadow 0.2s ease-in-out;
-}
-
-.main-index:hover {
-  /* transform: scale(1.02); */
-  box-shadow: #000000ae 10px 15px 20px;
-  transition: box-shadow 0.2s ease-in-out;
-}
-
-.main-index-2 {
-  padding: 20px;
-  outline-offset: 1px;
-  outline: 1px solid #2f2f2fc5;
-  outline-style: solid;
-  background-color: #fae4cfae;
-  backdrop-filter: blur(10px);
-}
-
-.svg {
-  stroke: #000000;
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
 .svg:hover {
   stroke: #007f8c;
   transition: stroke 0.5s ease-in-out;
 }
-
-.desc-details {
-  color: #ff0000;
-}
-
-.desc-intro {
-  color: #000000;
-}
-
 .g-link {
   /* background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b); */
   color: #000000;
@@ -581,17 +541,6 @@ main {
   color: #007f8c;
   transition: all 0.3s ease;
 }
-
-.carousel-buttons {
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.carousel-buttons:hover {
-  transform: scale(1.05);
-  background-color: #646464;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
 /* Tweak these */
 .marquee {
   --gap: 2rem;
@@ -889,7 +838,7 @@ button.gradient-text {
 
 @media screen and (max-width: 768px) {
   html {
-    font-size: 14px;
+    font-size: 11px;
   }
 
   .logo {
@@ -902,7 +851,7 @@ button.gradient-text {
   }
 
   .link {
-    font-size: 0.8rem;
+    font-size: 0.5rem;
   }
 
   .slug {
@@ -920,6 +869,9 @@ button.gradient-text {
 
   .canvas {
     height:fit-content
+  }
+  .footer{
+    padding:2rem;
   }
 }
 
@@ -1070,7 +1022,7 @@ button.gradient-text {
   color: #cfcdcd;
   border: 1px solid transparent;
   transition: color 1s ease, border-color 1s ease, background-color 2s ease;
-  background-color: #161515;
+  background-color: #000000;
 
 }
 
@@ -1079,23 +1031,4 @@ button.gradient-text {
   border: 1px solid #05c3d8;
   background-color: #161515;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
-}
-
-/*  */
-.perspective {
-  position: relative;
-  perspective: 1000px;
-  perspective-origin: center;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.d-card {
-  height: 800px;
-}
-
-.parallax-mask {
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
 }
