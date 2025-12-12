@@ -94,7 +94,7 @@ function LPSingleCard({ art, float = true }) {
                     ior={1.01}
                     reflectivity={1}
                     depthWrite={false}
-                    samples={1}    
+                    samples={1}
                     resolution={256}
                 />
             </mesh>
@@ -184,6 +184,9 @@ export default function LowPowerGallery({ artworks }) {
                 <Suspense fallback={<LPLoadingFallback />}>
                     <LPSingleCard art={currentArt} />
                 </Suspense>
+
+                <OrbitControls enablePan enableZoom={false} enabled={!isModalOpen} />
+
             </Canvas>
 
             <div className="flex justify-between w-full px-6 absolute bottom-10">

@@ -134,7 +134,7 @@ function SwappableTextCube() {
                 animation: "fadeIn 0.2s ease-out",
               }}
             >
-              View Gallery
+             Click to View Gallery
             </div>
           </Html>
         )}

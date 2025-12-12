@@ -52,7 +52,7 @@ export default function Gallery() {
           onClick={switchMode}
           className="px-4 py-2 bg-black text-white text-sm rounded-lg shadow-md hover:bg-neutral-800 transition logo-3"
         >
-          {lowPowerMode ? "Switch to High-Fidelity" : "Switch to Low-Fidelity"}
+          {lowPowerMode ? "Switch to Full Gallery" : "Switch to Single Pane"}
         </button>
       </div>
 
@@ -75,8 +75,8 @@ export default function Gallery() {
               src="/globe-2.svg"
               alt="loading"
               className="logo-pic"
-              width={26}
-              height={26}
+              width={20}
+              height={20}
               style={{
 
                 animation: "spin 0.6s linear infinite",
