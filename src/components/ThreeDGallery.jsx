@@ -66,7 +66,8 @@ export default function ThreeDFloatingGallery() {
             color: "white",
             fontSize: "16px",
             borderRadius: "8px",
-            backdropFilter: "blur(6px)",
+            background:"#161515",
+            // backdropFilter: "blur(6px)",
             display: "flex",
             alignItems: "center",
             gap: "10px",
@@ -121,7 +122,7 @@ export default function ThreeDFloatingGallery() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <Canvas  camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]}>
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
         <directionalLight position={[-5, 2, -5]} intensity={0.6} />
@@ -232,6 +233,58 @@ function BeveledCard({ width, height, depth }) {
   return (
     <mesh>
       <extrudeGeometry args={[shape, extrudeSettings]} />
+      <meshStandardMaterial color="#111" roughness={0.3} metalness={0.2} />
+    </mesh>
+  );
+}
+
+/*  Recess for sunk card */
+function RecessedFrame({
+  width,
+  height,
+  depth = 0.2,
+  inset = 0.15, // how deep the art sits in
+}) {
+  const shape = useMemo(() => {
+    const w = width / 2;
+    const h = height / 2;
+
+    const holeW = w - inset;
+    const holeH = h - inset;
+
+    const s = new THREE.Shape();
+    s.moveTo(-w, -h);
+    s.lineTo(w, -h);
+    s.lineTo(w, h);
+    s.lineTo(-w, h);
+    s.closePath();
+
+    // 🔹 inner cut-out (the depression)
+    const hole = new THREE.Path();
+    hole.moveTo(-holeW, -holeH);
+    hole.lineTo(holeW, -holeH);
+    hole.lineTo(holeW, holeH);
+    hole.lineTo(-holeW, holeH);
+    hole.closePath();
+
+    s.holes.push(hole);
+    return s;
+  }, [width, height, inset]);
+
+  return (
+    <mesh position={[0, 0, 0.26]}>
+      <extrudeGeometry
+        args={[
+          shape,
+          {
+            depth,
+            bevelEnabled: true,
+            bevelThickness: 0.03,
+            bevelSize: 0.03,
+            bevelSegments: 3,
+          },
+        ]}
+      />
       <meshStandardMaterial color="#111" roughness={0.3} metalness={0.2} />
     </mesh>
   );
@@ -352,6 +405,14 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
               depth={0.5}
             />
 
+            {/* RECESSED FRAME */}
+            <RecessedFrame
+              width={cardWidth + 0.22}
+              height={cardHeight + 0.22}
+              depth={0.40}
+              inset={0.11}
+            />
+
             {/* FRONT IMAGE */}
             {tex ? (
               <mesh position={[0, 0, 0.61]}>
@@ -367,7 +428,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
             )}
 
             {/* GLASS PANE */}
-            <mesh position={[0, 0, 0.63]}>
+            <mesh position={[0, 0, 0.68]}>
               <planeGeometry args={[cardWidth, cardHeight]} />
               <meshPhysicalMaterial
                 transmission={1}
@@ -379,7 +440,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
                 ior={1.3}
                 reflectivity={1}
                 depthWrite={false}
-                samples={1}     
+                samples={1}
                 resolution={256}
               />
             </mesh>

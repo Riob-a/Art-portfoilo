@@ -65,6 +65,7 @@ export default function Gallery() {
               color: "white",
               fontSize: "16px",
               borderRadius: "8px",
+              background:"#161515",
               // backdropFilter: "blur(6px)",
               display: "flex",
               alignItems: "center",
