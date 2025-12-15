@@ -410,7 +410,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
               width={cardWidth + 0.22}
               height={cardHeight + 0.22}
               depth={0.40}
-              inset={0.11}
+              inset={0.1}
             />
 
             {/* FRONT IMAGE */}

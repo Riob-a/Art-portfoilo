@@ -7,29 +7,37 @@ import ThreeDGallery from "../components/ThreeDGallery";
 import LowPowerGallery from "../components/LowPowerGallery";
 
 export default function Gallery() {
-  const [lowPowerMode, setLowPowerMode] = useState(null);
+  const [lowPowerMode, setLowPowerMode] = useState(true);
   const [isSwitching, setIsSwitching] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+
 
   // Load mode from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("galleryMode");
-    setLowPowerMode(saved === "low");
+    if (saved === "high") {
+      setLowPowerMode(false);
+    } else {
+      setLowPowerMode(true); // default
+    };
   }, []);
 
   // Save mode
   useEffect(() => {
-    if (lowPowerMode === null) return;
+    if (!hasUserInteracted) return;
+    // if (lowPowerMode === null) return;
+
     localStorage.setItem("galleryMode", lowPowerMode ? "low" : "high");
-  }, [lowPowerMode]);
+  }, [lowPowerMode, hasUserInteracted]);
 
   // Loader on switch
   const switchMode = () => {
+    setHasUserInteracted(true);
     setIsSwitching(true); // show loader
 
     setTimeout(() => {
       // Switch the mode
       setLowPowerMode(prev => !prev);
-
       // Give the 3D component a moment to mount
       setTimeout(() => setIsSwitching(false), 600);
     }, 200);
@@ -65,7 +73,7 @@ export default function Gallery() {
               color: "white",
               fontSize: "16px",
               borderRadius: "8px",
-              background:"#161515",
+              background: "#161515",
               // backdropFilter: "blur(6px)",
               display: "flex",
               alignItems: "center",

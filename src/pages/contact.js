@@ -90,79 +90,47 @@ export default function Contact() {
   return (
     <div className='animate-fadeInLeft'>
       <section className="p-8 max-w-2xl mx-auto a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center">
-        <div className="flex items-center justify-between mb-18 ">
-            <div className="flex flex-col gap-2 ">
-              <motion.h2
-                style={{ y: ySlow }}
-                className="text-2xl md:text-8xl font-bold a-heading"
-              >
-                Get
-              </motion.h2>
-              <motion.h2
-                style={{ y: yMedium }}
-                className="text-2xl md:text-8xl font-bold a-heading"
-              >
-                in
-              </motion.h2>
-              <motion.h2
-                style={{ y: yFast }}
-                className="text-2xl md:text-8xl font-bold a-heading"
-              >
-                Touch
-              </motion.h2>
-            </div>
-
-          <motion.div
-            className='line-arrow'
-            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-            whileTap={{ scale: 0.6 }}
-          >
-            <Link href="/">
-              <button className="arrow-l-button">{arrow}</button>
-            </Link>
-          </motion.div>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="flex flex-col form space-y-6  mt-5 a-content">
+        <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <motion.input
-            whileHover={{ scale: 1.05, color: '#007f8c' }}
+            whileHover={{ scale: 1.05 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             placeholder="Your Name"
-            className="form-input border p-2 "
+            className="border contact-field p-2 inline-block w-full"
             required
           />
           <motion.input
-            whileHover={{ scale: 1.05, color: '#007f8c' }}
+            whileHover={{ scale: 1.05 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Your Email"
-            className="form-input border p-2 "
+            className="border contact-field p-2 inline-block w-full"
             required
           />
           <motion.textarea
-            whileHover={{ scale: 1.05, color: '#007f8c' }}
+            whileHover={{ scale: 1.05 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             name="message"
             value={formData.message}
             onChange={handleChange}
             placeholder="Your Message"
-            className="form-input border p-2 "
+            className="border contact-field p-2 inline-block w-full "
             rows="5"
             required
           />
           <motion.button
-            whileHover={{ scale: 1.05, color: '#007f8c' }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95, y: 2 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="submit"
-            className="form-input gradient-text py-2 px-4 "
+            className="contact-btn py-2 px-4"
           >
             Send Message
           </motion.button>

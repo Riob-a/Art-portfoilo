@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Text3D, Environment, Center, Bounds, RoundedBox, Edges } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
@@ -94,7 +94,7 @@ function SwappableTextCube() {
         </Center>
       </a.group>
 
-      {/* --- CUBE (grows massively on hover) --- */}
+      {/* --- SPHERE (grows massively on hover) --- */}
       <a.group
         ref={sphereRef}
         scale={cubeScale.to(s => [s, s, s])}
@@ -112,7 +112,7 @@ function SwappableTextCube() {
         }}
         onClick={() => {
           setClicked(true);
-          setTimeout(() => setClicked(false), 200);
+          setTimeout(() => setClicked(false), 250);
           router.push("/gallery");
         }}
       >
@@ -134,7 +134,7 @@ function SwappableTextCube() {
                 animation: "fadeIn 0.2s ease-out",
               }}
             >
-             Click to View Gallery
+              Click to View Gallery
             </div>
           </Html>
         )}
@@ -174,6 +174,13 @@ function SwappableTextCube() {
 // Main Canvas Component
 // ----------------------------------------
 export default function ThreeDTextWithPlatform() {
+  const [showHint, setShowHint] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowHint(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <Canvas
       style={{
@@ -194,16 +201,39 @@ export default function ThreeDTextWithPlatform() {
         <RotatingPlatform>
           <SwappableTextCube />
           <Html>
+            {showHint && (<div
+              className="md:hidden animate-bounc fixed left-12 top-15 logo-3"
+              style={{
+                background: "rgba(0,0,0,0.7)",
+                color: "white",
+                padding: "8px 12px",
+                borderRadius: "6px",
+                fontSize: "10px",
+                whiteSpace: "nowrap",
+                pointerEvents: "none",
+                backdropFilter: "blur(4px)",
+                transform: "translateY(-10px)",
+                animation: "fadeIn 0.2s ease-out",
+              }}
+            >
+              View Gallery
+            </div>)}
+            
             <Link
               href="/gallery"
               className="fixed top-15  z-50 md:hidden"
             >
-              <button
-                className=" p-1 text-white text-center "
-                aria-label="Open gallery"
-              >
-                <FaSearch />
-              </button>
+              <div className="relative flex items-center justify-center gap-1">
+                {/* Pulse indicator */}
+                <span className="absolute inline-flex h-10 w-10 rounded-full bg-white/30 animate-ping" />
+
+                <button
+                  className="relative p-2 text-white text-center bg-black/60 rounded-full"
+                  aria-label="Open gallery"
+                >
+                  <FaSearch size={18} />
+                </button>
+              </div>
             </Link>
           </Html>
         </RotatingPlatform>
