@@ -62,7 +62,7 @@ function RecessedFrame({
         s.lineTo(-w, h);
         s.closePath();
 
-        // 🔹 inner cut-out (the depression)
+        //  inner cut-out (the depression)
         const hole = new THREE.Path();
         hole.moveTo(-holeW, -holeH);
         hole.lineTo(holeW, -holeH);
@@ -153,7 +153,7 @@ function LPSingleCard({ art, float = true }) {
                     transparent
                     color="rgba(0, 0, 0, 1)"
                     opacity={0.12}
-                    roughness={0.05}
+                    roughness={0.01}
                     thickness={0.1}
                     ior={1.01}
                     reflectivity={1}
@@ -240,7 +240,7 @@ export default function LowPowerGallery({ artworks }) {
         <div className="relative h-[100vh] w-full">
             <Canvas shadows camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.8} />
-                <Environment preset="warehouse"  environmentIntensity={1} />
+                <Environment preset="warehouse"  environmentIntensity={0.03} />
                 <directionalLight position={[5, 5, 5]} intensity={1.2} />
                 <directionalLight position={[-5, 2, -5]} intensity={0.6} />
 
