@@ -156,7 +156,7 @@ function LPSingleCard({ art, float = true }) {
                     roughness={0.01}
                     thickness={0.1}
                     ior={1.01}
-                    reflectivity={1}
+                    reflectivity={0.01}
                     depthWrite={false}
                     samples={1}
                     resolution={256}
@@ -240,8 +240,8 @@ export default function LowPowerGallery({ artworks }) {
         <div className="relative h-[100vh] w-full">
             <Canvas shadows camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.8} />
-                <Environment preset="warehouse"  environmentIntensity={0.03} />
-                <directionalLight position={[5, 5, 5]} intensity={1.2} />
+                {/* <Environment preset="warehouse"  environmentIntensity={0.01} /> */}
+                <directionalLight position={[5, 5, 5]} intensity={1.7} />
                 <directionalLight position={[-5, 2, -5]} intensity={0.6} />
 
                 {/* <Suspense fallback={<Html center><div className="text-white">Loading...</div></Html>}>
