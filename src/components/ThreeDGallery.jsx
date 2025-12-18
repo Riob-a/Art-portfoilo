@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, Html } from "@react-three/drei";
+import { OrbitControls, Html, Environment } from "@react-three/drei";
 import { TextureLoader } from "three";
 import * as THREE from "three";
 import artworks from "../data/artworks";
@@ -66,7 +66,7 @@ export default function ThreeDFloatingGallery() {
             color: "white",
             fontSize: "16px",
             borderRadius: "8px",
-            background:"#161515",
+            background: "#161515",
             // backdropFilter: "blur(6px)",
             display: "flex",
             alignItems: "center",
@@ -123,6 +123,7 @@ export default function ThreeDFloatingGallery() {
       )}
 
       <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]}>
+        <Environment preset="warehouse" environmentIntensity={1} />
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
         <directionalLight position={[-5, 2, -5]} intensity={0.6} />
@@ -431,13 +432,13 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
             <mesh position={[0, 0, 0.68]}>
               <planeGeometry args={[cardWidth, cardHeight]} />
               <meshPhysicalMaterial
-                transmission={1}
+                transmission={0}
                 transparent
                 color="rgba(0, 0, 0, 1)"
                 opacity={0.12}
-                roughness={0.1}
-                thickness={0.1}
-                ior={1.3}
+                roughness={0.05}
+                thickness={0.5}
+                ior={1.5}
                 reflectivity={1}
                 depthWrite={false}
                 samples={1}

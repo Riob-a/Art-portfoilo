@@ -40,7 +40,7 @@ export default function About() {
   return (
     <div>
       <section
-        className="p-8 max-w-2xl mx-auto animate-fadeInLeft a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center"
+        className="about mt-8 p-8 max-w-2xl mx-auto animate-fadeInLeft"
       >
         <div className="flex items-center justify-between mb-18">
           {/* Conditional rendering: 3D header only for high-power devices */}
@@ -48,7 +48,8 @@ export default function About() {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-3xl md:text-8xl font-bold mb-18 a-heading"
+              // className="text-3xl md:text-8xl font-bold mb-18 a-heading"
+              className="text-8xl font-bold mt-4 a-heading"
             >
               About Me
             </motion.h2>

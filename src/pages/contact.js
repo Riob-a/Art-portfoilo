@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import { FaGithub, FaLinkedin, FaGoogle } from 'react-icons/fa'
 import ThreeDHeader from '../components/ThreeDHeader';
+import { Svg } from '@react-three/drei'
 
 export default function Contact() {
   const arrow = (
@@ -89,8 +90,20 @@ export default function Contact() {
 
   return (
     <div className='animate-fadeInLeft'>
-      <section className="p-8 max-w-2xl mx-auto a-content min-h-screen md:min-h-[180vh] flex flex-col justify-center">
-        <h2 className="text-2xl font-bold mb-4">Get in Touch</h2>
+      <section className=" p-8 mt-8 max-w-xl mx-auto h-screen">
+        <div className='flex items-center justify-between mb-20'> 
+          <h2 className="text-8xl font-bold mb-4 a-heading">Get in Touch</h2>
+          <motion.div
+            className="line-arrow"
+            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+            whileTap={{ scale: 0.6 }}
+          >
+            <Link href="/">
+              <button className="arrow-l-button">{arrow}</button>
+            </Link>
+          </motion.div>
+          
+        </div>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <motion.input
             whileHover={{ scale: 1.05 }}
@@ -100,7 +113,7 @@ export default function Contact() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Your Name"
-            className="border contact-field p-2 inline-block w-full"
+            className="border contact-field p-2 inline-block w-full hover:text-[#007f8c] "
             required
           />
           <motion.input
@@ -111,7 +124,7 @@ export default function Contact() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Your Email"
-            className="border contact-field p-2 inline-block w-full"
+            className="border contact-field p-2 inline-block w-full hover:text-[#007f8c]"
             required
           />
           <motion.textarea
@@ -121,7 +134,7 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
             placeholder="Your Message"
-            className="border contact-field p-2 inline-block w-full "
+            className="border contact-field p-2 inline-block w-full hover:text-[#007f8c]"
             rows="5"
             required
           />
@@ -130,7 +143,7 @@ export default function Contact() {
             whileTap={{ scale: 0.95, y: 2 }}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}
             type="submit"
-            className="contact-btn py-2 px-4"
+            className="gradient-text py-2 px-4"
           >
             Send Message
           </motion.button>
@@ -140,9 +153,9 @@ export default function Contact() {
 
       {/* Contact Info */}
       <section
-        className="contact h-[80vh] p-8 mt-8 mb-8 max-w-xl mx-auto text-center"
+        className="contact h-[50vh] p-8 mt-8 mb-8 max-w-xl mx-auto text-center"
         data-aos="fade-in"
-        data-aos-delay="400"
+        data-aos-delay="200"
       >
         <h2 className="text-2xl font-bold mb-4 a-heading">
           Contact Information

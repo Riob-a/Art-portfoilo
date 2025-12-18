@@ -752,6 +752,7 @@ button.gradient-text {
     fadeInLeft 1s ease-out both,
     gradientWave 2.5s ease infinite;
   animation-delay: 1.2s, 0s;
+  border: #05c3d8 1.5px dashed;
 }
 
 .gradient-text :hover {

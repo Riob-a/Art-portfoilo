@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import * as THREE from "three";
-import { OrbitControls, Html } from "@react-three/drei";
+import { OrbitControls, Html, Environment } from "@react-three/drei";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { FaDownload, FaSearch } from "react-icons/fa";
@@ -153,7 +153,7 @@ function LPSingleCard({ art, float = true }) {
                     transparent
                     color="rgba(0, 0, 0, 1)"
                     opacity={0.12}
-                    roughness={0.1}
+                    roughness={0.05}
                     thickness={0.1}
                     ior={1.01}
                     reflectivity={1}
@@ -240,6 +240,7 @@ export default function LowPowerGallery({ artworks }) {
         <div className="relative h-[100vh] w-full">
             <Canvas shadows camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.8} />
+                <Environment preset="warehouse"  environmentIntensity={1} />
                 <directionalLight position={[5, 5, 5]} intensity={1.2} />
                 <directionalLight position={[-5, 2, -5]} intensity={0.6} />
 
@@ -255,7 +256,7 @@ export default function LowPowerGallery({ artworks }) {
             </Canvas>
 
             <div className="flex justify-between w-full px-6 absolute bottom-30"
-                // data-aos="fade-in" data-aos-delay="200"
+            // data-aos="fade-in" data-aos-delay="200"
             >
                 <button onClick={prev} className="px-4 py-2 bg-black text-white hover:text-[#007f8cff] transition rounded-lg logo-3">◀ Prev</button>
                 <button onClick={openModal} className="px-4 py-2  text-white hover:text-[#007f8cff] transition">

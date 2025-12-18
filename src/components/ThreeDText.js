@@ -201,7 +201,7 @@ export default function ThreeDTextWithPlatform() {
         <RotatingPlatform>
           <SwappableTextCube />
           <Html>
-            {showHint && (<div
+            {/* {showHint && (<div
               className="md:hidden animate-bounc fixed left-12 top-15 logo-3"
               style={{
                 background: "rgba(0,0,0,0.7)",
@@ -217,7 +217,7 @@ export default function ThreeDTextWithPlatform() {
               }}
             >
               View Gallery
-            </div>)}
+            </div>)} */}
             
             <Link
               href="/gallery"
