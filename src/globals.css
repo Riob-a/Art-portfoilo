@@ -526,6 +526,7 @@ main {
   stroke: #007f8c;
   transition: stroke 0.5s ease-in-out;
 }
+
 .g-link {
   /* background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b); */
   color: #000000;
@@ -541,6 +542,7 @@ main {
   color: #007f8c;
   transition: all 0.3s ease;
 }
+
 /* Tweak these */
 .marquee {
   --gap: 2rem;
@@ -713,7 +715,7 @@ main {
 
 .a-content {
   color: #fdfdfd;
-  
+
 }
 
 .a-link {
@@ -763,7 +765,7 @@ button.gradient-text {
 /* end */
 
 /* Components */
-.home{
+.home {
   background: linear-gradient(135deg,
       #fdb140 0%,
       #f69b13 35%,
@@ -842,6 +844,21 @@ button.gradient-text {
     font-size: 11px;
   }
 
+  .navbar {
+    font-size: 0.9rem;
+    height: 20px;
+  }
+
+  .navbar.collapsed .logo-pic {
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease-in-out;
+
+  }
+
   .logo {
     font-size: 0.9rem;
   }
@@ -869,10 +886,12 @@ button.gradient-text {
   }
 
   .canvas {
-    height:fit-content
+    height: fit-content
   }
-  .footer{
-    padding:2rem;
+
+  .footer {
+    padding: 2rem;
+    font-size: 1rem;
   }
 }
 
@@ -1024,7 +1043,7 @@ button.gradient-text {
   border: 1px solid transparent;
   transition: color 1s ease, border-color 1s ease, background-color 2s ease;
   background-color: #000000;
-
+  font-family: 'Panchang', sans-serif;
 }
 
 .footer:hover {

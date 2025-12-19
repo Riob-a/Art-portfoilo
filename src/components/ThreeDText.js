@@ -221,7 +221,7 @@ export default function ThreeDTextWithPlatform() {
             
             <Link
               href="/gallery"
-              className="fixed top-15  z-50 md:hidden"
+              className="fixed top-65 z-50 md:hidden items-center justify-center"
             >
               <div className="relative flex items-center justify-center gap-1">
                 {/* Pulse indicator */}

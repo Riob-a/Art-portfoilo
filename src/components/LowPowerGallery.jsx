@@ -166,10 +166,25 @@ function LPSingleCard({ art, float = true }) {
     );
 }
 
+//  Screen size render conditional
+function useIsLargeScreen(breakpoint = 1024) {
+    const [isLarge, setIsLarge] = useState(false);
+
+    useEffect(() => {
+        const check = () => setIsLarge(window.innerWidth >= breakpoint);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, [breakpoint]);
+
+    return isLarge;
+}
+
 // --- LOW-POWER SINGLE-CARD GALLERY ---
 export default function LowPowerGallery({ artworks }) {
     const [index, setIndex] = useState(0);
 
+    const isLargeScreen = useIsLargeScreen(1024);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
     const currentArt = artworks[index];
@@ -240,13 +255,15 @@ export default function LowPowerGallery({ artworks }) {
         <div className="relative h-[100vh] w-full">
             <Canvas shadows camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.8} />
-                {/* <Environment preset="warehouse"  environmentIntensity={0.01} /> */}
+
+                {isLargeScreen && (
+                    <Environment
+                        preset="warehouse"
+                        environmentIntensity={0.4}
+                    />
+                )}                
                 <directionalLight position={[5, 5, 5]} intensity={1.7} />
                 <directionalLight position={[-5, 2, -5]} intensity={0.6} />
-
-                {/* <Suspense fallback={<Html center><div className="text-white">Loading...</div></Html>}>
-                    <LPSingleCard art={currentArt} />
-                </Suspense> */}
                 <Suspense fallback={<LPLoadingFallback />}>
                     <LPSingleCard art={currentArt} />
                 </Suspense>
