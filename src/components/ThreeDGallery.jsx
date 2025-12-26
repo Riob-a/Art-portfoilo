@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, Html, Environment } from "@react-three/drei";
+import { OrbitControls, Html, Environment, Bounds } from "@react-three/drei";
 import { TextureLoader } from "three";
 import * as THREE from "three";
 import artworks from "../data/artworks";
@@ -115,7 +115,7 @@ export default function ThreeDFloatingGallery() {
 
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-screen w-full p-6">
 
       {/* DIM BACKGROUND WHEN MODAL OPEN */}
       {isModalOpen && (
@@ -129,15 +129,22 @@ export default function ThreeDFloatingGallery() {
         <directionalLight position={[-5, 2, -5]} intensity={0.6} />
 
         <Suspense fallback={<LoadingFallback />}>
-          <GalleryScene
-            artworks={artworks}
-            sizes={sizes}
-            openModal={openModal}
-            modalOpen={isModalOpen}
-          />
+          <Bounds
+            fit
+            clip
+            observe
+            margin={0.95}
+          >
+            <GalleryScene
+              artworks={artworks}
+              sizes={sizes}
+              openModal={openModal}
+              modalOpen={isModalOpen}
+            />
+          </Bounds>
         </Suspense>
 
-        <OrbitControls enablePan enableZoom={!isModalOpen} enabled={!isModalOpen} />
+        <OrbitControls makeDefault enablePan enableZoom={!isModalOpen} enabled={!isModalOpen} minDistance={6} maxDistance={14}/>
       </Canvas>
 
       {/* ------------------ MODAL ------------------ */}
@@ -260,7 +267,7 @@ function RecessedFrame({
     s.lineTo(-w, h);
     s.closePath();
 
-    // 🔹 inner cut-out (the depression)
+    // inner cut-out (the depression)
     const hole = new THREE.Path();
     hole.moveTo(-holeW, -holeH);
     hole.lineTo(holeW, -holeH);
