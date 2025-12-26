@@ -234,7 +234,6 @@ function SwappableTextCube() {
         document.body.style.cursor = "default";
 
         setHoverVolume(0.2, 0.15);
-
       }}
     >
 
