@@ -115,7 +115,7 @@ export default function ThreeDFloatingGallery() {
 
 
   return (
-    <div className="relative h-[100vh] w-full">
+    <div className="relative h-screen w-full">
 
       {/* DIM BACKGROUND WHEN MODAL OPEN */}
       {isModalOpen && (
@@ -150,12 +150,12 @@ export default function ThreeDFloatingGallery() {
             onClick={handleClose}
           >
             <div
-              className="relative max-w-[50vw] w-full max-h-[100vh] overflow-auto rounded-lg p-1 animate-scaleIn "
+              className="relative max-w-[50vw] w-full max-h-screen overflow-auto rounded-lg p-1 animate-scaleIn "
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
-                className="absolute top-4 right-6 text-3xl x-button"
+                className="absolute top-4 right-8 text-3xl x-button"
                 onClick={handleClose}
               >
                 ✕
@@ -175,7 +175,7 @@ export default function ThreeDFloatingGallery() {
                   {selectedArt.title}
                 </h2>
 
-                <p className="text-white text-center max-w-[80%]">
+                <p className="text-white text max-w-[80%]">
                   {selectedArt.description}
                 </p>
 
@@ -311,13 +311,6 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
       }
     });
   }, [textures]);
-
-  // const textures = useLoader(TextureLoader, urls);
-  // useEffect(() => {
-  //   textures?.forEach((t) => {
-  //     if (t) t.flipY = false;
-  //   });
-  // }, [textures]);
 
   /* -------- GRID POSITIONS -------- */
   const positions = useMemo(() => {

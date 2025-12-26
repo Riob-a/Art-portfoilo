@@ -19,7 +19,7 @@ export default function Home() {
   );
 
   return (
-    <div className='home h-[100vh]'>
+    <div className='home h-screen'>
       <Navbar />
       {/* --- Hero/Header Section --- */}
       <section>
