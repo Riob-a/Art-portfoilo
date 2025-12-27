@@ -7,6 +7,7 @@ import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import { Html, Sparkles } from "@react-three/drei";
 import { FaSearch } from "react-icons/fa";
+import { useGlobalAudio } from "./useGlobalAudio";
 import Link from 'next/link';
 
 
@@ -29,7 +30,7 @@ function RotatingPlatform({ children }) {
 // ----------------------------------------
 // Swappable Text <-> Cube Component
 // ----------------------------------------
-function SwappableTextCube() {
+function SwappableTextCube({ audioCtxRef }) {
   const router = useRouter();
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -40,7 +41,7 @@ function SwappableTextCube() {
   // const hoverSourceRef = useRef(null);
   // const hoverGainRef = useRef(null);
 
-  const audioCtxRef = useRef(null);
+  // const audioCtxRef = useRef(null);
 
   const hoverBufferRef = useRef(null);
   const clickBufferRef = useRef(null);
@@ -55,7 +56,7 @@ function SwappableTextCube() {
   });
 
 
-  // Smooth animation for BOTH text and cube
+  // Smooth animation for BOTH text and sphere
   const { textScale, cubeScale } = useSpring({
     textScale: hovered ? 0.2 : 1,   // shrink text smaller than cube
     cubeScale: hovered ? 3.0 : 0,   // cube grows 
@@ -70,92 +71,20 @@ function SwappableTextCube() {
     }
   });
 
-  // Volume modifier
-  // function fadeVolume(audio, target, duration = 200) {
-  //   if (!audio) return;
-
-  //   const start = audio.volume;
-  //   const diff = target - start;
-  //   const startTime = performance.now();
-
-  //   function step(now) {
-  //     const t = Math.min((now - startTime) / duration, 1);
-  //     audio.volume = start + diff * t;
-  //     if (t < 1) requestAnimationFrame(step);
-  //   }
-
-  //   requestAnimationFrame(step);
-  // }
-
-  // sound clip setup
-  // useEffect(() => {
-  //   if (typeof window === "undefined") return;
-
-  //   hoverSoundRef.current = new Audio("/sounds/hover.wav");
-  //   clickSoundRef.current = new Audio("/sounds/click.wav");
-
-  //   hoverSoundRef.current.volume = 0.15; // subtle
-  //   clickSoundRef.current.volume = 0.25;
-
-  //   // Prevent overlap
-  //   hoverSoundRef.current.preload = "auto";
-  //   clickSoundRef.current.preload = "auto";
-  // }, []);
-
+  // start hover loop silently once audio is unlocked
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (!audioCtxRef?.current?.hoverBuffer) return;
 
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    audioCtxRef.current = ctx;
+    startHoverSound();
+    setHoverVolume(0.01, 0.01);
+  }, [audioCtxRef?.current?.hoverBuffer]);
 
-    const loadSound = async (url, ref) => {
-      const res = await fetch(url);
-      const arrayBuffer = await res.arrayBuffer();
-      ref.current = await ctx.decodeAudioData(arrayBuffer);
-    };
-
-    loadSound("/sounds/hover.wav", hoverBufferRef);
-    loadSound("/sounds/click.wav", clickBufferRef);
-  }, []);
-
-  // trigger sounds
-  // useEffect(() => {
-  //   const unlockAudio = () => {
-  //     if (hoverSoundRef.current) {
-  //       hoverSoundRef.current.play().then(() => {
-  //         hoverSoundRef.current.pause();
-  //         hoverSoundRef.current.currentTime = 0;
-  //       }).catch(() => { });
-  //     }
-
-  //     document.removeEventListener("pointerdown", unlockAudio);
-  //   };
-
-  //   document.addEventListener("pointerdown", unlockAudio);
-  //   return () => document.removeEventListener("pointerdown", unlockAudio);
-  // }, []);
-
-  useEffect(() => {
-    const unlock = () => {
-      const ctx = audioCtxRef.current;
-      if (ctx && ctx.state === "suspended") ctx.resume();
-
-      document.removeEventListener("pointerdown", unlock);
-      document.removeEventListener("pointermove", unlock);
-    };
-
-    document.addEventListener("pointerdown", unlock);
-    document.addEventListener("pointermove", unlock);
-
-    return () => {
-      document.removeEventListener("pointerdown", unlock);
-      document.removeEventListener("pointermove", unlock);
-    };
-  }, []);
 
   const startHoverSound = () => {
     const ctx = audioCtxRef.current;
-    const buffer = hoverBufferRef.current;
+    // const buffer = hoverBufferRef.current;
+    const buffer = audioCtxRef.current?.hoverBuffer;
+
     if (!ctx || !buffer || hoverSourceRef.current) return;
 
     const source = ctx.createBufferSource();
@@ -188,7 +117,8 @@ function SwappableTextCube() {
 
   const playClick = () => {
     const ctx = audioCtxRef.current;
-    const buffer = clickBufferRef.current;
+    // const buffer = clickBufferRef.current;
+    const buffer = audioCtxRef.current?.clickBuffer;
     if (!ctx || !buffer) return;
 
     const source = ctx.createBufferSource();
@@ -204,23 +134,6 @@ function SwappableTextCube() {
   };
 
   return (
-    // <group
-    //   onPointerOver={() => {
-    //     setHovered(true);
-    //     document.body.style.cursor = "pointer";
-
-    //     if (!hasPlayedHoverRef.current && hoverSoundRef.current) {
-    //       hoverSoundRef.current.currentTime = 0;
-    //       hoverSoundRef.current.play().catch(() => { });
-    //       hasPlayedHoverRef.current = true;
-    //     }
-    //   }}
-    //   onPointerOut={() => {
-    //     setHovered(false);
-    //     document.body.style.cursor = "default";
-    //     hasPlayedHoverRef.current = false;
-    //   }}
-    // >
     <group
       onPointerOver={() => {
         setHovered(true);
@@ -232,8 +145,7 @@ function SwappableTextCube() {
       onPointerOut={() => {
         setHovered(false);
         document.body.style.cursor = "default";
-
-        setHoverVolume(0.2, 0.15);
+        setHoverVolume(0.15, 0.2);
       }}
     >
 
@@ -242,6 +154,7 @@ function SwappableTextCube() {
         <Center>
           <Text3D
             font="/fonts/Panchang_Bold.json"
+            // font="/fonts/BBH Bartle_Regular"
             size={2}
             height={2}
             bevelEnabled
@@ -357,7 +270,58 @@ function SwappableTextCube() {
 // ----------------------------------------
 export default function ThreeDTextWithPlatform() {
   const [showHint, setShowHint] = useState(true);
+  const audioCtxRef = useRef(null);
+  const audioUnlockedRef = useRef(false);
 
+  // Sound triger- on hover
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+
+    const loadSound = async (url, ref) => {
+      const res = await fetch(url);
+      const buffer = await res.arrayBuffer();
+      return audioCtxRef.current.decodeAudioData(buffer);
+    };
+
+    Promise.all([
+      loadSound("/sounds/hover.wav"),
+      loadSound("/sounds/click.wav"),
+    ]).then(([hoverBuffer, clickBuffer]) => {
+      audioCtxRef.current.hoverBuffer = hoverBuffer;
+      audioCtxRef.current.clickBuffer = clickBuffer;
+    });
+
+    // unlock audio from ANY interaction on the page
+    const unlock = async () => {
+      if (audioUnlockedRef.current) return;
+      audioUnlockedRef.current = true;
+
+      if (audioCtxRef.current.state === "suspended") {
+        await audioCtxRef.current.resume();
+      }
+
+      document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("pointermove", unlock);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("wheel", unlock);
+    };
+
+    document.addEventListener("pointerdown", unlock);
+    document.addEventListener("pointermove", unlock);
+    document.addEventListener("touchstart", unlock);
+    document.addEventListener("wheel", unlock);
+
+    return () => {
+      document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("pointermove", unlock);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("wheel", unlock);
+    };
+  }, []);
+
+  // Hint trigger
   useEffect(() => {
     const timer = setTimeout(() => setShowHint(false), 3000);
     return () => clearTimeout(timer);
@@ -379,28 +343,14 @@ export default function ThreeDTextWithPlatform() {
       <directionalLight position={[5, 5, 5]} intensity={1} />
       <Environment preset="sunset" blur={0.9} />
 
-      <Bounds fit clip observe>
+      <Bounds
+        // fit
+        clip
+        observe
+      >
         <RotatingPlatform>
-          <SwappableTextCube />
+          <SwappableTextCube audioCtxRef={audioCtxRef} />
           <Html>
-            {/* {showHint && (<div
-              className="md:hidden animate-bounc fixed left-12 top-15 logo-3"
-              style={{
-                background: "rgba(0,0,0,0.7)",
-                color: "white",
-                padding: "8px 12px",
-                borderRadius: "6px",
-                fontSize: "10px",
-                whiteSpace: "nowrap",
-                pointerEvents: "none",
-                backdropFilter: "blur(4px)",
-                transform: "translateY(-10px)",
-                animation: "fadeIn 0.2s ease-out",
-              }}
-            >
-              View Gallery
-            </div>)} */}
-
             <Link
               href="/gallery"
               className="fixed top-65 z-50 md:hidden items-center justify-center"

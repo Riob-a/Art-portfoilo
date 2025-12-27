@@ -40,7 +40,7 @@ export default function About() {
   return (
     <div>
       <section
-        className="about mt-8 p-7 max-w-2xl mx-auto animate-fadeInLeft"
+        className="about mt-8 mb-40 p-7 max-w-2xl mx-auto animate-fadeInLeft"
       >
         <div className="flex items-center justify-between mb-18">
           {/* Conditional rendering: 3D header only for high-power devices */}

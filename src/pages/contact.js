@@ -90,7 +90,7 @@ export default function Contact() {
 
   return (
     <div className='animate-fadeInLeft'>
-      <section className=" p-7 mt-8 max-w-xl mx-auto h-screen">
+      <section className=" p-7 mt-8 max-w-xl mx-auto my-auto h-screen">
         <div className='flex items-center justify-between mb-20'> 
           <h2 className="text-8xl font-bold mb-4 a-heading">Get in Touch</h2>
           <motion.div
@@ -153,7 +153,7 @@ export default function Contact() {
 
       {/* Contact Info */}
       <section
-        className="contact h-[50vh] p-8 mt-8 mb-8 max-w-xl mx-auto text-center"
+        className="contact h-[50vh] p-8 mt-18 mb-8 max-w-xl mx-auto my-auto text-center"
         data-aos="fade-in"
         data-aos-delay="200"
       >

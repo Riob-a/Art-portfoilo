@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
 import { motion, useScroll, useTransform } from "framer-motion";
 import ThreeDText from '../components/ThreeDText';
+import { useGlobalAudio } from '@/components/useGlobalAudio';
 
 export default function Home() {
   const svg = (
@@ -19,16 +20,15 @@ export default function Home() {
   );
 
   return (
-    <div className='home h-screen'>
+    <div className='home '>
       <Navbar />
-      {/* --- Hero/Header Section --- */}
       <section>
         <motion.header
           className="relative "
           data-aos="fade-in"
           data-aos-delay="200"
         >
-          <ThreeDText />
+          <ThreeDText  />
         </motion.header>
       </section>
     </div>
