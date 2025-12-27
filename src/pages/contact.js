@@ -89,10 +89,15 @@ export default function Contact() {
   }
 
   return (
-    <div className='animate-fadeInLeft'>
+    <div className=''>
       <section className=" p-7 mt-8 max-w-xl mx-auto my-auto h-screen">
-        <div className='flex items-center justify-between mb-20'> 
-          <h2 className="text-8xl font-bold mb-4 a-heading">Get in Touch</h2>
+        <div className='flex items-center justify-between mb-20'>
+          {/* <h2 className="text-8xl font-bold mb-4 a-heading">Get in Touch</h2> */}
+          <h2 className="text-8xl font-bold mb-4 a-heading">
+            <div data-aos="fade-up" data-aos-delay="0">Get</div>
+            <div data-aos="fade-up" data-aos-delay="150">in</div>
+            <div data-aos="fade-up" data-aos-delay="300">Touch</div>
+          </h2>
           <motion.div
             className="line-arrow"
             transition={{ type: 'spring', stiffness: 500, damping: 20 }}
@@ -102,7 +107,7 @@ export default function Contact() {
               <button className="arrow-l-button">{arrow}</button>
             </Link>
           </motion.div>
-          
+
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
           <motion.input

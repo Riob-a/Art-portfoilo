@@ -169,7 +169,7 @@ export default function ThreeDFloatingGallery() {
               </button>
 
               {/* Fullscreen Image */}
-              <div className="max-w-full max-h-full p-4 flex flex-col items-center">
+              <div className="max-w-full max-h-full p-2 flex flex-col items-center">
                 <Image
                   src={selectedArt.imageUrl}
                   alt={selectedArt.title}

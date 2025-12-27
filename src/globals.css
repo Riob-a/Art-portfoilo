@@ -770,14 +770,16 @@ button.gradient-text {
 /* Components */
 .home {
   background: linear-gradient(135deg,
-      #fdb140 0%,
-      #f69b13 35%,
-      #f09206 60%,
-      #f69b13 85%,
-      #fdb140 100%);
+      #1fffd4 0%,
+      #3fd0c9 20%,
+      #5faac7 40%,
+      #7f8fd4 55%,
+      #a86ad9 70%,
+      #c84adf 85%,
+      #ff00cc 100%);
 
   background-size: 130% 100%;
-  animation: gradientWave 15s ease infinite;
+  animation: gradientWave 5s ease infinite;
   transition: background-color 0.3s, color 0.3s;
 }
 

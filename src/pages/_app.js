@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     AOS.init({
-      duration: 800,
+      duration: 500,
       once: true,
       easing: 'ease-in-out',
     });
