@@ -49,7 +49,7 @@ export default function TransitionOverlay() {
                 font-semibold
                 tracking-widest
                 opacity-90
-                a-heading
+                main-logo
               "
                 >
                     <div className="text-black uppercase tracking-widest">

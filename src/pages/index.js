@@ -25,6 +25,8 @@ export default function Home() {
               z-10
               pointer-events-none
               select-none
+
+              main-logo
             "
           >
             <span
@@ -35,7 +37,7 @@ export default function Home() {
                 font-semibold
                 tracking-widest
                 opacity-90
-                a-heading
+                main-logo
               "
             >
               <div className="text-white uppercase tracking-widest">

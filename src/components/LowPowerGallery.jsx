@@ -221,7 +221,7 @@ export default function LowPowerGallery({ artworks }) {
                         color: "white",
                         fontSize: "16px",
                         borderRadius: "8px",
-                        background: "#161515",
+                        // background: "#161515",
                         // backdropFilter: "blur(6px)",
                         display: "flex",
                         alignItems: "center",
@@ -252,13 +252,13 @@ export default function LowPowerGallery({ artworks }) {
 
 
     return (
-        <div className="relative h-[100vh] w-full">
+        <div className="relative h-screen w-full">
             <Canvas shadows camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.8} />
 
                 {isLargeScreen && (
                     <Environment
-                        preset="warehouse"
+                        preset="dawn"
                         environmentIntensity={0.4}
                     />
                 )}                
@@ -289,7 +289,7 @@ export default function LowPowerGallery({ artworks }) {
                     onClick={closeModal}
                 >
                     <div
-                        className="relative max-w-[50vw] w-full max-h-[100vh] overflow-auto rounded-lg p-1 animate-scaleIn "
+                        className="relative max-w-[50vw] w-full max-h-screen overflow-auto rounded-lg p-1 animate-scaleIn "
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Close Button */}

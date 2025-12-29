@@ -27,6 +27,11 @@ function InteractiveSphere({ audioCtxRef }) {
   const hoverSourceRef = useRef(null);
   const hoverGainRef = useRef(null);
 
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+
   // Color feedback
   const { color } = useSpring({
     color: clicked
@@ -107,30 +112,72 @@ function InteractiveSphere({ audioCtxRef }) {
     source.start(ctx.currentTime);
   };
 
+  // Phone/Tablet interactivity
+  const activateHover = () => {
+    setHovered(true);
+    setShowTooltip(true);
+    startHoverSound();
+    setHoverVolume(0.2, 0.15);
+    if (navigator.vibrate) navigator.vibrate(20);
+
+  };
+
+  const deactivateHover = () => {
+    setHovered(false);
+    setShowTooltip(false);
+    setHoverVolume(0.15, 0.2);
+  };
+
+
   return (
     <a.group
       ref={sphereGroupRef}
       scale={scale.to((s) => [s, s, s])}
+
       onPointerOver={() => {
         setHovered(true);
         setShowTooltip(true);
         document.body.style.cursor = "pointer";
         startHoverSound();
         setHoverVolume(0.2, 0.15);
+
+        activateHover();
       }}
       onPointerOut={() => {
         setHovered(false);
         setShowTooltip(false);
         document.body.style.cursor = "default";
         setHoverVolume(0.15, 0.2);
+
+        deactivateHover();
       }}
+      //   onClick={() => {
+      //     setClicked(true);
+      //     playClick();
+      //     setTimeout(() => setClicked(false), 200);
+      //     router.push("/gallery");
+      //   }}
+      // >
+
       onClick={() => {
+        if (isTouchDevice && !hovered) {
+          // FIRST TAP = hover
+          activateHover();
+          // auto-hide hover after delay
+          setTimeout(() => {
+            deactivateHover();
+          }, 2500);
+
+          return;
+        }
+        // SECOND TAP (or desktop click) = navigate
         setClicked(true);
         playClick();
         setTimeout(() => setClicked(false), 200);
         router.push("/gallery");
       }}
     >
+
       {/* Tooltip */}
       {showTooltip && (
         <Html position={[0, 3.2, 0]} center>
@@ -149,7 +196,8 @@ function InteractiveSphere({ audioCtxRef }) {
               animation: "fadeIn 0.2s ease-out",
             }}
           >
-            Click to View Gallery
+            {/* Click to View Gallery */}
+            {isTouchDevice ? "Tap again to open Gallery" : "Click to View Gallery"}
           </div>
         </Html>
       )}
@@ -186,6 +234,20 @@ function InteractiveSphere({ audioCtxRef }) {
 export default function InteractiveSpinningSphere() {
   const audioCtxRef = useRef(null);
   const audioUnlockedRef = useRef(false);
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia("(max-width: 768px)");
+
+    const update = () => setIsSmallScreen(media.matches);
+    update();
+
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -234,7 +296,7 @@ export default function InteractiveSpinningSphere() {
       <directionalLight position={[5, 5, 5]} intensity={1.0} />
       <Environment preset="studio" blur={0.8} />
 
-      <Bounds clip observe>
+      <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>
         <InteractiveSphere audioCtxRef={audioCtxRef} />
       </Bounds>
     </Canvas>
