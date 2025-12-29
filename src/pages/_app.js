@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     AOS.init({
-      duration: 500,
+      duration: 800,
       once: true,
       easing: 'ease-in-out',
     });
@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
   return (
     <div className="app-layout min-h-screen flex flex-col">
 
-      <main className="content flex-grow">
+      <main className="content grow">
         <AnimatePresence mode="wait">
           <TransitionOverlay key={router.route} />
           <Component {...pageProps} />

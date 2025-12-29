@@ -20,14 +20,14 @@ export default function TransitionOverlay() {
             // animate={{ scaleX: 0 }}
             // exit={{ scaleX: 1 }}
             // transition={{ duration: 0.5, ease: "easeInOut" }}
-            // className="fixed top-0 left-0 w-full h-full bg-black z-50 origin-left"
+            // className="fixed top-0 left-0 w-full h-full bg-white z-50 origin-left"
 
             variants={circleVariants}
             initial="initial"
             animate="animate"
             exit="exit"
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed top-0 left-0 w-full h-full bg-[#f69b13] z-50 "
+            className="fixed top-0 left-0 w-full h-full bg-[#fbf8f5] z-50 "
         >
             <motion.div
                 className="absolute inset-0 flex items-center justify-center"
@@ -41,6 +41,32 @@ export default function TransitionOverlay() {
                     height={120}
                     className="z-50 logo-transition"
                 />
+                <span
+                    className="
+                text-white
+                text-xl
+                md:text-2xl
+                font-semibold
+                tracking-widest
+                opacity-90
+                a-heading
+              "
+                >
+                    <div className="text-black uppercase tracking-widest">
+                        <div className="text-sm md:text-base opacity-70"
+                            data-aos="fade-right"
+                            data-aos-delay="400"
+                        >
+                            the
+                        </div>
+                        <div className="text-4xl md:text-7xl font-bold"
+                            data-aos="fade-right"
+                            data-aos-delay="800"
+                        >
+                            GALLERY
+                        </div>
+                    </div>
+                </span>
             </motion.div>
 
         </motion.div>

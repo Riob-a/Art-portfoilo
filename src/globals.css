@@ -6,15 +6,26 @@
 
 
 :root {
-  --background: #161515;
+  /* --background: #161515; */
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* --background: #e6d0a7; */
-    /* --background: #ff7e5f; */
     /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
+      background: linear-gradient(135deg,
+      #1fffd4 0%,
+      #3fd0c9 20%,
+      #5faac7 40%,
+      #7f8fd4 55%,
+      #a86ad9 70%,
+      #c84adf 85%,
+      #ff00cc 100%
+      );
+
+  background-size: 130% 100%;
+  animation: gradientWave 5s ease infinite;
+  transition: background-color 0.3s, color 0.3s;
     --foreground: #ededed;
   }
 }
@@ -71,7 +82,7 @@ font-family: 'Supreme', sans-serif;
 
 /* animations |key frames */
 @keyframes gradientWave {
-  /* 0% {
+  0% {
     background-position: 0% 50%;
   }
 
@@ -81,9 +92,9 @@ font-family: 'Supreme', sans-serif;
 
   100% {
     background-position: 0% 50%;
-  } */
+  }
 
-  0% {
+  /* 0% {
     background-position: 0% 50%;
   }
 
@@ -101,7 +112,7 @@ font-family: 'Supreme', sans-serif;
 
   100% {
     background-position: 0% 50%;
-  }
+  } */
 
 }
 
@@ -397,11 +408,6 @@ font-family: 'Supreme', sans-serif;
 
 body {
   background: var(--background);
-  /* background: linear-gradient(135deg, #ff7e5f, #ff7b5a, #feb47b, #f8b480);
-  background-size: 170% 100%;
-  animation: gradientWave 20s ease infinite;
-  transition: background-color 0.3s, color 0.3s; */
-
   color: var(--foreground);
 
   /* font-family: 'Technor', sans-serif; */
@@ -412,13 +418,6 @@ body {
 
   display: flex;
   flex-direction: column;
-
-  h2 {
-    font-family: 'Panchang', sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-  }
 }
 
 main {
@@ -466,83 +465,6 @@ main {
   /* -webkit-background-clip: text; */
   -webkit-text-fill-color: white;
   background-clip: text;
-}
-
-.globe-container {
-  position: absolute;
-  bottom: 1.5%;
-  right: 2%;
-  /* left: 0%; */
-  width: 20px;
-  height: 20px;
-  /* z-index: 11; */
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer
-}
-
-.globe-icon {
-  width: 100%;
-  height: 100%;
-  opacity: 0.7;
-  transition: transform 0.5s ease-in-out
-}
-
-.globe-icon:hover {
-  transform: rotate(360deg);
-}
-
-.svg-text-arc {
-  position: absolute;
-  top: -2px;
-  right: -3.5px;
-  width: 20px;
-  height: 20px;
-  overflow: visible;
-}
-
-.svg-text-arc text {
-  font-family: "Manufacturing Consent", system-ui;
-  font-size: 4rem;
-  fill: #010101;
-  /* letter-spacing: 1.5px; */
-}
-
-@media screen and (max-width: 768px) {
-  .header .text {
-    font-size: 2.7rem;
-    padding: 185px 0px;
-  }
-}
-
-@media screen and (max-width: 1100px) {
-  .header .text {
-    font-size: 2rem;
-    padding: 185px 0px;
-  }
-}
-
-.svg:hover {
-  stroke: #007f8c;
-  transition: stroke 0.5s ease-in-out;
-}
-
-.g-link {
-  /* background: linear-gradient(90deg, #ff613a, #ff7e5f, #feb47b); */
-  color: #000000;
-  background-size: 200% 100%;
-  transition: all 0.3s ease;
-  font-family: 'Panchang', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-style: bold;
-}
-
-.g-link:hover {
-  color: #007f8c;
-  transition: all 0.3s ease;
 }
 
 /* Tweak these */
@@ -731,13 +653,6 @@ main {
   text-decoration: underline;
   transition: color 0.5s ease-in-out, text-decoration 0.5s ease-in-out;
 }
-
-.form-input {
-  /* background: #ff000033; */
-  backdrop-filter: blur(10px);
-  font-weight: 600;
-}
-
 /* end */
 
 /* Contact */
@@ -760,6 +675,12 @@ button.gradient-text {
   border: #05c3d8 1.5px dashed;
 }
 
+.form-input {
+  /* background: #ff000033; */
+  backdrop-filter: blur(10px);
+  font-weight: 600;
+}
+
 .gradient-text :hover {
   transform: scale(1.1);
   transition: all 0.3s ease-in-out;
@@ -769,18 +690,22 @@ button.gradient-text {
 
 /* Components */
 .home {
-  background: linear-gradient(135deg,
+  /* background: linear-gradient(135deg,
       #1fffd4 0%,
       #3fd0c9 20%,
       #5faac7 40%,
       #7f8fd4 55%,
       #a86ad9 70%,
       #c84adf 85%,
-      #ff00cc 100%);
+      #ff00cc 100%
+      );
 
   background-size: 130% 100%;
   animation: gradientWave 5s ease infinite;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s; */
+  /* outline: 1rem solid white;
+  outline-offset: -15rem;
+  border-radius: 15px; */
 }
 
 .logo {
