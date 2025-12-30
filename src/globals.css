@@ -248,7 +248,7 @@ font-family: 'Supreme', sans-serif;
 }
 
 .line-arrow:hover {
-  background-color: #3deab8;
+  /* background-color: #3deab8; */
   transition: background-color 0.5s ease-in-out;
 }
 
@@ -648,12 +648,12 @@ main {
 }
 
 .a-link {
-  color: #ff7e5f;
+  color: #1d709dac;
   transition: color 0.5s ease-in-out;
 }
 
 .a-link:hover {
-  color: #feb47b;
+  color: #9ae0f9;
   text-decoration: underline;
   transition: color 0.5s ease-in-out, text-decoration 0.5s ease-in-out;
 }

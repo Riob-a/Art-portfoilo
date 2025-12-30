@@ -180,7 +180,7 @@ function InteractiveSphere({ audioCtxRef }) {
 
       {/* Tooltip */}
       {showTooltip && (
-        <Html position={[0, 3.2, 0]} center>
+        <Html position={[0, 4.5, 0]} center>
           <div
             className="logo-3"
             style={{

@@ -91,7 +91,7 @@ export default function Contact() {
           </motion.div>
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-3">
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-3" data-aos="fade-in" data-aos-delay="1000">
           <motion.input
             {...hoverSpring}
             name="name"

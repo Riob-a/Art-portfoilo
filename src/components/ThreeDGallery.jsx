@@ -162,7 +162,7 @@ export default function ThreeDFloatingGallery() {
             >
               {/* Close Button */}
               <button
-                className="absolute top-4 right-8 text-3xl x-button"
+                className="absolute top-4 right-8 text-2xl x-button"
                 onClick={handleClose}
               >
                 ✕
@@ -175,7 +175,7 @@ export default function ThreeDFloatingGallery() {
                   alt={selectedArt.title}
                   width={600}
                   height={300}
-                  className="w-auto max-h-[70vh] object-contain rounded"
+                  className="w-auto max-h-[60vh] object-contain rounded"
                 />
 
                 <h2 className="modal-text-2 text-white text-2xl mt-4">
