@@ -211,8 +211,8 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           // args={[2, 64, 64]}
           args={[
             2,
-            isSmallScreen ? 24 : 64,
-            isSmallScreen ? 24 : 64,
+            isSmallScreen ? 10 : 64,
+            isSmallScreen ? 10 : 64,
           ]}
         />
         <a.meshPhysicalMaterial
@@ -230,7 +230,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         <sphereGeometry
           // args={[2.02, 40, 20]}
           args={[
-            2.02,
+            isSmallScreen ? 2.2 : 2.02,
             isSmallScreen ? 18 : 40,
             isSmallScreen ? 12 : 20,
           ]}
@@ -239,8 +239,6 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         <Edges threshold={1} color="rgba(136, 136, 136, 1)"
         />
       </mesh>
-
-      {/* <Sparkles count={30} scale={12} size={1.2} speed={0.25} /> */}
     </a.group>
   );
 }
