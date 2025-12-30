@@ -764,14 +764,7 @@ button.gradient-text {
 
 @media screen and (max-width: 768px) {
   :root {
-    background: linear-gradient(135deg,
-        #1fffd4 0%,
-        #3fd0c9 20%,
-        #5faac7 40%,
-        #7f8fd4 55%,
-        #a86ad9 70%,
-        #c84adf 85%,
-        #ff00cc 100%);
+    background: #161515;
   }
 
   html {
