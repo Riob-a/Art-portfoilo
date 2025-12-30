@@ -52,7 +52,7 @@ export default function Gallery() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative gallery">
 
       {/* ───────── TOGGLE BUTTON ───────── */}
       <div className="fixed top-4 right-4 z-50">

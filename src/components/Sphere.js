@@ -16,9 +16,11 @@ import * as THREE from "three";
 // ----------------------------------------
 // Rotating Sphere
 // ----------------------------------------
-function InteractiveSphere({ audioCtxRef }) {
+function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
   const router = useRouter();
   const sphereGroupRef = useRef(null);
+
+  const baseScale = isSmallScreen ? 1.35 : 1;
 
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -42,7 +44,8 @@ function InteractiveSphere({ audioCtxRef }) {
 
   // Subtle scale feedback
   const { scale } = useSpring({
-    scale: hovered ? 1.15 : 1,
+    // scale: hovered ? 1.15 : 1,
+    scale: hovered ? baseScale * 1.12 : baseScale,
     config: { tension: 150, friction: 18 },
   });
 
@@ -204,7 +207,14 @@ function InteractiveSphere({ audioCtxRef }) {
 
       {/* Solid sphere */}
       <mesh>
-        <sphereGeometry args={[2, 64, 64]} />
+        <sphereGeometry
+          // args={[2, 64, 64]}
+          args={[
+            2,
+            isSmallScreen ? 24 : 64,
+            isSmallScreen ? 24 : 64,
+          ]}
+        />
         <a.meshPhysicalMaterial
           color={color}
           metalness={0.2}
@@ -217,7 +227,14 @@ function InteractiveSphere({ audioCtxRef }) {
 
       {/* Wireframe overlay */}
       <mesh>
-        <sphereGeometry args={[2.02, 40, 20]} />
+        <sphereGeometry
+          // args={[2.02, 40, 20]}
+          args={[
+            2.02,
+            isSmallScreen ? 18 : 40,
+            isSmallScreen ? 12 : 20,
+          ]}
+        />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         <Edges threshold={1} color="rgba(136, 136, 136, 1)"
         />
