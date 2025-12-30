@@ -764,11 +764,11 @@ button.gradient-text {
 
 @media screen and (max-width: 768px) {
   :root {
-    /* background: #161515; */
+    background: #3fd0c9;
   }
 
   .gallery {
-    background: #161515;
+    /* background: #161515; */
   }
 
   html {
