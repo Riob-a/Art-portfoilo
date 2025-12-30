@@ -226,16 +226,16 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       </mesh>
 
       {/* Wireframe overlay */}
-      <mesh>
+      <mesh renderOrder={10}>
         <sphereGeometry
           // args={[2.02, 40, 20]}
           args={[
-            isSmallScreen ? 3 : 2.02,
+            isSmallScreen ? 1 : 2.02,
             isSmallScreen ? 18 : 40,
             isSmallScreen ? 12 : 20,
           ]}
         />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} depthTest={false}/>
         <Edges threshold={1} color="rgba(136, 136, 136, 1)"
         />
       </mesh>
