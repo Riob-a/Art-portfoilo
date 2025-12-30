@@ -230,7 +230,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         <sphereGeometry
           // args={[2.02, 40, 20]}
           args={[
-            isSmallScreen ? 1 : 2.02,
+            isSmallScreen ? 1 : 2.,
             isSmallScreen ? 18 : 40,
             isSmallScreen ? 12 : 20,
           ]}
