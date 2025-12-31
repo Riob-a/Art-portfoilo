@@ -19,6 +19,7 @@ export default function ThreeDFloatingGallery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedArt, setSelectedArt] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
+  const [clicked, setClicked] = useState(null);
 
   const openModal = (art) => {
     setSelectedArt(art);
@@ -140,11 +141,13 @@ export default function ThreeDFloatingGallery() {
               sizes={sizes}
               openModal={openModal}
               modalOpen={isModalOpen}
+              clicked={clicked}
+              setClicked={setClicked}
             />
           </Bounds>
         </Suspense>
 
-        <OrbitControls makeDefault enablePan enableZoom={!isModalOpen} enabled={!isModalOpen} minDistance={6} maxDistance={14} />
+        <OrbitControls makeDefault enablePan enableZoom={!isModalOpen && clicked === null} enabled={!isModalOpen && clicked === null} minDistance={6} maxDistance={14} />
       </Canvas>
 
       {/* ------------------ MODAL ------------------ */}
@@ -301,10 +304,9 @@ function RecessedFrame({
 /* -------------------
    Gallery Scene
 ------------------- */
-function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
+function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, setClicked }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(null);
-  const [clicked, setClicked] = useState(null);
   const clickTimeout = useRef(null);
 
   const urls = useMemo(() => artworks.map((a) => a.imageUrl), [artworks]);
@@ -345,22 +347,24 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
   const springs = useSprings(
     artworks.length,
     artworks.map((_, i) => ({
-      scale: hovered === i ? 1.1 : 1,
-      // rotation: hovered === i ? [0.1, 0.4, 0] : [0, 0, 0],
+      scale: hovered === i || clicked === i ? 1.12 : 1,
+
       rotation:
         clicked === i
-          ? [0, Math.PI * 2, 0] // full spin
+          ? [0, Math.PI * 1.15, 0] // flip + overshoot
           : hovered === i
-            ? [0.1, 0.4, 0]
+            ? [0.08, 0.35, 0]
             : [0, 0, 0],
-      opacity: 1,
-      // config: { mass: 1, tension: 170, friction: 20 },
+
+      positionZ: clicked === i ? 0.6 : 0,
+
       config:
         clicked === i
-          ? { mass: 1, tension: 200, friction: 18 }
+          ? { mass: 1, tension: 260, friction: 22 }
           : { mass: 1, tension: 170, friction: 20 },
     }))
   );
+
 
   /* -------- FLOATING ANIMATION -------- */
   useFrame(({ clock }) => {
@@ -394,7 +398,10 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
         return (
           <a.group
             key={i}
-            position={positions[i]}
+            // position={positions[i]}
+            position-x={positions[i][0]}
+            position-y={positions[i][1]}
+            position-z={springs[i].positionZ}
             scale={springs[i].scale.to((s) => [s, s, s])}
             rotation={springs[i].rotation}
             onPointerOver={() => !modalOpen && setHovered(i)}
@@ -402,10 +409,12 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
 
             onClick={(e) => {
               e.stopPropagation();
-              if (!modalOpen) {
+              if (modalOpen) return;
 
-                setClicked(i); // trigger spin
-                setTimeout(() => setClicked(null), 700);// reset spin so it can be clicked again
+              // DOUBLE CLICK → OPEN MODAL
+              if (clickTimeout.current) {
+                clearTimeout(clickTimeout.current);
+                clickTimeout.current = null;
 
                 openModal({
                   imageUrl: art.imageUrl,
@@ -413,8 +422,18 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
                   description: art.description,
                   slug: art.slug,
                 });
+                return;
               }
+
+              // SINGLE CLICK → SPIN
+              setClicked(i);
+
+              clickTimeout.current = setTimeout(() => {
+                setClicked(null);
+                clickTimeout.current = null;
+              }, 650);
             }}
+
           >
             {/* BACK BEVELED PLATE */}
             <BeveledCard
@@ -422,6 +441,39 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
               height={cardHeight + 0.12}
               depth={0.5}
             />
+
+            {/* BACK FACE INFO */}
+            <Html
+              position={[
+                -cardWidth / 2 + 0.15, // left padding
+                -cardHeight / 2 + 0.18, // bottom padding
+                -0.26, // slightly behind the card
+              ]}
+              rotation={[0, Math.PI, 0]} // flip text to match back face
+              transform
+              distanceFactor={1.2}
+              occlude
+            >
+              <div
+                style={{
+                  maxWidth: "120px",
+                  fontSize: "10px",
+                  lineHeight: 1.2,
+                  color: "#bbb",
+                  fontFamily: "Inter, sans-serif",
+                  pointerEvents: "none",
+                  opacity: clicked === i ? 1 : 0,
+                  transition: "opacity 0.3s ease 0.15s",
+                }}
+              >
+                <div style={{ fontWeight: 600, marginBottom: "2px" }}>
+                  {art.title}
+                </div>
+                <div style={{ opacity: 0.7 }}>
+                  {art.description}
+                </div>
+              </div>
+            </Html>
 
             {/* RECESSED FRAME */}
             <RecessedFrame

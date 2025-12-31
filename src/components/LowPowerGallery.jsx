@@ -94,8 +94,9 @@ function RecessedFrame({
 }
 
 // --- SINGLE LOW-POWER CARD COMPONENT ---
-function LPSingleCard({ art, float = true }) {
+function LPSingleCard({ art, clicked, setClicked, onOpenModal, float = true }) {
     const meshRef = useRef();
+    const clickTimeout = useRef(null);
 
     const texture = useLoader(TextureLoader, art.imageUrl);
     useMemo(() => {
@@ -107,14 +108,22 @@ function LPSingleCard({ art, float = true }) {
 
     // Float animation
     useFrame(({ clock }) => {
-        if (meshRef.current && float) {
+        if (meshRef.current && float && clicked === null) {
             meshRef.current.position.y = Math.sin(clock.getElapsedTime() * 0.8) * 0.2;
         }
     });
 
     // Hover scale
     const [hovered, setHovered] = useState(false);
-    const spring = useSpring({ scale: hovered ? 1.05 : 1 });
+    // const spring = useSpring({ scale: hovered ? 1.05 : 1 });
+    const spring = useSpring({
+        scale: hovered || clicked ? 1.08 : 1,
+        rotation: clicked ? [0, Math.PI * 1.1, 0] : [0, 0, 0],
+        positionZ: clicked ? 0.5 : 0,
+        config: clicked
+            ? { tension: 240, friction: 22 }
+            : { tension: 170, friction: 20 },
+    });
 
     const cardHeight = 3;
     const aspect = texture.image ? texture.image.width / texture.image.height : 1;
@@ -124,14 +133,79 @@ function LPSingleCard({ art, float = true }) {
         <a.group
             ref={meshRef}
             scale={spring.scale.to((s) => [s, s, s])}
+            rotation={spring.rotation}
+            position-z={spring.positionZ}
             onPointerOver={() => setHovered(true)}
             onPointerOut={() => setHovered(false)}
+            onClick={(e) => {
+                e.stopPropagation();
+
+                // DOUBLE CLICK → MODAL
+                if (clickTimeout.current) {
+                    clearTimeout(clickTimeout.current);
+                    clickTimeout.current = null;
+                    onOpenModal();
+                    return;
+                }
+
+                // SINGLE CLICK → SPIN
+                setClicked(true);
+
+                clickTimeout.current = setTimeout(() => {
+                    setClicked(null);
+                    clickTimeout.current = null;
+                }, 600);
+            }}
+
         >
             <LPBeveledCard
                 width={cardWidth + 0.12}
                 height={cardHeight + 0.12}
                 depth={0.5}
             />
+
+            {/* BACK FACE INFO */}
+            <Html
+                position={[
+                    -cardWidth / 2 + 0.15, // lower-left corner
+                    -cardHeight / 2 + 0.18,
+                    -0.25, // just behind the back plate
+                ]}
+                rotation={[0, Math.PI, 0]} // correct orientation when flipped
+                transform
+                distanceFactor={1.3}
+                occlude
+            >
+                <div
+                    style={{
+                        maxWidth: "120px",
+                        fontSize: "10px",
+                        lineHeight: 1.2,
+                        color: "#bbb",
+                        fontFamily: "Inter, system-ui, sans-serif",
+                        pointerEvents: "none",
+
+                        opacity: clicked ? 1 : 0,
+                        transition: "opacity 0.25s ease 0.15s",
+                    }}
+                >
+                    <div
+                        style={{
+                            fontWeight: 600,
+                            marginBottom: "2px",
+                            letterSpacing: "0.04em",
+                            textTransform: "uppercase",
+                        }}
+                    >
+                        {art.title}
+                    </div>
+
+                    <div style={{ opacity: 0.7 }}>
+                        {art.description}
+                    </div>
+                </div>
+            </Html>
+
 
             {/* RECESSED FRAME */}
             <RecessedFrame
@@ -183,6 +257,7 @@ function useIsLargeScreen(breakpoint = 1024) {
 // --- LOW-POWER SINGLE-CARD GALLERY ---
 export default function LowPowerGallery({ artworks }) {
     const [index, setIndex] = useState(0);
+    const [clicked, setClicked] = useState(null);
 
     const isLargeScreen = useIsLargeScreen(1024);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -261,14 +336,19 @@ export default function LowPowerGallery({ artworks }) {
                         preset="dawn"
                         environmentIntensity={1}
                     />
-                )}                
+                )}
                 <directionalLight position={[5, 5, 5]} intensity={1.7} />
                 <directionalLight position={[-5, 2, -5]} intensity={0.6} />
                 <Suspense fallback={<LPLoadingFallback />}>
-                    <LPSingleCard art={currentArt} />
+                    <LPSingleCard
+                        art={currentArt}
+                        clicked={clicked}
+                        setClicked={setClicked}
+                        onOpenModal={openModal}
+                    />
                 </Suspense>
 
-                <OrbitControls enablePan enableZoom={false} enabled={!isModalOpen} />
+                <OrbitControls enablePan enableZoom={false} enabled={!isModalOpen && clicked === null} />
 
             </Canvas>
 
