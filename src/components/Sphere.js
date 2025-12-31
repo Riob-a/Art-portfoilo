@@ -226,24 +226,22 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       </mesh>
 
       {/* Wireframe overlay */}
-      <mesh renderOrder={10}>
+      {/* <mesh renderOrder={10}>
         <sphereGeometry
           args={[
-            isSmallScreen ? 1.06 : 2.02,
-            isSmallScreen ? 20 : 40,
-            isSmallScreen ? 10 : 20,
+            isSmallScreen ? 1 : 2.02,
+            isSmallScreen ? 18 : 40,
+            isSmallScreen ? 12 : 20,
           ]}
-        />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
-        {/* {!isSmallScreen && (
+        /> */}
+      {!isSmallScreen && (
         <mesh>
           <sphereGeometry args={[2.02, 40, 20]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
           <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
         </mesh>
-      )} */}
-      </mesh>
+      )}
+      {/* </mesh> */}
     </a.group>
   );
 }
@@ -317,7 +315,7 @@ export default function InteractiveSpinningSphere() {
       <Environment preset="studio" blur={0.8} />
 
       <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>
-        <InteractiveSphere audioCtxRef={audioCtxRef} isSmallScreen={isSmallScreen} />
+        <InteractiveSphere audioCtxRef={audioCtxRef} isSmallScreen={isSmallScreen}/>
       </Bounds>
     </Canvas>
   );
