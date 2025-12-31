@@ -324,7 +324,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
     const cols = 3;
     const spacingX = 4;
     const spacingY = 4;
-    const startY = 3;
+    const startY = 4;
 
     return artworks.map((_, i) => {
       const col = i % cols;

@@ -33,12 +33,12 @@ export default function About() {
       {/* Header */}
       <div className="flex items-center justify-between mb-18">
         <motion.h2
-          {...fadeUp}
-          transition={{ duration: 0.8 }}
+          // {...fadeUp}
+          // transition={{ duration: 0.8 }}
           className="text-8xl  a-heading"
         >
-          <div data-aos="fade-right" data-aos-duration="500" data-aos-delay="0">About</div>
-          <div data-aos="fade-right" data-aos-duration="500" data-aos-delay="400">Me</div>
+          <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="0">About</div>
+          <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">Me</div>
         </motion.h2>
 
         <motion.div whileTap={{ scale: 0.6 }} className="line-arrow">
@@ -52,9 +52,12 @@ export default function About() {
 
       {/* Content */}
       <motion.div
-        {...fadeUp}
-        transition={{ duration: 1 }}
+        // {...fadeUp}
+        // transition={{ duration: 1 }}
         className="space-y-5  leading-relaxed mx-auto"
+        data-aos="fade-in"
+        data-aos-delay="800"
+        data-aos-duration="400"
       >
         <p>
           I am a visual artist comfortable with both paint and pencil,

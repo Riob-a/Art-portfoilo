@@ -73,9 +73,9 @@ export default function Contact() {
       <section className="p-7 h-screen">
         <div className="flex items-center justify-between mb-20">
           <h2 className="text-8xl font-bold a-heading">
-            <div data-aos="fade-right" data-aos-duration="500" data-aos-delay="0">Get</div>
-            <div data-aos="fade-right" data-aos-duration="500" data-aos-delay="400">in</div>
-            <div data-aos="fade-right" data-aos-duration="500" data-aos-delay="800">Touch</div>
+            <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="0">Get</div>
+            <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">in</div>
+            <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="800">Touch</div>
           </h2>
 
           <motion.div
@@ -139,7 +139,7 @@ export default function Contact() {
       </section>
 
       {/* Contact Info */}
-      <section className="contact  h-[50vh] p-8 max-w-xl mx-auto text-center md: mt-50">
+      <section className="contact  h-[50vh] p-8 max-w-xl mx-auto text-center md: mt-50" data-aos="fade-in" data-aos-delay="1000">
         <h2 className="text-2xl font-bold mb-4 a-heading">
           Contact Information
         </h2>

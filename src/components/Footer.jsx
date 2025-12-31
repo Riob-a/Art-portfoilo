@@ -4,11 +4,11 @@ export default function Footer() {
   return (
     <footer
      className="footer text-sm px-4 py-3  flex justify-between items-center ">
-      <a href="/privacy-policy"
+      <p
        className="hover:underline"
        >
-        Privacy Policy
-      </a>
+        Portfolio
+      </p>
       <span className='flex items-center gap-1'><a className='flex items-center gap-1' href="https://portfolio-five-five.vercel.app/"><FaLink/> by derrick</a></span>
     </footer>
   );

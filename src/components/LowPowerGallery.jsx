@@ -259,7 +259,7 @@ export default function LowPowerGallery({ artworks }) {
                 {isLargeScreen && (
                     <Environment
                         preset="dawn"
-                        environmentIntensity={0.4}
+                        environmentIntensity={1}
                     />
                 )}                
                 <directionalLight position={[5, 5, 5]} intensity={1.7} />
