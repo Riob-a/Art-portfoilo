@@ -122,7 +122,7 @@ export default function ThreeDFloatingGallery() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]} className="bg[#161515]/5 rounded-lg" style={{margin: "auto", display:"block", width: "90%"}}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]} className="bg[#161515]/5 rounded-lg" style={{ margin: "auto", display: "block", width: "90%" }}>
         <Environment preset="dawn" environmentIntensity={1} />
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
@@ -144,7 +144,7 @@ export default function ThreeDFloatingGallery() {
           </Bounds>
         </Suspense>
 
-        <OrbitControls makeDefault enablePan enableZoom={!isModalOpen} enabled={!isModalOpen} minDistance={6} maxDistance={14}/>
+        <OrbitControls makeDefault enablePan enableZoom={!isModalOpen} enabled={!isModalOpen} minDistance={6} maxDistance={14} />
       </Canvas>
 
       {/* ------------------ MODAL ------------------ */}
@@ -304,6 +304,8 @@ function RecessedFrame({
 function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(null);
+  const [clicked, setClicked] = useState(null);
+  const clickTimeout = useRef(null);
 
   const urls = useMemo(() => artworks.map((a) => a.imageUrl), [artworks]);
   const textures = useLoader(TextureLoader, urls, (loader) => {
@@ -344,9 +346,19 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
     artworks.length,
     artworks.map((_, i) => ({
       scale: hovered === i ? 1.1 : 1,
-      rotation: hovered === i ? [0.1, 0.4, 0] : [0, 0, 0],
+      // rotation: hovered === i ? [0.1, 0.4, 0] : [0, 0, 0],
+      rotation:
+        clicked === i
+          ? [0, Math.PI * 2, 0] // full spin
+          : hovered === i
+            ? [0.1, 0.4, 0]
+            : [0, 0, 0],
       opacity: 1,
-      config: { mass: 1, tension: 170, friction: 20 },
+      // config: { mass: 1, tension: 170, friction: 20 },
+      config:
+        clicked === i
+          ? { mass: 1, tension: 200, friction: 18 }
+          : { mass: 1, tension: 170, friction: 20 },
     }))
   );
 
@@ -387,9 +399,14 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen }) {
             rotation={springs[i].rotation}
             onPointerOver={() => !modalOpen && setHovered(i)}
             onPointerOut={() => !modalOpen && setHovered(null)}
+
             onClick={(e) => {
               e.stopPropagation();
               if (!modalOpen) {
+
+                setClicked(i); // trigger spin
+                setTimeout(() => setClicked(null), 700);// reset spin so it can be clicked again
+
                 openModal({
                   imageUrl: art.imageUrl,
                   title: art.title,
