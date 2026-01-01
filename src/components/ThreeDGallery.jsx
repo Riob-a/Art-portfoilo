@@ -94,22 +94,6 @@ export default function ThreeDFloatingGallery() {
           to { transform: rotate(360deg); }
         }
       `}</style>
-        {/* <style>{`
-        .loader {
-          width: 16px;
-          height: 16px;
-          aspect-ratio: 1 / 1;       
-          border: 3px solid #fff;
-          border-top-color: transparent;
-          border-radius: 50%;
-          display: inline-block;
-          box-sizing: border-box;   
-          animation: spin 0.7s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style> */}
       </Html>
     );
   }
@@ -123,7 +107,7 @@ export default function ThreeDFloatingGallery() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]} className="bg[#161515]/5 rounded-lg" style={{ margin: "auto", display: "block", width: "90%" }}>
+      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]} className="bg[#161515]/5 rounded-lg" style={{ margin: "auto", display: "block", width: "95%" }}>
         <Environment preset="dawn" environmentIntensity={1} />
         <ambientLight intensity={0.8} />
         <directionalLight position={[5, 5, 5]} intensity={1.2} />
@@ -308,6 +292,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
   const groupRef = useRef();
   const [hovered, setHovered] = useState(null);
   const clickTimeout = useRef(null);
+  const BACK_TEXT_WIDTH = 0.12
 
   const urls = useMemo(() => artworks.map((a) => a.imageUrl), [artworks]);
   const textures = useLoader(TextureLoader, urls, (loader) => {
@@ -445,31 +430,37 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             {/* BACK FACE INFO */}
             <Html
               position={[
-                -cardWidth / 2 + 0.15, // left padding
-                -cardHeight / 2 + 0.18, // bottom padding
-                -0.26, // slightly behind the card
+                -cardWidth / 2 + BACK_TEXT_WIDTH / 2,
+                -cardHeight / 2 + 0.1,
+                -0.26,
               ]}
-              rotation={[0, Math.PI, 0]} // flip text to match back face
+              rotation={[0, Math.PI, 0]}
               transform
-              distanceFactor={1.2}
+              distanceFactor={5.5}
               occlude
             >
               <div
                 style={{
-                  maxWidth: "120px",
+                  width: "120px",
                   fontSize: "10px",
                   lineHeight: 1.2,
                   color: "#bbb",
-                  fontFamily: "Inter, sans-serif",
+                  // fontFamily: "Unbounded, sans-serif",
                   pointerEvents: "none",
-                  opacity: clicked === i ? 1 : 0,
+                  opacity: clicked === i && !modalOpen ? 1 : 0,
                   transition: "opacity 0.3s ease 0.15s",
+                  background: "rgba(255, 0, 0, 0.363)",
+                  outline: "1px solid red",
+
                 }}
               >
-                <div style={{ fontWeight: 600, marginBottom: "2px" }}>
+                <div
+                  className="modal-text"
+                  style={{ fontWeight: 800, marginBottom: "2px" }}
+                >
                   {art.title}
                 </div>
-                <div style={{ opacity: 0.7 }}>
+                <div style={{ fontWeight: 400, opacity: 0.7 }}>
                   {art.description}
                 </div>
               </div>

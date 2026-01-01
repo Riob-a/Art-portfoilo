@@ -94,9 +94,11 @@ function RecessedFrame({
 }
 
 // --- SINGLE LOW-POWER CARD COMPONENT ---
-function LPSingleCard({ art, clicked, setClicked, onOpenModal, float = true }) {
+function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float = true }) {
     const meshRef = useRef();
     const clickTimeout = useRef(null);
+    const BACK_TEXT_WIDTH = 0.12
+
 
     const texture = useLoader(TextureLoader, art.imageUrl);
     useMemo(() => {
@@ -165,46 +167,51 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, float = true }) {
             />
 
             {/* BACK FACE INFO */}
-            <Html
-                position={[
-                    -cardWidth / 2 + 0.15, // lower-left corner
-                    -cardHeight / 2 + 0.18,
-                    -0.25, // just behind the back plate
-                ]}
-                rotation={[0, Math.PI, 0]} // correct orientation when flipped
-                transform
-                distanceFactor={1.3}
-                occlude
-            >
-                <div
-                    style={{
-                        maxWidth: "120px",
-                        fontSize: "10px",
-                        lineHeight: 1.2,
-                        color: "#bbb",
-                        fontFamily: "Inter, system-ui, sans-serif",
-                        pointerEvents: "none",
-
-                        opacity: clicked ? 1 : 0,
-                        transition: "opacity 0.25s ease 0.15s",
-                    }}
+            {!modalOpen && (
+                <Html
+                    position={[
+                        -cardWidth / 2 + BACK_TEXT_WIDTH / 2,
+                        -cardHeight / 2 + 0.1,
+                        -0.26,
+                    ]}
+                    rotation={[0, Math.PI, 0]}
+                    transform
+                    distanceFactor={5.5}
+                    occlude
                 >
                     <div
                         style={{
-                            fontWeight: 600,
-                            marginBottom: "2px",
-                            letterSpacing: "0.04em",
-                            textTransform: "uppercase",
+                            maxWidth: "120px",
+                            fontSize: "10px",
+                            lineHeight: 1.2,
+                            color: "#bbb",
+                            fontFamily: "Unbounded, sans-serif",
+                            pointerEvents: "none",
+                            opacity: clicked ? 1 : 0,
+                            transition: "opacity 0.25s ease 0.15s",
+                            background: "rgba(255, 0, 0, 0.363)",
+                            outline: "1px solid red",
                         }}
                     >
-                        {art.title}
-                    </div>
+                        <div
+                        className="modal-text"
+                            style={{
+                                fontWeight: 800,
+                                marginBottom: "2px",
+                                letterSpacing: "0.04em",
+                                textTransform: "uppercase",
+                            }}
+                        >
+                            {art.title}
+                        </div>
 
-                    <div style={{ opacity: 0.7 }}>
-                        {art.description}
+                        <div style={{ fontWeight: 400, opacity: 0.7 }}>
+                            {art.description}
+                        </div>
                     </div>
-                </div>
-            </Html>
+                </Html>
+            )}
+
 
 
             {/* RECESSED FRAME */}
@@ -345,6 +352,7 @@ export default function LowPowerGallery({ artworks }) {
                         clicked={clicked}
                         setClicked={setClicked}
                         onOpenModal={openModal}
+                        modalOpen={isModalOpen}
                     />
                 </Suspense>
 
@@ -374,27 +382,27 @@ export default function LowPowerGallery({ artworks }) {
                     >
                         {/* Close Button */}
                         <button
-                            className="absolute top-4 right-6 text-3xl x-button"
+                            className="absolute top-4 right-8 text-2xl x-button"
                             onClick={closeModal}
                         >
                             ✕
                         </button>
 
                         {/* Fullscreen Image */}
-                        <div className="max-w-full max-h-full p-4 flex flex-col items-center">
+                        <div className="max-w-full max-h-full p-2 flex flex-col items-center">
                             <Image
                                 src={currentArt.imageUrl}
                                 alt={currentArt.title}
                                 width={600}
                                 height={300}
-                                className="w-auto max-h-[70vh] object-contain rounded"
+                                className="w-auto max-h-[60vh] object-contain rounded"
                             />
 
                             <h2 className="modal-text-2 text-white text-2xl mt-4">
                                 {currentArt.title}
                             </h2>
 
-                            <p className="text-white text-center max-w-[80%]">
+                            <p className="text-white text max-w-[80%]">
                                 {currentArt.description}
                             </p>
 
