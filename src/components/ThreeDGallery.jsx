@@ -342,7 +342,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
       scale: hovered === i || clicked === i ? 1.12 : 1,
 
       rotation:
-        clicked === i
+        clicked === i || heldIndex === i
           ? [0, Math.PI * 1.15, 0]
           : hovered === i
             ? [0.08, 0.35, 0]
@@ -399,11 +399,58 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             onPointerOver={() => !modalOpen && setHovered(i)}
             onPointerOut={() => !modalOpen && setHovered(null)}
 
-            onClick={(e) => {
+            // onClick={(e) => {
+            //   e.stopPropagation();
+            //   if (modalOpen) return;
+
+            //   // DOUBLE CLICK → OPEN MODAL
+            //   if (clickTimeout.current) {
+            //     clearTimeout(clickTimeout.current);
+            //     clickTimeout.current = null;
+
+            //     openModal({
+            //       imageUrl: art.imageUrl,
+            //       title: art.title,
+            //       description: art.description,
+            //       slug: art.slug,
+            //     });
+            //     return;
+            //   }
+
+            //   // SINGLE CLICK → SPIN
+            //   setClicked(i);
+
+            //   clickTimeout.current = setTimeout(() => {
+            //     setClicked(null);
+            //     clickTimeout.current = null;
+            //   }, 650);
+            // }}
+
+            onPointerDown={(e) => {
               e.stopPropagation();
               if (modalOpen) return;
 
-              // DOUBLE CLICK → OPEN MODAL
+              holdTimeout.current = setTimeout(() => {
+                setHeldIndex(i);     // 🔒 lock on back
+                setClicked(null);   // cancel auto-return
+              }, HOLD_DELAY);
+            }}
+
+            onPointerUp={(e) => {
+              e.stopPropagation();
+
+              if (holdTimeout.current) {
+                clearTimeout(holdTimeout.current);
+                holdTimeout.current = null;
+              }
+
+              // If we were holding → release returns card
+              if (heldIndex === i) {
+                setHeldIndex(null);
+                return;
+              }
+
+              // Otherwise treat as click (single / double)
               if (clickTimeout.current) {
                 clearTimeout(clickTimeout.current);
                 clickTimeout.current = null;
@@ -417,14 +464,20 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                 return;
               }
 
-              // SINGLE CLICK → SPIN
               setClicked(i);
-
               clickTimeout.current = setTimeout(() => {
                 setClicked(null);
                 clickTimeout.current = null;
               }, 650);
             }}
+
+            onPointerLeave={() => {
+              if (holdTimeout.current) {
+                clearTimeout(holdTimeout.current);
+                holdTimeout.current = null;
+              }
+            }}
+
 
           >
             {/* BACK BEVELED PLATE */}
@@ -452,13 +505,14 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                   fontSize: "10px",
                   lineHeight: 1.2,
                   color: "#bbb",
-                  // fontFamily: "Unbounded, sans-serif",
                   pointerEvents: "none",
-                  opacity: clicked === i && !modalOpen ? 1 : 0,
+                  // opacity: clicked === i && !modalOpen ? 1 : 0,
+                  opacity:
+                    (clicked === i || heldIndex === i) && !modalOpen ? 1 : 0,
                   transition: "opacity 0.3s ease 0.15s",
                   background: "rgba(255, 0, 0, 0.363)",
                   outline: "1px solid red",
-
+                  cursor: "pointer"
                 }}
               >
                 <div

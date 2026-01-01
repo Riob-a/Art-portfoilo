@@ -2,13 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {
-  Environment,
-  Edges,
-  Html,
-  Sparkles,
-  Bounds,
-} from "@react-three/drei";
+import {  Environment, Edges, Html, Sparkles, Bounds,} from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
@@ -154,14 +148,6 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
         deactivateHover();
       }}
-      //   onClick={() => {
-      //     setClicked(true);
-      //     playClick();
-      //     setTimeout(() => setClicked(false), 200);
-      //     router.push("/gallery");
-      //   }}
-      // >
-
       onClick={() => {
         if (isTouchDevice && !hovered) {
           // FIRST TAP = hover
@@ -211,37 +197,40 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           // args={[2, 64, 64]}
           args={[
             isSmallScreen ? 1 : 2,
-            isSmallScreen ? 35 : 64,
-            isSmallScreen ? 35 : 64,
+            isSmallScreen ? 40 : 64,
+            isSmallScreen ? 40 : 64,
           ]}
         />
         <a.meshPhysicalMaterial
           color={color}
-          metalness={0.2}
-          roughness={0.4}
+          metalness={0.5}
+          roughness={0.1}
           clearcoat={1}
-          clearcoatRoughness={0.4}
+          clearcoatRoughness={0.3}
           reflectivity={1}
         />
       </mesh>
 
       {/* Wireframe overlay */}
-      {/* <mesh renderOrder={10}>
+      <mesh renderOrder={10}>
         <sphereGeometry
           args={[
-            isSmallScreen ? 1 : 2.02,
+            isSmallScreen ? 1.3 : 2.02,
             isSmallScreen ? 18 : 40,
-            isSmallScreen ? 12 : 20,
+            isSmallScreen ? 18 : 20,
           ]}
-        /> */}
-      {!isSmallScreen && (
+        
+        />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
+      {/* {!isSmallScreen && (
         <mesh>
           <sphereGeometry args={[2.02, 40, 20]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
           <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
         </mesh>
-      )}
-      {/* </mesh> */}
+      )} */}
+      </mesh>
     </a.group>
   );
 }

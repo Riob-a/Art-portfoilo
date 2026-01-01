@@ -97,6 +97,10 @@ function RecessedFrame({
 function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float = true }) {
     const meshRef = useRef();
     const clickTimeout = useRef(null);
+    const [held, setHeld] = useState(false);
+    const holdTimeout = useRef(null);
+    const HOLD_DELAY = 320;
+
     const BACK_TEXT_WIDTH = 0.12
 
 
@@ -119,10 +123,10 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
     const [hovered, setHovered] = useState(false);
     // const spring = useSpring({ scale: hovered ? 1.05 : 1 });
     const spring = useSpring({
-        scale: hovered || clicked ? 1.08 : 1,
-        rotation: clicked ? [0, Math.PI * 1.1, 0] : [0, 0, 0],
-        positionZ: clicked ? 0.5 : 0,
-        config: clicked
+        scale: hovered || clicked || held ? 1.08 : 1,
+        rotation: clicked || held ? [0, Math.PI * 1.1, 0] : [0, 0, 0],
+        positionZ: clicked || held ? 0.5 : 0,
+        config: clicked || held
             ? { tension: 240, friction: 22 }
             : { tension: 170, friction: 20 },
     });
@@ -139,8 +143,30 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
             position-z={spring.positionZ}
             onPointerOver={() => setHovered(true)}
             onPointerOut={() => setHovered(false)}
-            onClick={(e) => {
+
+            onPointerDown={(e) => {
                 e.stopPropagation();
+                if (modalOpen) return;
+
+                holdTimeout.current = setTimeout(() => {
+                    setHeld(true);       // 🔒 persist on back
+                    setClicked(null);   // cancel auto-return
+                }, HOLD_DELAY);
+            }}
+
+            onPointerUp={(e) => {
+                e.stopPropagation();
+
+                if (holdTimeout.current) {
+                    clearTimeout(holdTimeout.current);
+                    holdTimeout.current = null;
+                }
+
+                // RELEASE FROM HOLD → RETURN
+                if (held) {
+                    setHeld(false);
+                    return;
+                }
 
                 // DOUBLE CLICK → MODAL
                 if (clickTimeout.current) {
@@ -150,15 +176,20 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                     return;
                 }
 
-                // SINGLE CLICK → SPIN
+                // SINGLE CLICK → TEMP FLIP
                 setClicked(true);
-
                 clickTimeout.current = setTimeout(() => {
                     setClicked(null);
                     clickTimeout.current = null;
                 }, 600);
             }}
 
+            onPointerLeave={() => {
+                if (holdTimeout.current) {
+                    clearTimeout(holdTimeout.current);
+                    holdTimeout.current = null;
+                }
+            }}
         >
             <LPBeveledCard
                 width={cardWidth + 0.12}
@@ -185,21 +216,20 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                             fontSize: "10px",
                             lineHeight: 1.2,
                             color: "#bbb",
-                            fontFamily: "Unbounded, sans-serif",
+                            // fontFamily: "Unbounded, sans-serif",
                             pointerEvents: "none",
-                            opacity: clicked ? 1 : 0,
+                            opacity: clicked || held ? 1 : 0,
                             transition: "opacity 0.25s ease 0.15s",
                             background: "rgba(255, 0, 0, 0.363)",
                             outline: "1px solid red",
+                            cursor: "pointer"
                         }}
                     >
                         <div
-                        className="modal-text"
+                            className="modal-text"
                             style={{
                                 fontWeight: 800,
                                 marginBottom: "2px",
-                                letterSpacing: "0.04em",
-                                textTransform: "uppercase",
                             }}
                         >
                             {art.title}
