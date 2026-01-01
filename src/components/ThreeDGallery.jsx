@@ -292,6 +292,8 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
   const groupRef = useRef();
   const [hovered, setHovered] = useState(null);
   const clickTimeout = useRef(null);
+  const [returning, setReturning] = useState(null);
+
   const BACK_TEXT_WIDTH = 0.12
 
   const urls = useMemo(() => artworks.map((a) => a.imageUrl), [artworks]);
@@ -334,12 +336,20 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
     artworks.map((_, i) => ({
       scale: hovered === i || clicked === i ? 1.12 : 1,
 
+      // rotation:
+      //   clicked === i
+      //     ? [0, Math.PI * 1.15, 0] 
+      //     : hovered === i
+      //       ? [0.08, 0.35, 0]
+      //       : [0, 0, 0],
+
       rotation:
         clicked === i
-          ? [0, Math.PI * 1.15, 0] // flip + overshoot
-          : hovered === i
-            ? [0.08, 0.35, 0]
-            : [0, 0, 0],
+          ? [0, Math.PI * 1.15, 0]        // show back
+          : returning === i
+            ? [0, Math.PI * 1.15, 0]      // HOLD back
+            : [0, 0, 0],                  // return to front
+
 
       positionZ: clicked === i ? 0.6 : 0,
 
@@ -380,6 +390,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
         const cardHeight = 3;
         const cardWidth = aspect * cardHeight;
 
+        
         return (
           <a.group
             key={i}
@@ -411,12 +422,28 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               }
 
               // SINGLE CLICK → SPIN
+              // setClicked(i);
+
+              // clickTimeout.current = setTimeout(() => {
+              //   setClicked(null);
+              //   clickTimeout.current = null;
+              // }, 650);
+
+              // SINGLE CLICK → FLIP & HOLD BACK
               setClicked(i);
 
               clickTimeout.current = setTimeout(() => {
                 setClicked(null);
+                setReturning(i);
+
+                // delay return to front
+                setTimeout(() => {
+                  setReturning(null);
+                }, 850); // how long the BACK stays visible
+
                 clickTimeout.current = null;
-              }, 650);
+              }, 650); // flip duration
+
             }}
 
           >
