@@ -431,7 +431,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               if (modalOpen) return;
 
               holdTimeout.current = setTimeout(() => {
-                setHeldIndex(i);     // 🔒 lock on back
+                setHeldIndex(i);     // lock on back
                 setClicked(null);   // cancel auto-return
               }, HOLD_DELAY);
             }}

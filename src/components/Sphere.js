@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import {  Environment, Edges, Html, Sparkles, Bounds,} from "@react-three/drei";
+import { Environment, Edges, Html, Sparkles, Bounds, } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
@@ -203,11 +203,25 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         />
         <a.meshPhysicalMaterial
           color={color}
-          metalness={0.5}
-          roughness={0.1}
-          clearcoat={1}
-          clearcoatRoughness={0.3}
-          reflectivity={1}
+          /* --- Transparency --- */
+          transparent
+          opacity={isSmallScreen ? 0.2 : 0.5}
+          depthWrite={false}
+          /* --- Reflection / Refraction --- */
+          transmission={0}
+          ior={1.5}
+          /* --- Surface response --- */
+          metalness={0.0}
+          roughness={isSmallScreen ? 0.18 : 0.05}
+          /* --- Clearcoat (expensive when stacked) --- */
+          clearcoat={isSmallScreen ? 0.4 : 1}
+          clearcoatRoughness={isSmallScreen ? 0.2 : 0.02}
+          /* --- COSTLY: only enable on larger screens --- */
+          thickness={isSmallScreen ? 0 : 2.5}
+          reflectivity={isSmallScreen ? 1 : 5}
+          /* --- Transmission buffers (skip on small) --- */
+          samples={isSmallScreen ? 0 : 1}
+          resolution={isSmallScreen ? 0 : 256}
         />
       </mesh>
 
@@ -215,15 +229,15 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       <mesh renderOrder={10}>
         <sphereGeometry
           args={[
-            isSmallScreen ? 1.3 : 2.02,
-            isSmallScreen ? 18 : 40,
-            isSmallScreen ? 18 : 20,
+            isSmallScreen ? 1.15 : 2.02,
+            isSmallScreen ? 20 : 40,
+            isSmallScreen ? 20 : 20,
           ]}
-        
+
         />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
-      {/* {!isSmallScreen && (
+        {/* {!isSmallScreen && (
         <mesh>
           <sphereGeometry args={[2.02, 40, 20]} />
           <meshBasicMaterial transparent opacity={0} depthWrite={false} />
@@ -296,15 +310,15 @@ export default function InteractiveSpinningSphere() {
       className="home"
       style={{ height: "625px", width: "99%", margin: "auto", display: "block" }}
       dpr={[1, 1.5]}
-      camera={{ position: [0, -4, 5], fov: 60 }}
+      camera={{ position: [0, -5, 5], fov: 60 }}
       gl={{ antialias: true }}
     >
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1.0} />
-      <Environment preset="studio" blur={0.8} />
+      <Environment preset="studio" blur={1.8} />
 
       <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>
-        <InteractiveSphere audioCtxRef={audioCtxRef} isSmallScreen={isSmallScreen}/>
+        <InteractiveSphere audioCtxRef={audioCtxRef} isSmallScreen={isSmallScreen} />
       </Bounds>
     </Canvas>
   );
