@@ -295,6 +295,22 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
   const [returning, setReturning] = useState(null);
 
   const [heldIndex, setHeldIndex] = useState(null);
+  const [exitingIndex, setExitingIndex] = useState(null);
+
+
+  const singlePaneIndex = heldIndex !== null ? heldIndex : clicked;
+  const isSinglePane = singlePaneIndex !== null;
+  useEffect(() => {
+    if (!isSinglePane && exitingIndex !== null) {
+      const timeout = setTimeout(() => {
+        setExitingIndex(null);
+      }, 350); // exit duration
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isSinglePane, exitingIndex]);
+
+
   const holdTimeout = useRef(null);
   const HOLD_DELAY = 320;
 
@@ -336,69 +352,84 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
   const basePositions = positions;
 
   const floatVariations = useMemo(
-  () =>
-    artworks.map(() => ({
-      speed: 0.7 + Math.random() * 0.4,        // 0.7 – 1.1
-      amplitude: 0.12 + Math.random() * 0.12,  // 0.12 – 0.24
-    })),
-  [artworks]
-);
+    () =>
+      artworks.map(() => ({
+        speed: 0.7 + Math.random() * 0.4,        // 0.7 – 1.1
+        amplitude: 0.12 + Math.random() * 0.12,  // 0.12 – 0.24
+      })),
+    [artworks]
+  );
 
 
   /* -------- SPRINGS -------- */
   const springs = useSprings(
     artworks.length,
-    artworks.map((_, i) => ({
-      // scale: hovered === i || clicked === i ? 1.12 : 1,
-      scale:
-        clicked === i || heldIndex === i
+    artworks.map((_, i) => {
+      const isFocused = singlePaneIndex === i;
+      const shouldYield = isSinglePane && !isFocused;
+      const isExiting = exitingIndex === i;
+
+      return {
+        scale: isFocused
           ? 1.15
-          : hovered === i
-            ? 1.08
-            : 1,
+          : shouldYield
+            ? 0.92
+            : isExiting
+              ? 1.02
+              : hovered === i
+                ? 1.08
+                : 1,
 
-
-      rotation:
-        clicked === i || heldIndex === i
+        rotation: isFocused
           ? [0, Math.PI * 1.15, 0]
-          : hovered === i
-            ? [0.08, 0.35, 0]
-            : [0, 0, 0],
+          : isExiting
+            ? [0, 0.2, 0]
+            : hovered === i && !isSinglePane
+              ? [0.08, 0.35, 0]
+              : [0, 0, 0],
 
-      positionZ: clicked === i ? 0.6 : 0,
+        positionZ: isFocused
+          ? 0.6
+          : shouldYield
+            ? -1.2
+            : isExiting
+              ? -0.3
+              : 0,
 
-      config:
-        clicked === i
+        config: isFocused
           ? { mass: 1, tension: 260, friction: 22 }
-          : { mass: 1, tension: 170, friction: 20 },
-    }))
+          : isExiting
+            ? { mass: 1.2, tension: 200, friction: 28 }
+            : shouldYield
+              ? { mass: 1, tension: 180, friction: 26 }
+              : { mass: 1, tension: 170, friction: 20 },
+      };
+    })
   );
 
 
   /* -------- FLOATING ANIMATION -------- */
-  // useFrame(({ clock }) => {
-  //   if (!groupRef.current) return;
-
-  //   groupRef.current.children.forEach((child, i) => {
-  //     const floatY = Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
-
-  //     const baseY = basePositions[i][1];
-  //     child.position.y = baseY + floatY;
-
-  //     const targetScale = hovered === i ? 1.1 : 1;
-  //     child.scale.x += (targetScale - child.scale.x) * 0.1;
-  //     child.scale.y += (targetScale - child.scale.y) * 0.1;
-  //     child.scale.z += (targetScale - child.scale.z) * 0.1;
-  //   });
-  // });
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
 
     groupRef.current.children.forEach((child, i) => {
       const { speed, amplitude } = floatVariations[i];
+
+      const isFocused = singlePaneIndex === i;
+      const shouldYield = isSinglePane && !isFocused;
+
+      const effectiveAmplitude = isFocused
+        ? amplitude * 0.2
+        : shouldYield
+          ? amplitude * 0.1
+          : exitingIndex !== null
+            ? amplitude * 0.3
+            : amplitude;
+
       const floatY =
         // Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
-         Math.sin(clock.getElapsedTime() * speed + i) * amplitude;
+        // Math.sin(clock.getElapsedTime() * speed + i) * amplitude;
+        Math.sin(clock.getElapsedTime() * speed + i) * effectiveAmplitude;
 
       child.position.y = basePositions[i][1] + floatY;
     });
@@ -419,41 +450,20 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
         return (
           <a.group
             key={i}
-            // position={positions[i]}
             position-x={positions[i][0]}
             position-y={positions[i][1]}
             position-z={springs[i].positionZ}
             scale={springs[i].scale.to((s) => [s, s, s])}
             rotation={springs[i].rotation}
-            onPointerOver={() => !modalOpen && setHovered(i)}
-            onPointerOut={() => !modalOpen && setHovered(null)}
+            // onPointerOver={() => !modalOpen && setHovered(i)}
+            // onPointerOut={() => !modalOpen && setHovered(null)}
+            onPointerOver={() =>
+              !modalOpen && !isSinglePane && setHovered(i)
+            }
+            onPointerOut={() =>
+              !modalOpen && !isSinglePane && setHovered(null)
+            }
 
-            // onClick={(e) => {
-            //   e.stopPropagation();
-            //   if (modalOpen) return;
-
-            //   // DOUBLE CLICK → OPEN MODAL
-            //   if (clickTimeout.current) {
-            //     clearTimeout(clickTimeout.current);
-            //     clickTimeout.current = null;
-
-            //     openModal({
-            //       imageUrl: art.imageUrl,
-            //       title: art.title,
-            //       description: art.description,
-            //       slug: art.slug,
-            //     });
-            //     return;
-            //   }
-
-            //   // SINGLE CLICK → SPIN
-            //   setClicked(i);
-
-            //   clickTimeout.current = setTimeout(() => {
-            //     setClicked(null);
-            //     clickTimeout.current = null;
-            //   }, 650);
-            // }}
 
             onPointerDown={(e) => {
               e.stopPropagation();
@@ -475,6 +485,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
 
               // If we were holding → release returns card
               if (heldIndex === i) {
+                setExitingIndex(i);
                 setHeldIndex(null);
                 return;
               }
@@ -495,6 +506,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
 
               setClicked(i);
               clickTimeout.current = setTimeout(() => {
+                setExitingIndex(i);
                 setClicked(null);
                 clickTimeout.current = null;
               }, 650);
