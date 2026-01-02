@@ -204,14 +204,14 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           color={color}
           /* --- Transparency --- */
           transparent
-          opacity={isSmallScreen ? 0.2 : 0.5}
+          opacity={isSmallScreen ? 0.3 : 0.3}
           depthWrite={false}
           /* --- Reflection / Refraction --- */
-          transmission={0}
+          transmission={isSmallScreen ? 0 : 0.5}
           ior={1.5}
           /* --- Surface response --- */
           metalness={0.1}
-          roughness={isSmallScreen ? 0.18 : 0.05}
+          roughness={isSmallScreen ? 0.01 : 0.05}
           /* --- Clearcoat (expensive when stacked) --- */
           clearcoat={isSmallScreen ? 0.4 : 1}
           clearcoatRoughness={isSmallScreen ? 0.2 : 0.02}
@@ -228,7 +228,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       <mesh renderOrder={10}>
         <sphereGeometry
           args={[
-            isSmallScreen ? 1.15 : 2.02,
+            isSmallScreen ? 1.02 : 2.02,
             isSmallScreen ? 20 : 40,
             isSmallScreen ? 20 : 20,
           ]}

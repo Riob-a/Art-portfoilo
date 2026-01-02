@@ -386,7 +386,9 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             ? [0, 0.2, 0]
             : hovered === i && !isSinglePane
               ? [0.08, 0.35, 0]
-              : [0, 0, 0],
+              // : [0, 0, 0],
+              : [0.02, 0.01, 0],
+
 
         positionZ: isFocused
           ? 0.6
@@ -396,13 +398,23 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               ? -0.3
               : 0,
 
+        // config: isFocused
+        //   ? { mass: 1, tension: 260, friction: 22 }
+        //   : isExiting
+        //     ? { mass: 1.2, tension: 200, friction: 28 }
+        //     : shouldYield
+        //       ? { mass: 1, tension: 180, friction: 26 }
+        //       : { mass: 1, tension: 170, friction: 20 },
         config: isFocused
-          ? { mass: 1, tension: 260, friction: 22 }
+          ? { mass: 1, tension: 280, friction: 24 }   // confident lock
           : isExiting
-            ? { mass: 1.2, tension: 200, friction: 28 }
+            ? { mass: 1.2, tension: 200, friction: 30 } // graceful release
             : shouldYield
-              ? { mass: 1, tension: 180, friction: 26 }
-              : { mass: 1, tension: 170, friction: 20 },
+              ? { mass: 1.1, tension: 160, friction: 28 } // background calm
+              : hovered === i
+                ? { mass: 0.8, tension: 220, friction: 18 } // reactive hover
+                : { mass: 1, tension: 170, friction: 22 },  // idle
+
       };
     })
   );
@@ -431,6 +443,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
         // Math.sin(clock.getElapsedTime() * speed + i) * amplitude;
         Math.sin(clock.getElapsedTime() * speed + i) * effectiveAmplitude;
 
+
       child.position.y = basePositions[i][1] + floatY;
     });
   });
@@ -453,7 +466,9 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             position-x={positions[i][0]}
             position-y={positions[i][1]}
             position-z={springs[i].positionZ}
-            scale={springs[i].scale.to((s) => [s, s, s])}
+            // scale={springs[i].scale.to((s) => [s, s, s])}
+            scale={springs[i].scale.to((s) => [s * 1.02, s, s * 0.98])}
+
             rotation={springs[i].rotation}
             // onPointerOver={() => !modalOpen && setHovered(i)}
             // onPointerOut={() => !modalOpen && setHovered(null)}
