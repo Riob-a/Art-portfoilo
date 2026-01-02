@@ -335,11 +335,28 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
 
   const basePositions = positions;
 
+  const floatVariations = useMemo(
+  () =>
+    artworks.map(() => ({
+      speed: 0.7 + Math.random() * 0.4,        // 0.7 – 1.1
+      amplitude: 0.12 + Math.random() * 0.12,  // 0.12 – 0.24
+    })),
+  [artworks]
+);
+
+
   /* -------- SPRINGS -------- */
   const springs = useSprings(
     artworks.length,
     artworks.map((_, i) => ({
-      scale: hovered === i || clicked === i ? 1.12 : 1,
+      // scale: hovered === i || clicked === i ? 1.12 : 1,
+      scale:
+        clicked === i || heldIndex === i
+          ? 1.15
+          : hovered === i
+            ? 1.08
+            : 1,
+
 
       rotation:
         clicked === i || heldIndex === i
@@ -359,19 +376,31 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
 
 
   /* -------- FLOATING ANIMATION -------- */
+  // useFrame(({ clock }) => {
+  //   if (!groupRef.current) return;
+
+  //   groupRef.current.children.forEach((child, i) => {
+  //     const floatY = Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
+
+  //     const baseY = basePositions[i][1];
+  //     child.position.y = baseY + floatY;
+
+  //     const targetScale = hovered === i ? 1.1 : 1;
+  //     child.scale.x += (targetScale - child.scale.x) * 0.1;
+  //     child.scale.y += (targetScale - child.scale.y) * 0.1;
+  //     child.scale.z += (targetScale - child.scale.z) * 0.1;
+  //   });
+  // });
   useFrame(({ clock }) => {
     if (!groupRef.current) return;
 
     groupRef.current.children.forEach((child, i) => {
-      const floatY = Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
+      const { speed, amplitude } = floatVariations[i];
+      const floatY =
+        // Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
+         Math.sin(clock.getElapsedTime() * speed + i) * amplitude;
 
-      const baseY = basePositions[i][1];
-      child.position.y = baseY + floatY;
-
-      const targetScale = hovered === i ? 1.1 : 1;
-      child.scale.x += (targetScale - child.scale.x) * 0.1;
-      child.scale.y += (targetScale - child.scale.y) * 0.1;
-      child.scale.z += (targetScale - child.scale.z) * 0.1;
+      child.position.y = basePositions[i][1] + floatY;
     });
   });
 
@@ -510,20 +539,41 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                   opacity:
                     (clicked === i || heldIndex === i) && !modalOpen ? 1 : 0,
                   transition: "opacity 0.3s ease 0.15s",
+                  transform:
+                    (clicked === i || heldIndex === i) && !modalOpen
+                      ? "translateY(0px)"
+                      : "translateY(6px)",
                   background: "rgba(255, 0, 0, 0.363)",
+                  backdropFilter: "blur(6px)",
                   outline: "1px solid red",
                   cursor: "pointer"
                 }}
               >
                 <div
-                  className="modal-text"
-                  style={{ fontWeight: 800, marginBottom: "2px" }}
+                  className="modal-text m-1"
+                  style={{
+                    fontWeight: 800,
+                    fontSize: "11px",
+                    marginBottom: "4px",
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase",
+                  }}
                 >
                   {art.title}
                 </div>
-                <div style={{ fontWeight: 400, opacity: 0.7 }}>
+
+                <div
+                  className="p-1"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: "10px",
+                    lineHeight: 1.4,
+                    opacity: 0.75,
+                  }}
+                >
                   {art.description}
                 </div>
+
               </div>
             </Html>
 

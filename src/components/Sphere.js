@@ -38,7 +38,6 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
   // Subtle scale feedback
   const { scale } = useSpring({
-    // scale: hovered ? 1.15 : 1,
     scale: hovered ? baseScale * 1.12 : baseScale,
     config: { tension: 150, friction: 18 },
   });
@@ -211,7 +210,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           transmission={0}
           ior={1.5}
           /* --- Surface response --- */
-          metalness={0.0}
+          metalness={0.1}
           roughness={isSmallScreen ? 0.18 : 0.05}
           /* --- Clearcoat (expensive when stacked) --- */
           clearcoat={isSmallScreen ? 0.4 : 1}
@@ -314,7 +313,7 @@ export default function InteractiveSpinningSphere() {
       gl={{ antialias: true }}
     >
       <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={1.0} />
+      {/* <directionalLight position={[5, 5, 5]} intensity={1.0} /> */}
       <Environment preset="studio" blur={1.8} />
 
       <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>

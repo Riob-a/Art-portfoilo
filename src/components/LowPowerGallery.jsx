@@ -226,18 +226,30 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                         }}
                     >
                         <div
-                            className="modal-text"
+                            className="modal-text m-1"
                             style={{
                                 fontWeight: 800,
-                                marginBottom: "2px",
+                                fontSize: "11px",
+                                marginBottom: "4px",
+                                letterSpacing: "0.04em",
+                                textTransform: "uppercase",
                             }}
                         >
                             {art.title}
                         </div>
 
-                        <div style={{ fontWeight: 400, opacity: 0.7 }}>
+                        <div
+                            className="p-1"
+                            style={{
+                                fontWeight: 400,
+                                fontSize: "10px",
+                                lineHeight: 1.4,
+                                opacity: 0.75,
+                            }}
+                        >
                             {art.description}
                         </div>
+
                     </div>
                 </Html>
             )}

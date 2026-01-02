@@ -740,6 +740,8 @@ button.gradient-text {
   background: linear-gradient(60deg, #fd4444ef, #ff0000ef, #a70404);
   background-size: 200% 100%;
   animation: gradientWave 4s ease infinite;
+  width: 30px;
+  height: 30px;
 
   border-radius: 30px;
   transition: transform 0.5s ease-in-out;
@@ -844,16 +846,12 @@ button.gradient-text {
 
 .navbar {
   background-color: white;
-  /* border: 2px solid transparent; */
-  font-family: 'Technor', sans-serif;
-  font-weight: 500;
   transition: color 1s ease, border-color 1s ease, background-color 0.3s ease, transform 0.3s;
   color: #007f8c;
   display: flex;
-  height: 45px;
+  height: 40px;
 
-  /* box-shadow: #0000008e 5px 5px 5px; */
-  /* color: white; */
+  box-shadow: #0000008e 2px 5px 7px;
 }
 
 .link {
@@ -892,7 +890,6 @@ button.gradient-text {
   border: 2px solid #070707;
   max-width: 90%;
   max-height: 100%;
-  /* border-radius: 30px; */
   border-radius: 10px;
   transition: max-width 0.4s ease-in-out, max-height 0.4s ease-in-out, border-radius 0.7s ease-in-out, background-color 0.8s ease-in-out, border-color 1s ease;
 }
@@ -900,10 +897,10 @@ button.gradient-text {
 .navbar.collapsed {
   border: 2px solid transparent;
   flex-shrink: 0;
-  max-width: 45px;
-  max-height: 45px;
+  max-width: 40px;
+  max-height: 40px;
   overflow: hidden;
-  border-radius: 30px;
+  border-radius: 35px;
 
   margin: auto;
 
@@ -914,8 +911,8 @@ button.gradient-text {
 }
 
 .navbar.collapsed .logo-pic {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   margin: auto;
   justify-content: center;
   align-items: center;
@@ -924,7 +921,6 @@ button.gradient-text {
 }
 
 .navbar.expanded .links.left {
-  /* text-shadow: #000000 -2px 2px 1px; */
   opacity: 1;
   transform: translateX(0);
   transition: opacity 1s ease, transform 0.5s ease;
@@ -959,10 +955,6 @@ button.gradient-text {
   transition: color 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
-/* .chevron-right {
-  transition: transform 0.5s ease-in-out;
-} */
-
 .rotated {
   transform: rotate(180deg);
   transition: transform 0.5s ease-in-out;
@@ -975,7 +967,7 @@ button.gradient-text {
   color: #cfcdcd;
   border: 1px solid transparent;
   transition: color 1s ease, border-color 1s ease, background-color 2s ease;
-  background-color: #000000;
+  background-color: transparent;
   /* font-family: 'Panchang', sans-serif; */
 }
 
