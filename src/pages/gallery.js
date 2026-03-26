@@ -54,7 +54,8 @@ export default function Gallery() {
 
   return (
     <div className="relative gallery">
-       {/* <Navbar /> */}
+      {/* address the z fighting */}
+       {/* <Navbar />  */}
       {/* ───────── TOGGLE BUTTON ───────── */}
       <div className="fixed top-4 right-4 z-90">
         <button
