@@ -5,6 +5,7 @@ import artworks from "../data/artworks";
 import Image from 'next/image'
 import ThreeDGallery from "../components/ThreeDGallery";
 import LowPowerGallery from "../components/LowPowerGallery";
+import Navbar from "../components/Navbar"
 
 export default function Gallery() {
   const [lowPowerMode, setLowPowerMode] = useState(true);
@@ -53,9 +54,9 @@ export default function Gallery() {
 
   return (
     <div className="relative gallery">
-
+       {/* <Navbar /> */}
       {/* ───────── TOGGLE BUTTON ───────── */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 right-4 z-90">
         <button
           onClick={switchMode}
           className="px-4 py-2 bg-black text-white text-sm rounded-lg shadow-md hover:text-[#007f8cff] transition logo-3"

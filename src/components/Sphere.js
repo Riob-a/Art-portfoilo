@@ -204,20 +204,20 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           color={color}
           /* --- Transparency --- */
           transparent
-          opacity={isSmallScreen ? 0.3 : 0.3}
+          // opacity={isSmallScreen ? 0.3 : 0.3}
           depthWrite={false}
           /* --- Reflection / Refraction --- */
-          transmission={isSmallScreen ? 0 : 0.5}
-          ior={1.5}
+          // transmission={isSmallScreen ? 0 : 0.5}
+          // ior={1.5}
           /* --- Surface response --- */
-          metalness={0.1}
-          roughness={isSmallScreen ? 0.01 : 0.05}
+          metalness={0.5}
+          roughness={isSmallScreen ? 0.01 : 0.5}
           /* --- Clearcoat (expensive when stacked) --- */
           clearcoat={isSmallScreen ? 0.4 : 1}
-          clearcoatRoughness={isSmallScreen ? 0.2 : 0.02}
+          clearcoatRoughness={isSmallScreen ? 0.2 : 0}
           /* --- COSTLY: only enable on larger screens --- */
           thickness={isSmallScreen ? 0 : 2.5}
-          reflectivity={isSmallScreen ? 1 : 5}
+          reflectivity={isSmallScreen ? 1 : 1}
           /* --- Transmission buffers (skip on small) --- */
           samples={isSmallScreen ? 0 : 1}
           resolution={isSmallScreen ? 0 : 256}

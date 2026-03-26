@@ -13,16 +13,16 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
-    background: linear-gradient(135deg,
-        #1fffd4 0%,
-        #3fd0c9 20%,
-        #5faac7 40%,
-        #7f8fd4 55%,
-        #a86ad9 70%,
-        #c84adf 85%,
-        #ff00cc 100%);
+    background: linear-gradient(120deg,
+        /* #1fffd4,
+        #5faac7,
+        #a86ad9,
+        #ff00cc */
+        #F7BC3A,
+        #DD44EC
+      );
 
-    background-size: 160% 100%;
+    background-size: 300% 300%;
     animation: gradientWave 10s ease infinite;
     transition: background-color 0.3s, color 0.3s;
     --foreground: #ededed;
@@ -767,7 +767,7 @@ button.gradient-text {
 
 @media screen and (max-width: 768px) {
   :root {
-    background:  #7f8fd4;
+    background: #7f8fd4;
   }
 
   .gallery {
@@ -862,11 +862,11 @@ button.gradient-text {
   padding: 0.5rem 2rem;
 }
 
-/* .navbar:hover {
+.navbar:hover {
   transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
   border: 1px solid #ffffff;
-  color: #ff0000;
-} */
+  /* color: #ff0000; */
+}
 
 .link:hover {
   color: #3deab8;
