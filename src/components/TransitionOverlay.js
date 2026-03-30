@@ -52,7 +52,7 @@ export default function TransitionOverlay() {
                 main-logo
               "
                 >
-                    <div className="text-black uppercase tracking-widest">
+                    {/* <div className="text-black uppercase tracking-widest">
                         <div className="text-sm md:text-base opacity-70"
                             data-aos="fade-right"
                             data-aos-delay="400"
@@ -65,7 +65,7 @@ export default function TransitionOverlay() {
                         >
                             GALLERY
                         </div>
-                    </div>
+                    </div> */}
                 </span>
             </motion.div>
 

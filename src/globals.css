@@ -10,24 +10,48 @@
   --foreground: #171717;
 }
 
+/* @property --angle {
+  syntax: '<angle>';
+  initial-value: 120deg;
+  inherits: false;
+} */
+
 @media (prefers-color-scheme: dark) {
   :root {
     /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
-    background: linear-gradient(120deg,
-        /* #1fffd4,
-        #5faac7,
-        #a86ad9,
-        #ff00cc */
-        #F7BC3A,
-        #DD44EC
-      );
+    background: linear-gradient(-45deg,
+        /* #e85fc0,
+        #f2857a,
+        #eeb334, */
+        #eeb334,
+        #eeb334,
+        #f2857a,
+        #e85fc0
+        );
 
     background-size: 300% 300%;
-    animation: gradientWave 10s ease infinite;
-    transition: background-color 0.3s, color 0.3s;
+    animation: gradientWave 40s linear infinite;
     --foreground: #ededed;
+    will-change: background-position;
+
+    /* Rotate Background */
+
+    /* background: linear-gradient(var(--angle), #DD44EC, #F7BC3A);
+    animation: gradientRotate 15s linear infinite;
+    transition: color 0.3s;
+    --foreground: #ededed; */
   }
 }
+
+/* @keyframes gradientRotate {
+  from {
+    --angle: 120deg;
+  }
+
+  to {
+    --angle: 480deg;
+  }
+} */
 
 @layer utilities {
   .swing-hover {
@@ -35,7 +59,7 @@
     transform-origin: left center;
     display: inline-block;
     margin-right: 12px;
-    perspective: 300px;
+    perspective: 400px;
 
   }
 
@@ -113,6 +137,16 @@ font-family: 'Supreme', sans-serif;
     background-position: 0% 50%;
   } */
 
+}
+
+@keyframes gradientWave-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 300% 50%;
+  }
 }
 
 @keyframes fadeIn {
@@ -630,6 +664,21 @@ main {
   padding: 15px;
   border: 2px solid #171717;
   box-shadow: #7e7e7e 10px 10px 10px;
+}
+
+.icon-fade {
+  transition: opacity 0.3s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.icon-fade.hidden-icon {
+  opacity: 0;
+}
+
+.icon-fade.visible-icon {
+  opacity: 1;
 }
 
 /* end */

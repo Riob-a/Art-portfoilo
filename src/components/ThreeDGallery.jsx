@@ -570,7 +570,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                     (clicked === i || heldIndex === i) && !modalOpen
                       ? "translateY(0px)"
                       : "translateY(6px)",
-                  background: "rgba(255, 0, 0, 0.363)",
+                  background: "rgba(0, 0, 0, 0.564)",
                   backdropFilter: "blur(6px)",
                   outline: "1px solid red",
                   cursor: "pointer"
@@ -581,6 +581,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                   style={{
                     fontWeight: 800,
                     fontSize: "11px",
+                    marginTop:"2px",
                     marginBottom: "4px",
                     letterSpacing: "0.04em",
                     textTransform: "uppercase",

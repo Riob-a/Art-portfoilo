@@ -220,7 +220,8 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                             pointerEvents: "none",
                             opacity: clicked || held ? 1 : 0,
                             transition: "opacity 0.25s ease 0.15s",
-                            background: "rgba(255, 0, 0, 0.363)",
+                            // background: "rgba(255, 0, 0, 0.363)",
+                            background: "rgba(0, 0, 0, 0.564)",
                             outline: "1px solid red",
                             cursor: "pointer"
                         }}

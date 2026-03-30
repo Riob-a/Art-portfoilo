@@ -5,6 +5,7 @@ import artworks from "../data/artworks";
 import Image from 'next/image'
 import ThreeDGallery from "../components/ThreeDGallery";
 import LowPowerGallery from "../components/LowPowerGallery";
+import { FaExpand, FaCompress } from "react-icons/fa";
 import Navbar from "../components/Navbar"
 
 export default function Gallery() {
@@ -55,15 +56,26 @@ export default function Gallery() {
   return (
     <div className="relative gallery">
       {/* address the z fighting */}
-       {/* <Navbar />  */}
+      <Navbar />
       {/* ───────── TOGGLE BUTTON ───────── */}
-      <div className="fixed top-4 right-4 z-90">
+      <div className="fixed top-2.75 right-2.75 z-999 group">
         <button
           onClick={switchMode}
-          className="px-4 py-2 bg-black text-white text-sm rounded-lg shadow-md hover:text-[#007f8cff] transition logo-3"
+          className="px-3 py-2.5 bg-black text-white text-sm rounded-lg shadow-md hover:text-[#007f8cff] transition logo-3"
         >
-          {lowPowerMode ? "Switch to Full Gallery" : "Switch to Single Pane"}
+          <span className="relative w-4 h-4 block">
+            <span className={`icon-fade ${lowPowerMode ? "visible-icon" : "hidden-icon"}`}>
+              <FaExpand />
+            </span>
+            <span className={`icon-fade ${lowPowerMode ? "hidden-icon" : "visible-icon"}`}>
+              <FaCompress />
+            </span>
+          </span>
         </button>
+        {/* Tool Tip */}
+        <div className="absolute right-0 top-full mt-1 px-2 py-1 b-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none logo-3">
+          {lowPowerMode ? "Switch to Full Gallery" : "Switch to Single Pane"}
+        </div>
       </div>
 
       {/* ───────── SWITCH LOADER ───────── */}
