@@ -212,7 +212,7 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                 >
                     <div
                         style={{
-                            maxWidth: "120px",
+                            maxWidth: "200px",
                             fontSize: "10px",
                             lineHeight: 1.2,
                             color: "#bbb",
@@ -221,19 +221,22 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                             opacity: clicked || held ? 1 : 0,
                             transition: "opacity 0.25s ease 0.15s",
                             // background: "rgba(255, 0, 0, 0.363)",
-                            background: "rgba(0, 0, 0, 0.564)",
-                            outline: "1px solid red",
+                            background: "rgba(20, 12, 4, 0.82)",
+                            outline: "1px solid grey",
                             cursor: "pointer"
                         }}
                     >
                         <div
-                            className="modal-text m-1"
+                            className="modal-text m-1 p-3"
                             style={{
                                 fontWeight: 800,
-                                fontSize: "11px",
-                                marginBottom: "4px",
-                                letterSpacing: "0.04em",
+                                color: "#EF9F27",
+                                fontSize: "16px",
+                                marginBottom: "10px",
+                                letterSpacing: "0.06em",
                                 textTransform: "uppercase",
+                                borderBottom: "1px solid rgba(255,255,255,0.15)",
+                                paddingBottom: "8px",
                             }}
                         >
                             {art.title}
@@ -244,6 +247,7 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                             style={{
                                 fontWeight: 400,
                                 fontSize: "10px",
+                                color: "rgba(255,255,255,0.88)",
                                 lineHeight: 1.4,
                                 opacity: 0.75,
                             }}

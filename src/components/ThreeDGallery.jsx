@@ -119,19 +119,19 @@ export default function ThreeDFloatingGallery() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height:"98%" }}>
+      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height: "98%" }}>
 
         {/* CORNER BRACKETS */}
-        <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-black/70 pointer-events-none z-10" />
-        <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-black/70 pointer-events-none z-10" />
-        <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-black/70 pointer-events-none z-10" />
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-black/70 pointer-events-none z-10" />
+        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
 
         {/* EDGE PLUSES */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
 
         <Canvas
           camera={{ position: [0, 0, 10], fov: 60 }}
@@ -584,7 +584,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             >
               <div
                 style={{
-                  width: "120px",
+                  width: "240px",
                   fontSize: "10px",
                   lineHeight: 1.2,
                   color: "#bbb",
@@ -597,38 +597,42 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                     (clicked === i || heldIndex === i) && !modalOpen
                       ? "translateY(0px)"
                       : "translateY(6px)",
-                  background: "rgba(0, 0, 0, 0.564)",
+                  // background: "rgba(0, 0, 0, 0.564)",
+                  background: "rgba(20, 12, 4, 0.82)",
                   backdropFilter: "blur(6px)",
-                  outline: "1px solid red",
+                  outline: "1px solid grey",
                   cursor: "pointer"
                 }}
               >
                 <div
-                  className="modal-text m-1"
+                  className="modal-text m-1 p-3"
                   style={{
                     fontWeight: 800,
-                    fontSize: "11px",
-                    marginTop: "2px",
-                    marginBottom: "4px",
-                    letterSpacing: "0.04em",
+                    color: "#EF9F27",
+                    fontSize: "16px",
+                    marginBottom: "10px",
+                    letterSpacing: "0.06em",
                     textTransform: "uppercase",
+                    borderBottom: "1px solid rgba(255,255,255,0.15)",
+                    paddingBottom: "8px",
                   }}
                 >
                   {art.title}
                 </div>
 
                 <div
-                  className="p-1"
+                  className="p-3"
                   style={{
                     fontWeight: 400,
-                    fontSize: "10px",
-                    lineHeight: 1.4,
-                    opacity: 0.75,
+                    fontSize: "14px",
+                    color: "rgba(255,255,255,0.88)",
+                    lineHeight: 1.6,
+                    minWidth: "240px",
+                    maxWidth: "280px",
                   }}
                 >
                   {art.description}
                 </div>
-
               </div>
             </Html>
 
