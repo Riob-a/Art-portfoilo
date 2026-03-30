@@ -100,39 +100,66 @@ export default function ThreeDFloatingGallery() {
 
 
   return (
-    <div className="relative h-screen w-full ">
+    <div className="relative h-screen w-full mt-2">
+
+      {/* CORNER BRACKETS */}
+      {/* <div className="absolute top-2 left-2 w-6 h-6 border-t border-l border-white/70 pointer-events-none z-10" />
+      <div className="absolute top-2 right-2 w-6 h-6 border-t border-r border-white/70 pointer-events-none z-10" />
+      <div className="absolute bottom-2 left-2 w-6 h-6 border-b border-l border-white/70 pointer-events-none z-10" />
+      <div className="absolute bottom-2 right-2 w-6 h-6 border-b border-r border-white/70 pointer-events-none z-10" /> */}
+
+      {/* HINT TEXT */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">
+        pan to explore · scroll to zoom
+      </div>
+
 
       {/* DIM BACKGROUND WHEN MODAL OPEN */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <Canvas camera={{ position: [0, 0, 10], fov: 60 }} dpr={[1, 1.5]} className="bg[#161515]/5 rounded-lg" style={{ margin: "auto", display: "block", width: "95%" }}>
-        <Environment preset="dawn" environmentIntensity={1} />
-        <ambientLight intensity={0.8} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} />
-        <directionalLight position={[-5, 2, -5]} intensity={0.6} />
+      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height:"98%" }}>
 
-        <Suspense fallback={<LoadingFallback />}>
-          <Bounds
-            fit
-            clip
-            observe
-            margin={0.95}
-          >
-            <GalleryScene
-              artworks={artworks}
-              sizes={sizes}
-              openModal={openModal}
-              modalOpen={isModalOpen}
-              clicked={clicked}
-              setClicked={setClicked}
-            />
-          </Bounds>
-        </Suspense>
+        {/* CORNER BRACKETS */}
+        <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-black/70 pointer-events-none z-10" />
+        <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-black/70 pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-black/70 pointer-events-none z-10" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-black/70 pointer-events-none z-10" />
 
-        <OrbitControls makeDefault enablePan enableZoom={!isModalOpen && clicked === null} enabled={!isModalOpen && clicked === null} minDistance={6} maxDistance={14} />
-      </Canvas>
+        {/* EDGE PLUSES */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-l pointer-events-none z-10">+</div>
+
+        <Canvas
+          camera={{ position: [0, 0, 10], fov: 60 }}
+          dpr={[1, 1.5]}
+          className="bg[#161515]/5 rounded-lg"
+          style={{ display: "block", width: "100%" }}
+        >
+          <Environment preset="dawn" environmentIntensity={1} />
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[5, 5, 5]} intensity={1.2} />
+          <directionalLight position={[-5, 2, -5]} intensity={0.6} />
+
+          <Suspense fallback={<LoadingFallback />}>
+            <Bounds fit clip observe margin={0.95}>
+              <GalleryScene
+                artworks={artworks}
+                sizes={sizes}
+                openModal={openModal}
+                modalOpen={isModalOpen}
+                clicked={clicked}
+                setClicked={setClicked}
+              />
+            </Bounds>
+          </Suspense>
+
+          <OrbitControls makeDefault enablePan enableZoom={!isModalOpen && clicked === null} enabled={!isModalOpen && clicked === null} minDistance={6} maxDistance={14} />
+        </Canvas>
+      </div>
 
       {/* ------------------ MODAL ------------------ */}
       {isModalOpen &&
@@ -581,7 +608,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                   style={{
                     fontWeight: 800,
                     fontSize: "11px",
-                    marginTop:"2px",
+                    marginTop: "2px",
                     marginBottom: "4px",
                     letterSpacing: "0.04em",
                     textTransform: "uppercase",

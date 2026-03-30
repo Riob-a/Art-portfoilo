@@ -168,7 +168,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
       {/* Tooltip */}
       {showTooltip && (
-        <Html position={[0, 4.5, 0]} center>
+        <Html position={[0, 0, 0]} left>
           <div
             className="logo-3"
             style={{
@@ -176,7 +176,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
               color: "white",
               padding: "8px 12px",
               borderRadius: "6px",
-              fontSize: "14px",
+              fontSize: "10px",
               whiteSpace: "nowrap",
               pointerEvents: "none",
               backdropFilter: "blur(4px)",
@@ -235,14 +235,11 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
         />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
-        {/* {!isSmallScreen && (
-        <mesh>
-          <sphereGeometry args={[2.02, 40, 20]} />
-          <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-          <Edges threshold={1} color="rgba(136, 136, 136, 1)" />
-        </mesh>
-      )} */}
+        <Edges
+          threshold={1}
+          color="rgba(136, 136, 136, 1)" 
+          lineWidth={0.5}
+          />
       </mesh>
     </a.group>
   );
@@ -309,7 +306,7 @@ export default function InteractiveSpinningSphere() {
       className="home"
       style={{ height: "625px", width: "99%", margin: "auto", display: "block" }}
       dpr={[1, 1.5]}
-      camera={{ position: [0, -5, 5], fov: 60 }}
+      camera={{ position: [0, 4, 3], fov: 90 }}
       gl={{ antialias: true }}
     >
       <ambientLight intensity={0.5} />

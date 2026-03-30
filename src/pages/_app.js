@@ -3,6 +3,7 @@ import 'aos/dist/aos.css';
 import AOS from 'aos';
 import { useEffect } from 'react';
 import Footer from '../components/Footer'
+import GalleryOverlay from '@/components/NameOverlay';
 import TransitionOverlay from '../components/TransitionOverlay';
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router'; 
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }) {
           <TransitionOverlay key={router.route} />
           <Component {...pageProps} />
         </AnimatePresence>
+        <GalleryOverlay />
       </main>
       <Footer />
     </div>

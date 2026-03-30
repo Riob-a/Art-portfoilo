@@ -47,7 +47,7 @@ export default function Gallery() {
 
   if (lowPowerMode === null) {
     return (
-      <div className="w-full h-screen flex items-center justify-center text-white logo-3">
+      <div className="w-full h-screen flex items-center justify-center text-white logo-3 ">
         Loading mode...
       </div>
     );
@@ -55,15 +55,14 @@ export default function Gallery() {
 
   return (
     <div className="relative gallery">
-      {/* address the z fighting */}
-      <Navbar />
+      {/* <Navbar /> */}
       {/* ───────── TOGGLE BUTTON ───────── */}
-      <div className="fixed top-2.75 right-2.75 z-999 group">
+      <div className="fixed top-3.5 right-12 z-999 group">
         <button
           onClick={switchMode}
-          className="px-3 py-2.5 bg-black text-white text-sm rounded-lg shadow-md hover:text-[#007f8cff] transition logo-3"
+          className="toggle-button px-3 py-3 bg-black text-white text-sm rounded-lg shadow-md hover:text-[#007f8cff] transition logo-3"
         >
-          <span className="relative w-4 h-4 block">
+          <span className="relative w-4 h-4 bloc items-center justify-center">
             <span className={`icon-fade ${lowPowerMode ? "visible-icon" : "hidden-icon"}`}>
               <FaExpand />
             </span>

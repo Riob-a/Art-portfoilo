@@ -1,6 +1,11 @@
 import { FaLink } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+   const pathname = usePathname();
+  
+    if (pathname === "/gallery") return null;
+
   return (
     <footer
      className="footer text-sm px-4 py-3  flex justify-between items-center ">
