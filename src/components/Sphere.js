@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Edges, Html, Sparkles, Bounds, } from "@react-three/drei";
+import { Environment, Edges, Html, Bounds } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
@@ -25,14 +25,12 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
   const isTouchDevice =
     typeof window !== "undefined" &&
-    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
-
+    ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
+    window.innerWidth < 1024;
 
   // Color feedback
   const { color } = useSpring({
-    color: clicked
-      ? "#f5f7fa"
-      : "#1d709dac",
+    color: clicked ? "#a70404" : "#1d709dac",
     config: { tension: 180, friction: 20 },
   });
 
@@ -46,16 +44,31 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
   useFrame((_, delta) => {
     if (sphereGroupRef.current) {
       const targetSpeed = hovered ? 1 : 0.5;
-      sphereGroupRef.current.userData.currentSpeed =
-        THREE.MathUtils.lerp(
-          sphereGroupRef.current.userData.currentSpeed || 0.5,
-          targetSpeed,
-          delta * 3 // adjust smoothing factor
-        );
-      sphereGroupRef.current.rotation.y += delta * sphereGroupRef.current.userData.currentSpeed;
+      sphereGroupRef.current.userData.currentSpeed = THREE.MathUtils.lerp(
+        sphereGroupRef.current.userData.currentSpeed || 0.5,
+        targetSpeed,
+        delta * 3
+      );
+      sphereGroupRef.current.rotation.y +=
+        delta * sphereGroupRef.current.userData.currentSpeed;
     }
   });
 
+  // Intersection observer — pause when off screen
+  useEffect(() => {
+    const canvas = document.querySelector(".home");
+    if (!canvas) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        canvas.style.visibility = entry.isIntersecting ? "visible" : "hidden";
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
 
   // ----------------------------------------
   // Audio helpers
@@ -86,10 +99,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
     if (!ctx || !gain) return;
 
     gain.gain.cancelScheduledValues(ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(
-      value,
-      ctx.currentTime + duration
-    );
+    gain.gain.linearRampToValueAtTime(value, ctx.currentTime + duration);
   };
 
   const playClick = () => {
@@ -115,7 +125,6 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
     startHoverSound();
     setHoverVolume(0.2, 0.15);
     if (navigator.vibrate) navigator.vibrate(20);
-
   };
 
   const deactivateHover = () => {
@@ -124,19 +133,16 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
     setHoverVolume(0.15, 0.2);
   };
 
-
   return (
     <a.group
       ref={sphereGroupRef}
       scale={scale.to((s) => [s, s, s])}
-
       onPointerOver={() => {
         setHovered(true);
         setShowTooltip(true);
         document.body.style.cursor = "pointer";
         startHoverSound();
         setHoverVolume(0.2, 0.15);
-
         activateHover();
       }}
       onPointerOut={() => {
@@ -144,47 +150,45 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         setShowTooltip(false);
         document.body.style.cursor = "default";
         setHoverVolume(0.15, 0.2);
-
         deactivateHover();
       }}
       onClick={() => {
         if (isTouchDevice && !hovered) {
-          // FIRST TAP = hover
           activateHover();
-          // auto-hide hover after delay
-          setTimeout(() => {
-            deactivateHover();
-          }, 2500);
-
+          setTimeout(() => deactivateHover(), 2500);
           return;
         }
-        // SECOND TAP (or desktop click) = navigate
+
         setClicked(true);
         playClick();
-        setTimeout(() => setClicked(false), 200);
-        router.push("/gallery");
+
+        setTimeout(() => {
+          setClicked(false);
+          router.push("/gallery");
+        }, 250);
       }}
     >
-
       {/* Tooltip */}
       {showTooltip && (
         <Html position={[0, 0, 0]} left>
           <div
             className="logo-3"
             style={{
-              background: "rgba(0,0,0,0.7)",
-              color: "white",
-              padding: "8px 12px",
-              borderRadius: "6px",
-              fontSize: "10px",
+              background: "rgba(20, 12, 4, 0.85)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "rgba(255,255,255,0.88)",
+              padding: "10px 16px",
+              borderRadius: "8px",
+              fontSize: "12px",
+              fontWeight: 500,
+              letterSpacing: "0.04em",
               whiteSpace: "nowrap",
               pointerEvents: "none",
-              backdropFilter: "blur(4px)",
+              backdropFilter: "blur(6px)",
               transform: "translateY(-10px)",
               animation: "fadeIn 0.2s ease-out",
             }}
           >
-            {/* Click to View Gallery */}
             {isTouchDevice ? "Tap again to open Gallery" : "Click to View Gallery"}
           </div>
         </Html>
@@ -193,32 +197,22 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       {/* Solid sphere */}
       <mesh>
         <sphereGeometry
-          // args={[2, 64, 64]}
           args={[
             isSmallScreen ? 1 : 2,
-            isSmallScreen ? 40 : 64,
-            isSmallScreen ? 40 : 64,
+            isSmallScreen ? 32 : 64,
+            isSmallScreen ? 32 : 64,
           ]}
         />
         <a.meshPhysicalMaterial
           color={color}
-          /* --- Transparency --- */
           transparent
-          // opacity={isSmallScreen ? 0.3 : 0.3}
           depthWrite={false}
-          /* --- Reflection / Refraction --- */
-          // transmission={isSmallScreen ? 0 : 0.5}
-          // ior={1.5}
-          /* --- Surface response --- */
           metalness={0.5}
           roughness={isSmallScreen ? 0.01 : 0.5}
-          /* --- Clearcoat (expensive when stacked) --- */
           clearcoat={isSmallScreen ? 0.4 : 1}
           clearcoatRoughness={isSmallScreen ? 0.2 : 0}
-          /* --- COSTLY: only enable on larger screens --- */
           thickness={isSmallScreen ? 0 : 2.5}
-          reflectivity={isSmallScreen ? 1 : 1}
-          /* --- Transmission buffers (skip on small) --- */
+          reflectivity={1}
           samples={isSmallScreen ? 0 : 1}
           resolution={isSmallScreen ? 0 : 256}
         />
@@ -232,14 +226,9 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
             isSmallScreen ? 20 : 40,
             isSmallScreen ? 20 : 20,
           ]}
-
         />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        <Edges
-          threshold={1}
-          color="rgba(136, 136, 136, 1)" 
-          lineWidth={0.5}
-          />
+        <Edges threshold={1} color="rgba(136, 136, 136, 1)" lineWidth={0.5} />
       </mesh>
     </a.group>
   );
@@ -253,6 +242,7 @@ export default function InteractiveSpinningSphere() {
   const audioUnlockedRef = useRef(false);
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -265,6 +255,11 @@ export default function InteractiveSpinningSphere() {
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
+
+  // Only render Canvas once isSmallScreen is known
+  useEffect(() => {
+    setReady(true);
+  }, [isSmallScreen]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -301,17 +296,22 @@ export default function InteractiveSpinningSphere() {
     return () => document.removeEventListener("pointerdown", unlock);
   }, []);
 
+  if (!ready) return null;
+
   return (
     <Canvas
       className="home"
       style={{ height: "625px", width: "99%", margin: "auto", display: "block" }}
-      dpr={[1, 1.5]}
+      dpr={isSmallScreen ? [1, 1] : [1, 1.5]}
       camera={{ position: [0, 4, 3], fov: 90 }}
-      gl={{ antialias: true }}
+      gl={{ antialias: !isSmallScreen }}
     >
       <ambientLight intensity={0.5} />
-      {/* <directionalLight position={[5, 5, 5]} intensity={1.0} /> */}
-      <Environment preset="studio" blur={1.8} />
+      {isSmallScreen ? (
+        <directionalLight position={[5, 5, 5]} intensity={1.5} />
+      ) : (
+        <Environment preset="studio" blur={1.8} />
+      )}
 
       <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>
         <InteractiveSphere audioCtxRef={audioCtxRef} isSmallScreen={isSmallScreen} />

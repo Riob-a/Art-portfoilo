@@ -100,7 +100,7 @@ export default function ThreeDFloatingGallery() {
 
 
   return (
-    <div className="relative h-screen w-full mt-2">
+    <div className="relative h-screen w-full mt-0.5">
 
       {/* CORNER BRACKETS */}
       {/* <div className="absolute top-2 left-2 w-6 h-6 border-t border-l border-white/70 pointer-events-none z-10" />
@@ -119,7 +119,7 @@ export default function ThreeDFloatingGallery() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height: "98%" }}>
+      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height: "99%" }}>
 
         {/* CORNER BRACKETS */}
         <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />

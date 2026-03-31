@@ -22,7 +22,7 @@ export default function Home() {
           <div
             className="
               absolute
-              bottom-6
+              bottom-44
               left-6
               z-10
               select-none

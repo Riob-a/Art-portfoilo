@@ -29,14 +29,10 @@ const fadeUp = {
 
 export default function About() {
   return (
-    <section className="about max-h-screen  p-8">
+    <section className="about min-h-screen p-8 flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-18">
-        <motion.h2
-          // {...fadeUp}
-          // transition={{ duration: 0.8 }}
-          className="text-8xl  a-heading"
-        >
+        <motion.h2 className="text-8xl a-heading">
           <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="0">About</div>
           <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">Me</div>
         </motion.h2>
@@ -52,9 +48,7 @@ export default function About() {
 
       {/* Content */}
       <motion.div
-        // {...fadeUp}
-        // transition={{ duration: 1 }}
-        className="space-y-5  leading-relaxed mx-auto"
+        className="space-y-6 leading-relaxed max-w-2xl"
         data-aos="fade-in"
         data-aos-delay="800"
         data-aos-duration="400"
@@ -71,15 +65,71 @@ export default function About() {
           feel free to reach out and check out my other web projects.
         </p>
 
-        <p>
+        {/* Project link — styled as a proper CTA */}
+        <p
+          data-aos="fade-in"
+          data-aos-delay="1000"
+          data-aos-duration="400"
+        >
           <Link
             href="https://portfolio-five-five.vercel.app/"
             className="a-link"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontWeight: 600,
+              fontSize: "15px",
+              letterSpacing: "0.04em",
+              textDecoration: "underline",
+              textUnderlineOffset: "4px",
+              opacity: 0.9,
+            }}
           >
-            Here
+            Check out my other projects →
           </Link>
         </p>
       </motion.div>
+
+      {/* Bottom fill — skills/media row */}
+      <div
+        className="mt-16 pt-16  pb-10"
+        data-aos="fade-in"
+        data-aos-delay="1200"
+        data-aos-duration="600"
+      >
+        <p
+          style={{
+            fontSize: "11px",
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            opacity: 0.8,
+            marginBottom: "12px",
+            display: "flex",
+            justifyContent: "center" 
+          }}
+        >
+          Media
+        </p>
+        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap",  justifyContent: "center"  }}>
+          {["Pencil", "Paint", "Digital", "Still Life"].map((skill) => (
+            <span
+              key={skill}
+              style={{
+                padding: "6px 14px",
+                borderRadius: "999px",
+                border: "1px solid rgba(255,255,255,0.35)",
+                fontSize: "13px",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.85)",
+                letterSpacing: "0.03em",
+              }}
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

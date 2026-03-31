@@ -98,7 +98,7 @@ export default function Contact() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Your Name"
-            className="border contact-field p-2"
+            className="border form-input p-2"
             required
           />
 
@@ -109,7 +109,7 @@ export default function Contact() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Your Email"
-            className="border contact-field p-2"
+            className="border form-input p-2"
             required
           />
 
@@ -119,7 +119,7 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
             placeholder="Your Message"
-            className="border contact-field p-2"
+            className="border form-input p-2"
             rows={5}
             required
           />
@@ -129,6 +129,19 @@ export default function Contact() {
             whileTap={{ scale: 0.95, y: 2 }}
             transition={hoverSpring.transition}
             className="gradient-text py-2 px-4"
+            style={{
+              border: "1px solid rgba(255,255,255,0.5)",
+              borderRadius: "6px",
+              padding: "12px 24px",
+              color: "white",
+              fontWeight: 600,
+              fontSize: "14px",
+              letterSpacing: "0.06em",
+              textTransform: "uppercase",
+              background: "transparent",
+              cursor: "pointer",
+              alignSelf: "flex-start",
+            }}
             type="submit"
           >
             Send Message
