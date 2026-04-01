@@ -5,6 +5,7 @@ import artworks from "../data/artworks";
 import Image from 'next/image'
 import ThreeDGallery from "../components/ThreeDGallery";
 import LowPowerGallery from "../components/LowPowerGallery";
+import ThreeDFloatingGallery from "../components/ThreeDGallery";
 import { FaExpand, FaCompress } from "react-icons/fa";
 import Navbar from "../components/Navbar"
 
@@ -121,7 +122,8 @@ export default function Gallery() {
         {lowPowerMode ? (
           <LowPowerGallery artworks={artworks} />
         ) : (
-          <ThreeDGallery artworks={artworks} />
+          // <ThreeDGallery artworks={artworks} />
+          <ThreeDFloatingGallery artworks={artworks} />
         )}
       </div>
     </div>

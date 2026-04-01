@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, Suspense, useMemo } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, Html, Environment, Bounds } from "@react-three/drei";
+import { OrbitControls, Html, Environment, Bounds, PerformanceMonitor } from "@react-three/drei";
 import { TextureLoader } from "three";
 import * as THREE from "three";
 import artworks from "../data/artworks";
@@ -12,22 +12,25 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { FaDownload } from "react-icons/fa";
 
-//  Screen size render conditional
-function useIsLargeScreen(breakpoint = 1024) {
-  const [isLarge, setIsLarge] = useState(false);
+/* ------------------
+   Device Tier Hook
+------------------ */
+function useDeviceTier() {
+  return useMemo(() => {
+    const cores = navigator.hardwareConcurrency ?? 4;
+    const memory = navigator.deviceMemory ?? 4; // not supported in Firefox/Safari
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    const isSmallScreen = window.innerWidth < 768;
 
-  useEffect(() => {
-    const check = () => setIsLarge(window.innerWidth >= breakpoint);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, [breakpoint]);
-
-  return isLarge;
+    if (cores <= 2 || memory <= 1 || (isMobile && isSmallScreen)) return "low";
+    if (cores <= 4 || memory <= 4) return "mid";
+    return "high";
+  }, []);
 }
 
 export default function ThreeDFloatingGallery() {
   const [sizes, setSizes] = useState([]);
+  const [dpr, setDpr] = useState(1);
 
   /* ------------------ Modal State ------------------ */
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,7 +38,14 @@ export default function ThreeDFloatingGallery() {
   const [isClosing, setIsClosing] = useState(false);
   const [clicked, setClicked] = useState(null);
 
-  const isLargeScreen = useIsLargeScreen(1024);
+  const tier = useDeviceTier();
+
+  // Set initial DPR based on device tier
+  useEffect(() => {
+    if (tier === "low") setDpr(1);
+    else if (tier === "mid") setDpr(1.5);
+    else setDpr(Math.min(window.devicePixelRatio, 2));
+  }, [tier]);
 
   const openModal = (art) => {
     setSelectedArt(art);
@@ -48,7 +58,7 @@ export default function ThreeDFloatingGallery() {
     setTimeout(() => {
       setIsModalOpen(false);
       setSelectedArt(null);
-    }, 200); // match fadeOut animation
+    }, 200);
   };
 
   /* -------- preload image sizes -------- */
@@ -59,7 +69,6 @@ export default function ThreeDFloatingGallery() {
         (art) =>
           new Promise((resolve) => {
             const img = new window.Image();
-
             img.src = art.imageUrl;
             img.onload = () =>
               resolve({ width: img.width, height: img.height });
@@ -79,19 +88,14 @@ export default function ThreeDFloatingGallery() {
         <div
           style={{
             padding: "12px 16px",
-            // background: "rgba(255, 255, 255, 0.7)",
             color: "white",
             fontSize: "16px",
             borderRadius: "8px",
-            // background: "#161515",
-            // backdropFilter: "blur(6px)",
             display: "flex",
             alignItems: "center",
             gap: "10px",
           }}
         >
-          {/* <span className="loader"></span> */}
-          {/* SVG replaces spinner */}
           <img
             src="/globe-2.svg"
             alt="loading"
@@ -114,28 +118,19 @@ export default function ThreeDFloatingGallery() {
     );
   }
 
-
   return (
     <div className="relative h-screen w-full mt-0.5">
-
-      {/* CORNER BRACKETS */}
-      {/* <div className="absolute top-2 left-2 w-6 h-6 border-t border-l border-white/70 pointer-events-none z-10" />
-      <div className="absolute top-2 right-2 w-6 h-6 border-t border-r border-white/70 pointer-events-none z-10" />
-      <div className="absolute bottom-2 left-2 w-6 h-6 border-b border-l border-white/70 pointer-events-none z-10" />
-      <div className="absolute bottom-2 right-2 w-6 h-6 border-b border-r border-white/70 pointer-events-none z-10" /> */}
-
       {/* HINT TEXT */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">
         pan to explore · scroll to zoom
       </div>
-
 
       {/* DIM BACKGROUND WHEN MODAL OPEN */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height: "99%" }}>
+      <div className="relative h-scree" style={{ width: "95%", margin: "auto", height: "99%" }}>
 
         {/* CORNER BRACKETS */}
         <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
@@ -151,17 +146,27 @@ export default function ThreeDFloatingGallery() {
 
         <Canvas
           camera={{ position: [0, 0, 10], fov: 60 }}
-          dpr={[1, 1.5]}
+          dpr={dpr}
           className="bg[#161515]/5 rounded-lg"
           style={{ display: "block", width: "100%" }}
         >
-          <Environment preset="dawn" environmentIntensity={1} />
-          {/* {isLargeScreen && (
+          {/* PerformanceMonitor: adjusts DPR at runtime based on actual FPS */}
+          <PerformanceMonitor
+            onDecline={() => setDpr((prev) => Math.max(prev - 0.5, 0.75))}
+            onIncline={() => setDpr((prev) => Math.min(prev + 0.5, tier === "high" ? 2 : 1.5))}
+          />
+
+          {/* Only render Environment on mid/high tier devices */}
+          {tier !== "low" && (
             <Environment preset="dawn" environmentIntensity={1} />
-          )} */}
+          )}
+
           <ambientLight intensity={0.8} />
           <directionalLight position={[5, 5, 5]} intensity={1.2} />
-          <directionalLight position={[-5, 2, -5]} intensity={0.6} />
+          {/* Skip second directional light on low-end devices */}
+          {tier !== "low" && (
+            <directionalLight position={[-5, 2, -5]} intensity={0.6} />
+          )}
 
           <Suspense fallback={<LoadingFallback />}>
             <Bounds fit clip observe margin={0.95}>
@@ -172,11 +177,19 @@ export default function ThreeDFloatingGallery() {
                 modalOpen={isModalOpen}
                 clicked={clicked}
                 setClicked={setClicked}
+                tier={tier}
               />
             </Bounds>
           </Suspense>
 
-          <OrbitControls makeDefault enablePan enableZoom={!isModalOpen && clicked === null} enabled={!isModalOpen && clicked === null} minDistance={6} maxDistance={14} />
+          <OrbitControls
+            makeDefault
+            enablePan
+            enableZoom={!isModalOpen && clicked === null}
+            enabled={!isModalOpen && clicked === null}
+            minDistance={6}
+            maxDistance={14}
+          />
         </Canvas>
       </div>
 
@@ -190,10 +203,9 @@ export default function ThreeDFloatingGallery() {
             onClick={handleClose}
           >
             <div
-              className="relative max-w-[50vw] w-full max-h-screen overflow-auto rounded-lg p-1 animate-scaleIn "
+              className="relative max-w-[50vw] w-full max-h-screen overflow-auto rounded-lg p-1 animate-scaleIn"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
               <button
                 className="absolute top-4 right-8 text-2xl x-button"
                 onClick={handleClose}
@@ -201,7 +213,6 @@ export default function ThreeDFloatingGallery() {
                 ✕
               </button>
 
-              {/* Fullscreen Image */}
               <div className="max-w-full max-h-full p-2 flex flex-col items-center">
                 <Image
                   src={selectedArt.imageUrl}
@@ -219,11 +230,7 @@ export default function ThreeDFloatingGallery() {
                   {selectedArt.description}
                 </p>
 
-                {/* Buttons */}
                 <div className="flex gap-4 mt-2">
-                  {/* <Link href={`/artworks/${selectedArt.slug}`}>
-                    <button className="m-button rounded-lg">More...</button>
-                  </Link> */}
                   <a
                     href={selectedArt.imageUrl}
                     download
@@ -244,7 +251,7 @@ export default function ThreeDFloatingGallery() {
 /* -------------------------------
    BEVELED / EXTRUDED CARD SHAPE
 -------------------------------- */
-function BeveledCard({ width, height, depth }) {
+function BeveledCard({ width, height, depth, tier }) {
   const shape = useMemo(() => {
     const w = width / 2;
     const h = height / 2;
@@ -263,12 +270,12 @@ function BeveledCard({ width, height, depth }) {
     () => ({
       steps: 1,
       depth: depth,
-      bevelEnabled: true,
+      bevelEnabled: tier !== "low",
       bevelThickness: 0.1,
       bevelSize: 0.08,
-      bevelSegments: 5,
+      bevelSegments: tier === "high" ? 5 : tier === "mid" ? 3 : 1,
     }),
-    [depth]
+    [depth, tier]
   );
 
   return (
@@ -279,17 +286,13 @@ function BeveledCard({ width, height, depth }) {
   );
 }
 
-/*  Recess for sunk card */
-function RecessedFrame({
-  width,
-  height,
-  depth = 0.2,
-  inset = 0.15, // how deep the art sits in
-}) {
+/* ----------------
+   Recessed Frame
+---------------- */
+function RecessedFrame({ width, height, depth = 0.2, inset = 0.15, tier }) {
   const shape = useMemo(() => {
     const w = width / 2;
     const h = height / 2;
-
     const holeW = w - inset;
     const holeH = h - inset;
 
@@ -300,7 +303,6 @@ function RecessedFrame({
     s.lineTo(-w, h);
     s.closePath();
 
-    // inner cut-out (the depression)
     const hole = new THREE.Path();
     hole.moveTo(-holeW, -holeH);
     hole.lineTo(holeW, -holeH);
@@ -319,10 +321,10 @@ function RecessedFrame({
           shape,
           {
             depth,
-            bevelEnabled: true,
+            bevelEnabled: tier !== "low",
             bevelThickness: 0.03,
             bevelSize: 0.03,
-            bevelSegments: 3,
+            bevelSegments: tier === "high" ? 3 : 1,
           },
         ]}
       />
@@ -334,34 +336,29 @@ function RecessedFrame({
 /* -------------------
    Gallery Scene
 ------------------- */
-function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, setClicked }) {
+function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, setClicked, tier }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(null);
   const clickTimeout = useRef(null);
-  const [returning, setReturning] = useState(null);
 
   const [heldIndex, setHeldIndex] = useState(null);
   const [exitingIndex, setExitingIndex] = useState(null);
 
-
   const singlePaneIndex = heldIndex !== null ? heldIndex : clicked;
   const isSinglePane = singlePaneIndex !== null;
+
   useEffect(() => {
     if (!isSinglePane && exitingIndex !== null) {
       const timeout = setTimeout(() => {
         setExitingIndex(null);
-      }, 350); // exit duration
-
+      }, 350);
       return () => clearTimeout(timeout);
     }
   }, [isSinglePane, exitingIndex]);
 
-
   const holdTimeout = useRef(null);
   const HOLD_DELAY = 320;
-
-
-  const BACK_TEXT_WIDTH = 0.12
+  const BACK_TEXT_WIDTH = 0.12;
 
   const urls = useMemo(() => artworks.map((a) => a.imageUrl), [artworks]);
   const textures = useLoader(TextureLoader, urls, (loader) => {
@@ -371,7 +368,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
   useMemo(() => {
     textures.forEach((tex) => {
       if (tex) {
-        tex.flipY = true;     // **before attach**
+        tex.flipY = true;
         tex.needsUpdate = true;
       }
     });
@@ -387,11 +384,9 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
     return artworks.map((_, i) => {
       const col = i % cols;
       const row = Math.floor(i / cols);
-
       const x = (col - (cols - 1) / 2) * spacingX;
       const y = startY - row * spacingY;
-      const z = 0;
-      return [x, y, z];
+      return [x, y, 0];
     });
   }, [artworks]);
 
@@ -400,12 +395,11 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
   const floatVariations = useMemo(
     () =>
       artworks.map(() => ({
-        speed: 0.7 + Math.random() * 0.4,        // 0.7 – 1.1
-        amplitude: 0.12 + Math.random() * 0.12,  // 0.12 – 0.24
+        speed: 0.7 + Math.random() * 0.4,
+        amplitude: 0.12 + Math.random() * 0.12,
       })),
     [artworks]
   );
-
 
   /* -------- SPRINGS -------- */
   const springs = useSprings(
@@ -432,9 +426,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             ? [0, 0.2, 0]
             : hovered === i && !isSinglePane
               ? [0.08, 0.35, 0]
-              // : [0, 0, 0],
               : [0.02, 0.01, 0],
-
 
         positionZ: isFocused
           ? 0.6
@@ -445,19 +437,17 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               : 0,
 
         config: isFocused
-          ? { mass: 1, tension: 280, friction: 24 }   // confident lock
+          ? { mass: 1, tension: 280, friction: 24 }
           : isExiting
-            ? { mass: 1.2, tension: 200, friction: 30 } // graceful release
+            ? { mass: 1.2, tension: 200, friction: 30 }
             : shouldYield
-              ? { mass: 1.1, tension: 160, friction: 28 } // background calm
+              ? { mass: 1.1, tension: 160, friction: 28 }
               : hovered === i
-                ? { mass: 0.8, tension: 220, friction: 18 } // reactive hover
-                : { mass: 1, tension: 170, friction: 22 },  // idle
-
+                ? { mass: 0.8, tension: 220, friction: 18 }
+                : { mass: 1, tension: 170, friction: 22 },
       };
     })
   );
-
 
   /* -------- FLOATING ANIMATION -------- */
   useFrame(({ clock }) => {
@@ -478,10 +468,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             : amplitude;
 
       const floatY =
-        // Math.sin(clock.getElapsedTime() * 0.9 + i) * 0.18;
-        // Math.sin(clock.getElapsedTime() * speed + i) * amplitude;
         Math.sin(clock.getElapsedTime() * speed + i) * effectiveAmplitude;
-
 
       child.position.y = basePositions[i][1] + floatY;
     });
@@ -505,30 +492,23 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             position-x={positions[i][0]}
             position-y={positions[i][1]}
             position-z={springs[i].positionZ}
-            // scale={springs[i].scale.to((s) => [s, s, s])}
             scale={springs[i].scale.to((s) => [s * 1.02, s, s * 0.98])}
-
             rotation={springs[i].rotation}
-            // onPointerOver={() => !modalOpen && setHovered(i)}
-            // onPointerOut={() => !modalOpen && setHovered(null)}
             onPointerOver={() =>
               !modalOpen && !isSinglePane && setHovered(i)
             }
             onPointerOut={() =>
               !modalOpen && !isSinglePane && setHovered(null)
             }
-
-
             onPointerDown={(e) => {
               e.stopPropagation();
               if (modalOpen) return;
 
               holdTimeout.current = setTimeout(() => {
-                setHeldIndex(i);     // lock on back
-                setClicked(null);   // cancel auto-return
+                setHeldIndex(i);
+                setClicked(null);
               }, HOLD_DELAY);
             }}
-
             onPointerUp={(e) => {
               e.stopPropagation();
 
@@ -537,14 +517,12 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                 holdTimeout.current = null;
               }
 
-              // If we were holding → release returns card
               if (heldIndex === i) {
                 setExitingIndex(i);
                 setHeldIndex(null);
                 return;
               }
 
-              // Otherwise treat as click (single / double)
               if (clickTimeout.current) {
                 clearTimeout(clickTimeout.current);
                 clickTimeout.current = null;
@@ -565,21 +543,19 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                 clickTimeout.current = null;
               }, 650);
             }}
-
             onPointerLeave={() => {
               if (holdTimeout.current) {
                 clearTimeout(holdTimeout.current);
                 holdTimeout.current = null;
               }
             }}
-
-
           >
             {/* BACK BEVELED PLATE */}
             <BeveledCard
               width={cardWidth + 0.12}
               height={cardHeight + 0.12}
               depth={0.5}
+              tier={tier}
             />
 
             {/* BACK FACE INFO */}
@@ -601,7 +577,6 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                   lineHeight: 1.2,
                   color: "#bbb",
                   pointerEvents: "none",
-                  // opacity: clicked === i && !modalOpen ? 1 : 0,
                   opacity:
                     (clicked === i || heldIndex === i) && !modalOpen ? 1 : 0,
                   transition: "opacity 0.3s ease 0.15s",
@@ -609,11 +584,10 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                     (clicked === i || heldIndex === i) && !modalOpen
                       ? "translateY(0px)"
                       : "translateY(6px)",
-                  // background: "rgba(0, 0, 0, 0.564)",
                   background: "rgba(20, 12, 4, 0.82)",
                   backdropFilter: "blur(6px)",
                   outline: "1px solid grey",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 <div
@@ -654,6 +628,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               height={cardHeight + 0.22}
               depth={0.45}
               inset={0.125}
+              tier={tier}
             />
 
             {/* FRONT IMAGE */}
@@ -661,7 +636,6 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               <mesh position={[0, 0, 0.61]}>
                 <planeGeometry args={[cardWidth, cardHeight]} />
                 <meshBasicMaterial map={tex} toneMapped={false} />
-                {/* <meshStandardMaterial map={tex} toneMapped={false} transparent={false} /> */}
               </mesh>
             ) : (
               <mesh position={[0, 0, 0.41]}>
@@ -670,27 +644,28 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
               </mesh>
             )}
 
-            {/* GLASS PANE */}
-            <mesh position={[0, 0, 0.68]}>
-              <planeGeometry args={[cardWidth, cardHeight]} />
-              <meshPhysicalMaterial
-                transmission={0}
-                transparent
-                color="rgba(0, 0, 0, 1)"
-                opacity={0.12}
-                roughness={0.05}
-                thickness={0.5}
-                ior={1.5}
-                reflectivity={1}
-                depthWrite={false}
-                samples={1}
-                resolution={256}
-              />
-            </mesh>
+            {/* GLASS PANE — skip on low-end devices */}
+            {tier !== "low" && (
+              <mesh position={[0, 0, 0.68]}>
+                <planeGeometry args={[cardWidth, cardHeight]} />
+                <meshPhysicalMaterial
+                  transmission={0}
+                  transparent
+                  color="rgba(0, 0, 0, 1)"
+                  opacity={0.12}
+                  roughness={0.05}
+                  thickness={0.5}
+                  ior={1.5}
+                  reflectivity={1}
+                  depthWrite={false}
+                  samples={1}
+                  resolution={256}
+                />
+              </mesh>
+            )}
           </a.group>
         );
       })}
     </group>
   );
-
 }
