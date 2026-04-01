@@ -10,7 +10,7 @@ export default function GalleryOverlay() {
 
   return (
     <Link href="/">
-      <div className="main-logo-h fixed bottom-12 right-4 z-50 text-white uppercase tracking-widest cursor-pointer">
+      <div className="main-logo-h fixed bottom-22 right-4 z-50 text-white uppercase tracking-widest cursor-pointer">
         <div className="text-xs opacity-70">
           the
         </div>
