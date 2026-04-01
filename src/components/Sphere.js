@@ -205,7 +205,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         />
         <a.meshPhysicalMaterial
           color={color}
-          transparent
+          // transparent
           depthWrite={false}
           metalness={0.5}
           roughness={isSmallScreen ? 0.5 : 0.5}
@@ -215,6 +215,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           reflectivity={1}
           samples={isSmallScreen ? 0 : 1}
           resolution={isSmallScreen ? 0 : 256}
+          antialias={true}
         />
       </mesh>
 

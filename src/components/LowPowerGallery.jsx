@@ -265,8 +265,8 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
             <RecessedFrame
                 width={cardWidth + 0.22}
                 height={cardHeight + 0.22}
-                depth={0.40}
-                inset={0.11}
+                depth={0.45}
+                inset={0.125}
             />
 
             <mesh position={[0, 0, 0.61]}>
@@ -284,7 +284,7 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
                     roughness={0.01}
                     thickness={0.1}
                     ior={1.01}
-                    reflectivity={0.01}
+                    reflectivity={1}
                     depthWrite={false}
                     samples={1}
                     resolution={256}
@@ -391,8 +391,8 @@ export default function LowPowerGallery({ artworks }) {
                         environmentIntensity={1}
                     />
                 )}
-                <directionalLight position={[5, 5, 5]} intensity={1.7} />
-                <directionalLight position={[-5, 2, -5]} intensity={0.6} />
+                <directionalLight position={[5, 5, 5]} intensity={3.7} />
+                <directionalLight position={[-5, 2, -5]} intensity={3.6} />
                 <Suspense fallback={<LPLoadingFallback />}>
                     <LPSingleCard
                         art={currentArt}

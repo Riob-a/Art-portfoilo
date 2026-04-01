@@ -424,14 +424,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             : isExiting
               ? -0.3
               : 0,
-
-        // config: isFocused
-        //   ? { mass: 1, tension: 260, friction: 22 }
-        //   : isExiting
-        //     ? { mass: 1.2, tension: 200, friction: 28 }
-        //     : shouldYield
-        //       ? { mass: 1, tension: 180, friction: 26 }
-        //       : { mass: 1, tension: 170, friction: 20 },
+              
         config: isFocused
           ? { mass: 1, tension: 280, friction: 24 }   // confident lock
           : isExiting
@@ -640,8 +633,8 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             <RecessedFrame
               width={cardWidth + 0.22}
               height={cardHeight + 0.22}
-              depth={0.40}
-              inset={0.1}
+              depth={0.45}
+              inset={0.125}
             />
 
             {/* FRONT IMAGE */}
