@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <footer
-     className="footer text-sm px-4 py-3  flex justify-between items-center ">
+     className="footer text-xs px-4 py-3  flex justify-between items-center ">
       <p
        className="hover:underline"
        >

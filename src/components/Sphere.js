@@ -199,7 +199,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         <sphereGeometry
           args={[
             isSmallScreen ? 1 : 2,
-            isSmallScreen ? 32 : 64,
+            isSmallScreen ? 64 : 64,
             isSmallScreen ? 32 : 64,
           ]}
         />
@@ -208,7 +208,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           transparent
           depthWrite={false}
           metalness={0.5}
-          roughness={isSmallScreen ? 0.01 : 0.5}
+          roughness={isSmallScreen ? 0.5 : 0.5}
           clearcoat={isSmallScreen ? 0.4 : 1}
           clearcoatRoughness={isSmallScreen ? 0.2 : 0}
           thickness={isSmallScreen ? 0 : 2.5}
@@ -222,13 +222,18 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       <mesh renderOrder={10}>
         <sphereGeometry
           args={[
-            isSmallScreen ? 1.02 : 2.02,
-            isSmallScreen ? 20 : 40,
+            isSmallScreen ? 1.01 : 2.01,
+            isSmallScreen ? 40 : 40,
             isSmallScreen ? 20 : 20,
           ]}
         />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-        <Edges threshold={1} color="rgba(136, 136, 136, 1)" lineWidth={0.5} />
+        {/* <Edges threshold={1} color="rgba(136, 136, 136, 1)" lineWidth={0.5} /> */}
+        <Edges
+          threshold={1}
+          color={isSmallScreen ? "#aaaaff" : "rgba(136, 136, 136, 1)"}
+          lineWidth={isSmallScreen ? 0.8 : 0.5}
+        />
       </mesh>
     </a.group>
   );
@@ -301,7 +306,7 @@ export default function InteractiveSpinningSphere() {
   return (
     <Canvas
       className="home"
-      style={{ height: "625px", width: "99%", margin: "auto", display: "block" }}
+      style={{ height: "625px", width: "100%", margin: "auto", display: "block" }}
       dpr={isSmallScreen ? [1, 1] : [1, 1.5]}
       camera={{ position: [0, 4, 3], fov: 90 }}
       gl={{ antialias: !isSmallScreen }}

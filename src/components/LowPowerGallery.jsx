@@ -381,7 +381,7 @@ export default function LowPowerGallery({ artworks }) {
 
 
     return (
-        <div className="relative h-screen w-full">
+        <div className="relative h-screen w-full" style={{ width: "95%", margin: "auto", height: "99%" }}>
             <Canvas shadows camera={{ position: [0, 0, 7], fov: 60 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.8} />
 
