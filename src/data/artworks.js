@@ -2,9 +2,9 @@ const createSlug = (title) =>
   title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
 
 const artworks = [
-  { title: "skull", imageUrl: "/images/Skull.jpg", description: "Potrait of Human skull made with both pencil and paint. This was my third attempt with the aim of mixing drawing an painting", category: "Pencil/Paint", year: "2022" },
-  { title: "mosaic", imageUrl: "/images/Mosaic-skull.jpg", description: "Potrait of a Human skull Drawn entirely out of paint.This was My Second yearly study of the human skull", category: "Paint", year: "2020" },
-  { title: "Colored-skull", imageUrl: "/images/Colored-skull.jpg", description: "Potrait of the Human Skull Drawn with both pencil and paint. This is my fourth attempt going for more detail than the third", category: "Pencil/Paint", year: "2025" },
+  { title: "Skull", imageUrl: "/images/Skull.jpg", description: "Potrait of Human skull made with both pencil and paint. This was my third attempt with the aim of mixing drawing an painting", category: "Pencil/Paint", year: "2022" },
+  { title: "Mosaic", imageUrl: "/images/Mosaic-skull.jpg", description: "Potrait of a Human skull Drawn entirely out of paint.This was My Second yearly study of the human skull", category: "Paint", year: "2020" },
+  { title: "Colored-skull", imageUrl: "/images/Skull-1.jpeg", description: "Potrait of the Human Skull Drawn with both pencil and paint. This is my fourth attempt going for more detail than the third", category: "Pencil/Paint", year: "2025" },
   { title: "Hanging-branch", imageUrl: "/images/Branch.jpg", description: "A composition consisting of a hanging branch, drawn entirely digitally.", category: "Digital", year: "2025" },
   { title: "Touch", imageUrl: "/images/Touch.jpg", description: "Stylized version of Hands of god .", category: "Digital", year: "2025" },
 
