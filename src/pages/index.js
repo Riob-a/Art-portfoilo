@@ -52,13 +52,20 @@ export default function Home() {
                   className="relative flex items-center justify-center md:hidden"
                   aria-label="Open gallery"
                 >
-                  {/* Pulse indicator */}
                   <span className="absolute inline-flex h-10 w-10 rounded-full bg-white/30 animate-ping" />
-
-                  <span className="relative p-2 text-white  rounded-full">
+                  <span className="relative p-2 text-white rounded-full">
                     <FaSearch size={18} />
                   </span>
                 </Link>
+              </div>
+
+              {/* Subtitle */}
+              <div
+                className="text-xs md:text-xs opacity-50 tracking-widest font-light normal-case mt-1"
+                data-aos="fade-right"
+                data-aos-delay="1000"
+              >
+                Artist | Web Developer
               </div>
             </div>
           </div>

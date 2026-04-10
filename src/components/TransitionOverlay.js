@@ -1,74 +1,117 @@
-import { m, motion } from "framer-motion";
+// import { motion } from "framer-motion";
+// import Image from "next/image";
+
+// const circleVariants = {
+//     initial: { clipPath: "circle(0% at 50% 50%)" },
+//     animate: { clipPath: "circle(0% at 50% 50%)" },
+//     exit: { clipPath: "circle(150% at 50% 50%)" },
+// };
+
+// const contentVariants = {
+//     initial: { opacity: 0, scale: 0.8 },
+//     animate: { opacity: 0, scale: 0.8 },
+//     exit: { opacity: 1, scale: 1 },
+// };
+
+// // Separate variant so text can stagger in slightly after the image
+// const textVariants = {
+//     initial: { opacity: 0, y: 10 },
+//     animate: { opacity: 0, y: 10 },
+//     exit: { opacity: 1, y: 0 },
+// };
+
+// export default function TransitionOverlay() {
+//     return (
+//         <motion.div
+//             variants={circleVariants}
+//             initial="initial"
+//             animate="animate"
+//             exit="exit"
+//             transition={{ duration: 1.35, ease: "easeInOut" }}
+//             className="fixed top-0 left-0 w-full h-full bg-[#fbf8f5] z-50"
+//         >
+//             {/* Centered logo */}
+//             <motion.div
+//                 className="absolute inset-0 flex items-center justify-center"
+//                 variants={contentVariants}
+//                 transition={{ duration: 0.6, ease: "easeOut" }}
+//             >
+//                 <Image
+//                     src="/globe-2.svg"
+//                     alt="Logo"
+//                     width={120}
+//                     height={120}
+//                     className="z-50 logo-transition"
+//                 />
+//             </motion.div>
+
+//             {/* Bottom-right text — now a motion.div with its own variant */}
+//             <motion.div
+//                 variants={textVariants}
+//                 transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
+//                 className="main-logo-h2 fixed bottom-10 right-4 z-55 uppercase tracking-widest cursor-pointer"
+//             >
+//                 <div className="text-xs opacity-70 text-black">the</div>
+//                 <div className="flex items-center gap-2 text-xl text-black">
+//                     <span>GALLERY</span>
+//                 </div>
+//             </motion.div>
+//         </motion.div>
+//     );
+// }
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 const circleVariants = {
-    initial: { clipPath: "circle(0% at 50% 50%)" },   // tiny circle center
-    animate: { clipPath: "circle(0% at 50% 50%)" },   // stays tiny after entering
-    exit: { clipPath: "circle(150% at 50% 50%)" },    // expands to full
+    initial: { clipPath: "circle(0% at 50% 50%)" },
+    animate: { clipPath: "circle(0% at 50% 50%)" },
+    exit: { clipPath: "circle(150% at 50% 50%)" },
 };
 
-const imageVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 0, scale: 0.8 }, // stays invisible while page active
-    exit: { opacity: 1, scale: 1 }, // fade/scale in during transition
+const textVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 0, y: 10 },
+    exit: { opacity: 1, y: 0 },
 };
 
 export default function TransitionOverlay() {
     return (
         <motion.div
-            // initial={{ scaleX: 0 }}
-            // animate={{ scaleX: 0 }}
-            // exit={{ scaleX: 1 }}
-            // transition={{ duration: 0.5, ease: "easeInOut" }}
-            // className="fixed top-0 left-0 w-full h-full bg-white z-50 origin-left"
-
             variants={circleVariants}
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="fixed top-0 left-0 w-full h-full bg-[#fbf8f5] z-50 "
+            transition={{ duration: 1.35, ease: "easeInOut" }}
+            className="fixed top-0 left-0 w-full h-full bg-[#fbf8f5] z-50"
         >
-            <motion.div
-                className="absolute inset-0 flex items-center justify-center"
-                variants={imageVariants}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-                <Image
-                    src="/globe-2.svg"
-                    alt="Logo"
-                    width={120}
-                    height={120}
-                    className="z-50 logo-transition"
-                />
-                <span
-                    className="
-                text-white
-                text-xl
-                md:text-2xl
-                font-semibold
-                tracking-widest
-                opacity-90
-                main-logo
-              "
+            {/* Centered logo — shares layoutId with the navbar logo */}
+            <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div
+                    layoutId="site-logo"
+                    style={{ width: 120, height: 120, overflow: "hidden" }}
                 >
-                    {/* <div className="text-black uppercase tracking-widest">
-                        <div className="text-sm md:text-base opacity-70"
-                            data-aos="fade-right"
-                            data-aos-delay="400"
-                        >
-                            the
-                        </div>
-                        <div className="text-4xl md:text-7xl font-bold"
-                            data-aos="fade-right"
-                            data-aos-delay="800"
-                        >
-                            GALLERY
-                        </div>
-                    </div> */}
-                </span>
-            </motion.div>
+                    <Image
+                        src="/globe-2.svg"
+                        alt="Logo"
+                        width={120}
+                        height={120}
+                        style={{ width: "100%", height: "100%" }}
+                        className="z-50 logo-transition"
+                    />
+                </motion.div>
+            </div>
 
+            {/* Bottom-right text */}
+            <motion.div
+                variants={textVariants}
+                transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
+                className="main-logo-h2 fixed bottom-10 right-4 z-55 uppercase tracking-widest cursor-pointer"
+            >
+                <div className="text-xs opacity-70 text-black">the</div>
+                <div className="flex items-center gap-2 text-xl text-black">
+                    <span>GALLERY</span>
+                </div>
+            </motion.div>
         </motion.div>
     );
 }

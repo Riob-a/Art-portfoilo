@@ -407,7 +407,7 @@ export default function LowPowerGallery({ artworks }) {
 
             </Canvas>
 
-            <div className="flex justify-between w-full px-6 absolute bottom-30 md:bottom-10"
+            <div className="flex justify-between w-full px-6 absolute bottom-30 md:bottom-30"
             // data-aos="fade-in" data-aos-delay="200"
             >
                 <button onClick={prev} className="px-4 py-2 bg-black text-white hover:text-[#007f8cff] transition rounded-lg logo-3">◀ Prev</button>

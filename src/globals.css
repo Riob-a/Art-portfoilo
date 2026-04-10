@@ -26,8 +26,7 @@
         #eeb334,
         #eeb334,
         #f2857a,
-        #e85fc0
-        );
+        #e85fc0);
 
     background-size: 300% 300%;
     animation: gradientWave 40s linear infinite;
@@ -474,6 +473,21 @@ main {
 
 .main-logo-h:hover {
   color: white;
+  -webkit-text-stroke: 1px transparent;
+  transition: color 0.8s ease-in-out, -webkit-text-stroke 0.8s ease-in-out;
+}
+
+.main-logo-h2 {
+  font-family: "BBH Bartle", sans-serif;
+  font-weight: 800;
+  font-style: solid;
+  -webkit-text-stroke: 1px rgba(3, 3, 3, 0.351);
+  color: transparent;
+  transition: color 0.8s ease-in-out, -webkit-text-stroke 0.8s ease-in-out;
+}
+
+.main-logo-h2:hover {
+  color: rgb(0, 0, 0);
   -webkit-text-stroke: 1px transparent;
   transition: color 0.8s ease-in-out, -webkit-text-stroke 0.8s ease-in-out;
 }
