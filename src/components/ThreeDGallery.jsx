@@ -116,7 +116,7 @@ export default function ThreeDFloatingGallery() {
 
 
   return (
-    <div className="relative h-screen w-full mt-0.5">
+    <div className="relative h-screen w-full">
 
       {/* CORNER BRACKETS */}
       {/* <div className="absolute top-2 left-2 w-6 h-6 border-t border-l border-white/70 pointer-events-none z-10" />
@@ -135,24 +135,24 @@ export default function ThreeDFloatingGallery() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none"></div>
       )}
 
-      <div className="relative h-scree " style={{ width: "95%", margin: "auto", height: "99%" }}>
+      <div className="relative h-scree " style={{ width: "100%", margin: "auto", height: "100%" }}>
 
         {/* CORNER BRACKETS */}
-        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
-        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
-        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute top-0.5 left-0.5 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute top-0.5 right-0.5 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute bottom-0.5 left-0.5 w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
+        <div className="absolute bottom-0.5 right-0.5 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
 
         {/* EDGE PLUSES */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-2xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
 
         <Canvas
           camera={{ position: [0, 0, 10], fov: 60 }}
           dpr={[1, 1.5]}
-          className="bg[#161515]/5 rounded-lg"
+          className="bg[#161515]/5"
           style={{ display: "block", width: "100%" }}
         >
           <Environment preset="dawn" environmentIntensity={1} />

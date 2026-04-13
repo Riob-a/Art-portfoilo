@@ -43,7 +43,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
   // Rotation
   useFrame((_, delta) => {
     if (sphereGroupRef.current) {
-      const targetSpeed = hovered ? 1 : 0.5;
+      const targetSpeed = hovered ? 2 : 0.5;
       sphereGroupRef.current.userData.currentSpeed = THREE.MathUtils.lerp(
         sphereGroupRef.current.userData.currentSpeed || 0.5,
         targetSpeed,
