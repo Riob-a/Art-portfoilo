@@ -368,7 +368,7 @@ export default function LowPowerGallery({ artworks }) {
   const [tier, setTier] = useState("mid");
   useEffect(() => { setTier(detectDeviceTier()); }, []);
 
-  const isLargeScreen = useIsLargeScreen(1024);
+//   const isLargeScreen = useIsLargeScreen(1024);
   const currentArt = artworks[index];
 
   const envConfig = ENV_CONFIG[tier];
