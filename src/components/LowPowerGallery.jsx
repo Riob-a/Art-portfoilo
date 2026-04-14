@@ -345,17 +345,17 @@ function LPSingleCard({
     </a.group>
   );
 }
-//  Screen size render conditional
-function useIsLargeScreen(breakpoint = 1024) {
-  const [isLarge, setIsLarge] = useState(false);
-  useEffect(() => {
-    const check = () => setIsLarge(window.innerWidth >= breakpoint);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, [breakpoint]);
-  return isLarge;
-}
+//  Screen size render conditional (Redundant)
+// function useIsLargeScreen(breakpoint = 1024) {
+//   const [isLarge, setIsLarge] = useState(false);
+//   useEffect(() => {
+//     const check = () => setIsLarge(window.innerWidth >= breakpoint);
+//     check();
+//     window.addEventListener("resize", check);
+//     return () => window.removeEventListener("resize", check);
+//   }, [breakpoint]);
+//   return isLarge;
+// }
 
 // --- LOW-POWER SINGLE-CARD GALLERY ---
 export default function LowPowerGallery({ artworks }) {
@@ -440,7 +440,7 @@ export default function LowPowerGallery({ artworks }) {
         <ambientLight intensity={0.8} />
 
         {/* Conditionally mount Environment — null config = skip entirely */}
-        {envConfig && isLargeScreen && (
+        {envConfig && (
           <Environment
             preset={envConfig.preset}
             environmentIntensity={envConfig.environmentIntensity}
