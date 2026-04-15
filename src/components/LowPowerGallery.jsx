@@ -333,7 +333,7 @@ function LPSingleCard({
         <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
       {/* GLASS PANE */}
-      {tier !== "low" && (
+      {/* {tier !== "low" && ( */}
         <mesh position={[0, 0, 0.68]}>
           <planeGeometry args={[cardWidth, cardHeight]} />
           <meshPhysicalMaterial
@@ -349,7 +349,8 @@ function LPSingleCard({
             samples={1}
             resolution={256}
           />
-        </mesh>)}
+        </mesh>
+     
     </a.group>
   );
 }
