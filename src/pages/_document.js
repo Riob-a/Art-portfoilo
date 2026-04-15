@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script';
 
 export default function Document() {
   return (
@@ -17,13 +18,16 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300&family=Jacquard+12&family=Jacquard+24&family=Manufacturing+Consent&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pirata+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
         <link href="https://fonts.cdnfonts.com/css/druk-wide-bold" rel="stylesheet" />
-                
+
         <meta name="description" content="Art portfolio" />
       </Head>
 
       <body>
         <Main />
         <NextScript />
+        
+        <Script src="https://cdn.jsdelivr.net/npm/eruda"></Script>
+        <script dangerouslySetInnerHTML={{ __html: 'eruda.init();' }} />
       </body>
     </Html>
   );
