@@ -40,7 +40,9 @@ function detectDeviceTier() {
           gpuScore = 2;
         // Low-end GPU signals
         else if (
-          /intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(
+          // /intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(
+          //   renderer
+           /intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(
             renderer
           )
         )
@@ -48,6 +50,11 @@ function detectDeviceTier() {
       }
     }
   } catch (_) { }
+
+  try {
+  const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
+  if (adreno && parseInt(adreno[1]) < 500) return "low";
+} catch(_) {}
 
   // Network hint (saves on texture env loads on slow connections)
   const conn = navigator.connection;
