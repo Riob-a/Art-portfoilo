@@ -21,40 +21,39 @@ function detectDeviceTier() {
 
   // GPU tier via WebGL renderer string
   let gpuScore = 1; // default: mid
+ // REPLACE the entire GPU try block with this:
+try {
+  const canvas = document.createElement("canvas");
+  const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  if (gl) {
+    const ext = gl.getExtension("WEBGL_debug_renderer_info");
+    if (ext) {
+      const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL).toLowerCase();
+      
+      // Hard exit for low-end Adreno before score calculation
+      const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
+      if (adreno && parseInt(adreno[1]) < 500) return "low";
+
+      if (/rtx|rx 6|rx 7|rx 5700|m[12] (pro|max|ultra)|a\d{4}|quadro/i.test(renderer))
+        gpuScore = 2;
+      else if (/intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(renderer))
+        gpuScore = 0;
+    }
+  }
+} catch (_) {}
+
+// REPLACE both useEffects with this single one:
+useEffect(() => {
+  const t = detectDeviceTier();
+  setTier(t);
+  console.log("Device tier:", t);
   try {
     const canvas = document.createElement("canvas");
-    const gl =
-      canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-    if (gl) {
-      const ext = gl.getExtension("WEBGL_debug_renderer_info");
-      if (ext) {
-        const renderer = gl
-          .getParameter(ext.UNMASKED_RENDERER_WEBGL)
-          .toLowerCase();
-        // High-end GPU signals
-        if (
-          /rtx|rx 6|rx 7|rx 5700|m[12] (pro|max|ultra)|a\d{4}|quadro/i.test(
-            renderer
-          )
-        )
-          gpuScore = 2;
-        // Low-end GPU signals
-        else if (
-          // /intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(
-          //   renderer
-           /intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(
-            renderer
-          )
-        )
-          gpuScore = 0;
-      }
-    }
-  } catch (_) { }
-
-  try {
-  const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
-  if (adreno && parseInt(adreno[1]) < 500) return "low";
-} catch(_) {}
+    const gl = canvas.getContext("webgl");
+    const ext = gl?.getExtension("WEBGL_debug_renderer_info");
+    if (ext) console.log("GPU:", gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
+  } catch (_) {}
+}, []);
 
   // Network hint (saves on texture env loads on slow connections)
   const conn = navigator.connection;
