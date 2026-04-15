@@ -58,10 +58,10 @@ export default function Gallery() {
     <div className="relative gallery">
       {/* <Navbar /> */}
       {/* ───────── TOGGLE BUTTON ───────── */}
-      <div className="fixed top-3.5 right-12 z-999 group">
+      <div className="fixed top-5 right-5 z-999 group">
         <button
           onClick={switchMode}
-          className="toggle-button px-3 py-3 bg-black text-white text-sm rounded-lg shadow-md hover:text-[#007f8cff] transition logo-3"
+          className="toggle-button px-5 py-5 bg-black text-white text-lg rounded-lg  hover:text-[#007f8cff] transition logo-3"
         >
           <span className="relative w-4 h-4 bloc items-center justify-center">
             <span className={`icon-fade ${lowPowerMode ? "visible-icon" : "hidden-icon"}`}>
