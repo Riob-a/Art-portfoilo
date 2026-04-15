@@ -13,18 +13,67 @@ import { createPortal } from "react-dom";
 import { FaDownload } from "react-icons/fa";
 
 //  Screen size render conditional
-function useIsLargeScreen(breakpoint = 1024) {
-  const [isLarge, setIsLarge] = useState(false);
+// function useIsLargeScreen(breakpoint = 1024) {
+//   const [isLarge, setIsLarge] = useState(false);
 
-  useEffect(() => {
-    const check = () => setIsLarge(window.innerWidth >= breakpoint);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, [breakpoint]);
+//   useEffect(() => {
+//     const check = () => setIsLarge(window.innerWidth >= breakpoint);
+//     check();
+//     window.addEventListener("resize", check);
+//     return () => window.removeEventListener("resize", check);
+//   }, [breakpoint]);
 
-  return isLarge;
+//   return isLarge;
+// }
+// ------------------------- DEVICE POWER DETECTION ------------------------------
+function detectDeviceTier() {
+  if (typeof window === "undefined") return "mid";
+
+  const cores = navigator.hardwareConcurrency ?? 2;
+  const ram = navigator.deviceMemory ?? 4;
+
+  let gpuScore = 1;
+  try {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (gl) {
+      const ext = gl.getExtension("WEBGL_debug_renderer_info");
+      if (ext) {
+        const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL).toLowerCase();
+
+        // Hard exit for low-end Adreno
+        const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
+        if (adreno && parseInt(adreno[1]) < 500) return "low";
+
+        if (/rtx|rx 6|rx 7|rx 5700|m[12] (pro|max|ultra)|a\d{4}|quadro/i.test(renderer))
+          gpuScore = 2;
+        else if (/intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(renderer))
+          gpuScore = 0;
+      }
+    }
+  } catch (_) { }
+
+  const conn = navigator.connection;
+  const slowNetwork = conn && (conn.saveData || conn.effectiveType === "2g" || conn.effectiveType === "slow-2g");
+  if (slowNetwork) return "low";
+
+  const score = cores + ram / 2 + gpuScore * 2;
+  if (score >= 10) return "high";
+  if (score >= 5) return "mid";
+  return "low";
 }
+
+const ENV_CONFIG = {
+  high: { preset: "dawn", environmentIntensity: 1.0 },
+  mid: { preset: "dawn", environmentIntensity: 0.6 },
+  low: null,
+};
+
+const LIGHT_CONFIG = {
+  high: [1.2, 0.6],
+  mid: [1.0, 0.4],
+  low: [1.8, 1.2],
+};
 
 export default function ThreeDFloatingGallery() {
   const [sizes, setSizes] = useState([]);
@@ -35,7 +84,23 @@ export default function ThreeDFloatingGallery() {
   const [isClosing, setIsClosing] = useState(false);
   const [clicked, setClicked] = useState(null);
 
-  const isLargeScreen = useIsLargeScreen(1024);
+  // const isLargeScreen = useIsLargeScreen(1024);
+  // Detect once on mount — stable for the session
+  const [tier, setTier] = useState("mid");
+  useEffect(() => {
+    const t = detectDeviceTier();
+    setTier(t);
+    console.log("Device tier:", t);
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl");
+      const ext = gl?.getExtension("WEBGL_debug_renderer_info");
+      if (ext) console.log("GPU:", gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
+    } catch (_) { }
+  }, []);
+
+  const envConfig = ENV_CONFIG[tier];
+  const [frontLight, backLight] = LIGHT_CONFIG[tier];
 
   const openModal = (art) => {
     setSelectedArt(art);
@@ -117,12 +182,6 @@ export default function ThreeDFloatingGallery() {
 
   return (
     <div className="relative h-screen w-full">
-
-      {/* CORNER BRACKETS */}
-      {/* <div className="absolute top-2 left-2 w-6 h-6 border-t border-l border-white/70 pointer-events-none z-10" />
-      <div className="absolute top-2 right-2 w-6 h-6 border-t border-r border-white/70 pointer-events-none z-10" />
-      <div className="absolute bottom-2 left-2 w-6 h-6 border-b border-l border-white/70 pointer-events-none z-10" />
-      <div className="absolute bottom-2 right-2 w-6 h-6 border-b border-r border-white/70 pointer-events-none z-10" /> */}
 
       {/* HINT TEXT */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">
@@ -334,7 +393,7 @@ function RecessedFrame({
 /* -------------------
    Gallery Scene
 ------------------- */
-function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, setClicked }) {
+function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, setClicked, tier }) {
   const groupRef = useRef();
   const [hovered, setHovered] = useState(null);
   const clickTimeout = useRef(null);
@@ -671,22 +730,24 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             )}
 
             {/* GLASS PANE */}
-            <mesh position={[0, 0, 0.68]}>
-              <planeGeometry args={[cardWidth, cardHeight]} />
-              <meshPhysicalMaterial
-                transmission={0}
-                transparent
-                color="rgba(0, 0, 0, 1)"
-                opacity={0.12}
-                roughness={0.05}
-                thickness={0.5}
-                ior={1.5}
-                reflectivity={1}
-                depthWrite={false}
-                samples={1}
-                resolution={256}
-              />
-            </mesh>
+            {tier !== "low" && (
+              <mesh position={[0, 0, 0.68]}>
+                <planeGeometry args={[cardWidth, cardHeight]} />
+                <meshPhysicalMaterial
+                  transmission={0}
+                  transparent
+                  color="rgba(0, 0, 0, 1)"
+                  opacity={0.12}
+                  roughness={0.05}
+                  thickness={0.5}
+                  ior={1.5}
+                  reflectivity={1}
+                  depthWrite={false}
+                  samples={1}
+                  resolution={256}
+                />
+              </mesh>
+            )}
           </a.group>
         );
       })}

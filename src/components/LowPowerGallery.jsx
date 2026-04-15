@@ -42,19 +42,6 @@ try {
   }
 } catch (_) {}
 
-// REPLACE both useEffects with this single one:
-useEffect(() => {
-  const t = detectDeviceTier();
-  setTier(t);
-  console.log("Device tier:", t);
-  try {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl");
-    const ext = gl?.getExtension("WEBGL_debug_renderer_info");
-    if (ext) console.log("GPU:", gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
-  } catch (_) {}
-}, []);
-
   // Network hint (saves on texture env loads on slow connections)
   const conn = navigator.connection;
   const slowNetwork =

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import InteractiveSpinningSphere from "@/components/Sphere";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
+import { FaSquareArrowUpRight } from "react-icons/fa6";
 
 export default function Home() {
   return (
@@ -52,9 +53,9 @@ export default function Home() {
                   className="relative flex items-center justify-center md:hidden"
                   aria-label="Open gallery"
                 >
-                  <span className="absolute inline-flex h-10 w-10 rounded-full bg-white/30 animate-ping" />
+                  <span className="absolute inline-flex h-10 w-10 rounded-full bg-white/30" />
                   <span className="relative p-2 text-white rounded-full">
-                    <FaSearch size={18} />
+                    <FaSquareArrowUpRight size={18} />
                   </span>
                 </Link>
               </div>
