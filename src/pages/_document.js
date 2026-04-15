@@ -25,9 +25,6 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        
-        <Script src="https://cdn.jsdelivr.net/npm/eruda"></Script>
-        <script dangerouslySetInnerHTML={{ __html: 'eruda.init();' }} />
       </body>
     </Html>
   );
