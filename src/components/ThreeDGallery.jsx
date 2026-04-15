@@ -210,14 +210,18 @@ export default function ThreeDFloatingGallery() {
 
         <Canvas
           camera={{ position: [0, 0, 10], fov: 60 }}
-          dpr={[1, 1.5]}
+          shadows={tier !== "low"}
+          dpr={tier === "high" ? [1, 2] : tier === "mid" ? [1, 1.5] : [1, 1]}
           className="bg[#161515]/5"
           style={{ display: "block", width: "100%" }}
         >
-          <Environment preset="dawn" environmentIntensity={1} />
-          {/* {isLargeScreen && (
-            <Environment preset="dawn" environmentIntensity={1} />
-          )} */}
+          {envConfig && (
+            <Environment
+              preset={envConfig.preset}
+              environmentIntensity={envConfig.environmentIntensity}
+            />
+          )}
+
           <ambientLight intensity={0.8} />
           <directionalLight position={[5, 5, 5]} intensity={1.2} />
           <directionalLight position={[-5, 2, -5]} intensity={0.6} />

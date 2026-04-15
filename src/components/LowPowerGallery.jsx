@@ -44,12 +44,7 @@ try {
 
   // Network hint (saves on texture env loads on slow connections)
   const conn = navigator.connection;
-  const slowNetwork =
-    conn &&
-    (conn.saveData ||
-      conn.effectiveType === "2g" ||
-      conn.effectiveType === "slow-2g");
-
+  const slowNetwork = conn && (conn.saveData || conn.effectiveType === "2g" || conn.effectiveType === "slow-2g");
   if (slowNetwork) return "low";
 
   const score = cores + ram / 2 + gpuScore * 2;
