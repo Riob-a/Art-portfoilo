@@ -21,26 +21,26 @@ function detectDeviceTier() {
 
   // GPU tier via WebGL renderer string
   let gpuScore = 1; // default: mid
- // REPLACE the entire GPU try block with this:
-try {
-  const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-  if (gl) {
-    const ext = gl.getExtension("WEBGL_debug_renderer_info");
-    if (ext) {
-      const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL).toLowerCase();
-      
-      // Hard exit for low-end Adreno before score calculation
-      const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
-      if (adreno && parseInt(adreno[1]) < 500) return "low";
+  // REPLACE the entire GPU try block with this:
+  try {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (gl) {
+      const ext = gl.getExtension("WEBGL_debug_renderer_info");
+      if (ext) {
+        const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL).toLowerCase();
 
-      if (/rtx|rx 6|rx 7|rx 5700|m[12] (pro|max|ultra)|a\d{4}|quadro/i.test(renderer))
-        gpuScore = 2;
-      else if (/intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(renderer))
-        gpuScore = 0;
+        // Hard exit for low-end Adreno before score calculation
+        const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
+        if (adreno && parseInt(adreno[1]) < 500) return "low";
+
+        if (/rtx|rx 6|rx 7|rx 5700|m[12] (pro|max|ultra)|a\d{4}|quadro/i.test(renderer))
+          gpuScore = 2;
+        else if (/intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(renderer))
+          gpuScore = 0;
+      }
     }
-  }
-} catch (_) {}
+  } catch (_) { }
 
   // Network hint (saves on texture env loads on slow connections)
   const conn = navigator.connection;
@@ -153,7 +153,7 @@ function LPSingleCard({
   onOpenModal,
   modalOpen,
   float = true,
-  tier, 
+  tier,
 }) {
   const meshRef = useRef();
   const clickTimeout = useRef(null);
@@ -316,37 +316,26 @@ function LPSingleCard({
       </mesh>
       {/* GLASS PANE */}
       {/* {tier !== "low" && ( */}
-        <mesh position={[0, 0, 0.68]}>
-          <planeGeometry args={[cardWidth, cardHeight]} />
-          <meshPhysicalMaterial
-            transmission={0}
-            transparent
-            color="rgba(0, 0, 0, 1)"
-            opacity={0.12}
-            roughness={0.01}
-            thickness={0.1}
-            ior={1.01}
-            reflectivity={1}
-            depthWrite={false}
-            samples={1}
-            resolution={256}
-          />
-        </mesh>
-     
+      <mesh position={[0, 0, 0.68]}>
+        <planeGeometry args={[cardWidth, cardHeight]} />
+        <meshPhysicalMaterial
+          transmission={0}
+          transparent
+          color="rgba(0, 0, 0, 1)"
+          opacity={0.12}
+          roughness={0.01}
+          thickness={0.1}
+          ior={1.01}
+          reflectivity={1}
+          depthWrite={false}
+          samples={1}
+          resolution={256}
+        />
+      </mesh>
+
     </a.group>
   );
 }
-//  Screen size render conditional (Redundant)
-// function useIsLargeScreen(breakpoint = 1024) {
-//   const [isLarge, setIsLarge] = useState(false);
-//   useEffect(() => {
-//     const check = () => setIsLarge(window.innerWidth >= breakpoint);
-//     check();
-//     window.addEventListener("resize", check);
-//     return () => window.removeEventListener("resize", check);
-//   }, [breakpoint]);
-//   return isLarge;
-// }
 
 // --- LOW-POWER SINGLE-CARD GALLERY ---
 export default function LowPowerGallery({ artworks }) {
@@ -438,6 +427,10 @@ export default function LowPowerGallery({ artworks }) {
       className="relative h-screen w-full"
       style={{ width: "100%", margin: "auto", height: "99%" }}
     >
+      {/* HINT TEXT */}
+      <div className="absolute top-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">
+        pan to explore · scroll to zoom
+      </div>
       <Canvas
         shadows={tier !== "low"}        // skip shadow maps on low-end
         camera={{ position: [0, 0, 7], fov: 60 }}
@@ -463,7 +456,7 @@ export default function LowPowerGallery({ artworks }) {
             setClicked={setClicked}
             onOpenModal={openModal}
             modalOpen={isModalOpen}
-            tier={tier} 
+            tier={tier}
           />
         </Suspense>
 
