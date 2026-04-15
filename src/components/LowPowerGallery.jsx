@@ -47,7 +47,7 @@ function detectDeviceTier() {
           gpuScore = 0;
       }
     }
-  } catch (_) {}
+  } catch (_) { }
 
   // Network hint (saves on texture env loads on slow connections)
   const conn = navigator.connection;
@@ -68,15 +68,15 @@ function detectDeviceTier() {
 // Maps tier → drei <Environment> props (or null to skip entirely)
 const ENV_CONFIG = {
   high: { preset: "dawn", environmentIntensity: 1.0 },
-  mid:  { preset: "dawn", environmentIntensity: 0.6 },
-  low:  null, // skip Environment completely; fallback to flat lights only
+  mid: { preset: "dawn", environmentIntensity: 0.6 },
+  low: null, // skip Environment completely; fallback to flat lights only
 };
 
 // Maps tier → directional light intensities [front, back]
 const LIGHT_CONFIG = {
   high: [3.7, 3.6],
-  mid:  [2.8, 2.2],
-  low:  [1.8, 1.2],
+  mid: [2.8, 2.2],
+  low: [1.8, 1.2],
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -165,6 +165,7 @@ function LPSingleCard({
   onOpenModal,
   modalOpen,
   float = true,
+  tier, 
 }) {
   const meshRef = useRef();
   const clickTimeout = useRef(null);
@@ -180,13 +181,13 @@ function LPSingleCard({
       texture.needsUpdate = true;
     }
   }, [texture]);
-// Float animation
+  // Float animation
   useFrame(({ clock }) => {
     if (meshRef.current && float && clicked === null) {
       meshRef.current.position.y = Math.sin(clock.getElapsedTime() * 0.8) * 0.2;
     }
   });
-// Hover scale
+  // Hover scale
   const [hovered, setHovered] = useState(false);
   const spring = useSpring({
     scale: hovered || clicked || held ? 1.08 : 1,
@@ -325,23 +326,24 @@ function LPSingleCard({
         <planeGeometry args={[cardWidth, cardHeight]} />
         <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
-
-      <mesh position={[0, 0, 0.68]}>
-        <planeGeometry args={[cardWidth, cardHeight]} />
-        <meshPhysicalMaterial
-          transmission={0}
-          transparent
-          color="rgba(0, 0, 0, 1)"
-          opacity={0.12}
-          roughness={0.01}
-          thickness={0.1}
-          ior={1.01}
-          reflectivity={1}
-          depthWrite={false}
-          samples={1}
-          resolution={256}
-        />
-      </mesh>
+      {/* GLASS PANE */}
+      {tier !== "low" && (
+        <mesh position={[0, 0, 0.68]}>
+          <planeGeometry args={[cardWidth, cardHeight]} />
+          <meshPhysicalMaterial
+            transmission={0}
+            transparent
+            color="rgba(0, 0, 0, 1)"
+            opacity={0.12}
+            roughness={0.01}
+            thickness={0.1}
+            ior={1.01}
+            reflectivity={1}
+            depthWrite={false}
+            samples={1}
+            resolution={256}
+          />
+        </mesh>)}
     </a.group>
   );
 }
@@ -368,7 +370,7 @@ export default function LowPowerGallery({ artworks }) {
   const [tier, setTier] = useState("mid");
   useEffect(() => { setTier(detectDeviceTier()); }, []);
 
-//   const isLargeScreen = useIsLargeScreen(1024);
+  //   const isLargeScreen = useIsLargeScreen(1024);
   const currentArt = artworks[index];
 
   const envConfig = ENV_CONFIG[tier];
@@ -382,6 +384,21 @@ export default function LowPowerGallery({ artworks }) {
       setIsClosing(false);
     }, 200);
   };
+
+  useEffect(() => {
+    const t = detectDeviceTier();
+    setTier(t);
+    console.log("Device tier:", t);
+
+    // also log the raw GPU string
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl");
+      const ext = gl?.getExtension("WEBGL_debug_renderer_info");
+      if (ext) console.log("GPU:", gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
+    } catch (_) { }
+  }, []);
+
   // Preload next/prev images
   useEffect(() => {
     [artworks[index + 1], artworks[index - 1]].forEach((art) => {
@@ -394,7 +411,7 @@ export default function LowPowerGallery({ artworks }) {
 
   const next = () => setIndex((i) => Math.min(i + 1, artworks.length - 1));
   const prev = () => setIndex((i) => Math.max(i - 1, 0));
-// ------------------ LOADING FALLBACK ------------------
+  // ------------------ LOADING FALLBACK ------------------
   function LPLoadingFallback() {
     return (
       <Html center>
@@ -447,7 +464,7 @@ export default function LowPowerGallery({ artworks }) {
           />
         )}
 
-        <directionalLight position={[5, 5, 5]}   intensity={frontLight} />
+        <directionalLight position={[5, 5, 5]} intensity={frontLight} />
         <directionalLight position={[-5, 2, -5]} intensity={backLight} />
 
         <Suspense fallback={<LPLoadingFallback />}>
@@ -457,6 +474,7 @@ export default function LowPowerGallery({ artworks }) {
             setClicked={setClicked}
             onOpenModal={openModal}
             modalOpen={isModalOpen}
+            tier={tier} 
           />
         </Suspense>
 
@@ -491,9 +509,8 @@ export default function LowPowerGallery({ artworks }) {
       {isModalOpen &&
         createPortal(
           <div
-            className={`modal fixed inset-0 z-50 flex items-center justify-center ${
-              isClosing ? "animate-fadeOut" : "animate-fadeIn"
-            }`}
+            className={`modal fixed inset-0 z-50 flex items-center justify-center ${isClosing ? "animate-fadeOut" : "animate-fadeIn"
+              }`}
             onClick={closeModal}
           >
             <div
@@ -526,7 +543,7 @@ export default function LowPowerGallery({ artworks }) {
                     download
                     className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
                   >
-                  
+
                     <FaDownload /> Download
                   </a>
                 </div>
