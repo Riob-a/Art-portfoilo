@@ -20,13 +20,15 @@
   :root {
     /* --background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%); */
     background: linear-gradient(-45deg,
-        /* #e85fc0,
+        #ec3db7,
+        #e85fc0,
         #f2857a,
-        #eeb334, */
         #eeb334,
         #eeb334,
         #f2857a,
-        #e85fc0);
+        #e85fc0,
+        #c9339c
+      );
 
     background-size: 300% 300%;
     animation: gradientWave 40s linear infinite;
@@ -834,7 +836,7 @@ button.gradient-text {
 
 @media screen and (max-width: 768px) {
   :root {
-    background: #eeb334;
+    /* background: #eeb334; */
   }
 
   .gallery {
