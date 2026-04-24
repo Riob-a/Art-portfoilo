@@ -24,13 +24,14 @@
         #e85fc0,
         #f2857a,
         #eeb334,
+        #f9c148,
         #eeb334,
         #f2857a,
         #e85fc0,
         #c9339c
-      );
+        );
 
-    background-size: 300% 300%;
+    background-size: 350% 400%;
     animation: gradientWave 40s linear infinite;
     --foreground: #ededed;
     will-change: background-position;
