@@ -611,28 +611,28 @@ main {
 
 .modal-heading {
   color: white;
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .modal-text {
   /* color: #608561; */
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
 .modal-text-1 {
   color: rgb(4, 4, 4);
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 200;
   font-style: normal;
 }
 
 .modal-text-2 {
   color: #ffffff;
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 200;
   font-style: normal;
 }
@@ -724,7 +724,7 @@ main {
 /* About */
 .a-heading {
   color: #f8f9f9;
-  /* font-family: 'Druk Wide Bold', sans-serif; */
+  /* font-family: 'Unbounded', sans-serif; */
   font-family: "Unbounded", sans-serif;
   font-weight: 800;
   font-style: solid;
@@ -791,14 +791,14 @@ button.gradient-text {
 }
 
 .logo-3 {
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 400;
   font-style: normal;
   /* color: linear-gradient(45deg, #F16001, #C10801); */
 }
 
 .druk {
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 400;
   font-style: normal;
 }
@@ -926,7 +926,7 @@ button.gradient-text {
 }
 
 .link {
-  font-family: 'Druk Wide Bold', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   font-size: 1.1rem;
   font-weight: 800;
   transition: color 0.3s, transform 0.3s;

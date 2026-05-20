@@ -228,11 +228,11 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
             isSmallScreen ? 20 : 20,
           ]}
         />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <meshBasicMaterial  opacity={0} depthWrite={false} />
         {/* <Edges threshold={1} color="rgba(136, 136, 136, 1)" lineWidth={0.5} /> */}
         <Edges
-          threshold={1}
-          color={isSmallScreen ? "green" : "rgba(136, 136, 136, 1)"}
+          threshold={0}
+          color={isSmallScreen ? "green" : "black"}
           lineWidth={isSmallScreen ? 1.5 : 1}
         />
       </mesh>
