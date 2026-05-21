@@ -44,7 +44,7 @@ export default function TransitionOverlay() {
             <motion.div
                 variants={textVariants}
                 transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
-                className="main-logo-h2 fixed bottom-10 right-4 z-55 uppercase tracking-widest cursor-pointer"
+                className="main-logo-h2 fixed bottom-10 left-4 z-55 uppercase tracking-widest cursor-pointer"
             >
                 <div className="text-xs opacity-70 text-black">the</div>
                 <div className="flex items-center gap-2 text-xl text-black">

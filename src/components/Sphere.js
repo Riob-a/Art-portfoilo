@@ -30,7 +30,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
   // Color feedback
   const { color } = useSpring({
-    color: clicked ? "#a70404" : "#1d709dac",
+    color: clicked ? "#a70404" : "#fffff",
     config: { tension: 180, friction: 20 },
   });
 
@@ -174,19 +174,22 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           <div
             className="logo-3"
             style={{
-              background: "rgba(20, 12, 4, 0.85)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "rgba(255,255,255,0.88)",
-              padding: "10px 16px",
-              borderRadius: "8px",
-              fontSize: "12px",
-              fontWeight: 500,
-              letterSpacing: "0.04em",
+              background: "var(--theme-navbar, #ffffff)",
+              border: "2px solid var(--theme-navbar-text, #111111)",
+              color: "var(--theme-navbar-text, #111111)",
+              padding: "8px 14px",
+              borderRadius: "0",
+              fontSize: "0.6rem",
+              fontFamily: "Unbounded, sans-serif",
+              fontWeight: 800,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
               whiteSpace: "nowrap",
               pointerEvents: "none",
-              backdropFilter: "blur(6px)",
+              boxShadow: "3px 3px 0 var(--theme-navbar-text, #111111)",
               transform: "translateY(-10px)",
               animation: "fadeIn 0.2s ease-out",
+              backdropFilter: "none",
             }}
           >
             {isTouchDevice ? "Tap again to open Gallery" : "Click to View Gallery"}
@@ -223,15 +226,15 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
       <mesh renderOrder={10}>
         <sphereGeometry
           args={[
-            isSmallScreen ? 1.01 : 2.01,
+            isSmallScreen ? 1.01 : 2.02,
             isSmallScreen ? 40 : 40,
             isSmallScreen ? 20 : 20,
           ]}
         />
-        <meshBasicMaterial  opacity={0} depthWrite={false} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
         {/* <Edges threshold={1} color="rgba(136, 136, 136, 1)" lineWidth={0.5} /> */}
         <Edges
-          threshold={0}
+          threshold={1}
           color={isSmallScreen ? "green" : "black"}
           lineWidth={isSmallScreen ? 1.5 : 1}
         />
@@ -307,7 +310,7 @@ export default function InteractiveSpinningSphere() {
   return (
     <Canvas
       className="home"
-      style={{ height: "625px", width: "100%", margin: "auto", display: "block" }}
+      style={{ height: "100%", width: "100%", margin: "auto", display: "block" }}
       dpr={isSmallScreen ? [1, 1] : [1, 1.5]}
       camera={{ position: [0, 4, 3], fov: 90 }}
       gl={{ antialias: !isSmallScreen }}

@@ -23,7 +23,7 @@ export default function GalleryOverlay() {
         animate="animate"
         exit="exit"
         transition={{ duration: 0.3, ease: "easeOut", delay: 0.5 }}
-        className="main-logo-h fixed bottom-10 right-4 z-50 text-white uppercase tracking-widest cursor-pointer"
+        className="main-logo-h fixed bottom-10 left-4 z-50 text-white uppercase tracking-widest cursor-pointer"
       >
         <div className="text-xs opacity-70">
           the

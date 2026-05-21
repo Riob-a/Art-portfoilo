@@ -7,29 +7,22 @@ import { FaSquareArrowUpRight } from "react-icons/fa6";
 
 export default function Home() {
   return (
-    <div className="h-screen">
+    <div className="h-screen flex flex-col">
       <Navbar />
 
-      <section>
+      <section className="flex-1 flex flex-col min-h-0">
         <motion.header
-          className="relative w-full"
+          className="relative flex-1 flex flex-col min-h-0 w-full"
           data-aos="fade-in"
           data-aos-delay="200"
         >
-          {/* 3D Sphere */}
-          <InteractiveSpinningSphere />
+          {/* 3D Sphere — fills all remaining height */}
+          <div className="flex-1 flex flex-col min-h-0">
+            <InteractiveSpinningSphere />
+          </div>
 
           {/* Bottom-left text */}
-          <div
-            className="
-              absolute
-              bottom-44
-              left-6
-              z-10
-              select-none
-              main-logo
-            "
-          >
+          <div className=" absolute bottom-44 left-6 z-10 select-none main-logo" >
             <div className="text-white uppercase tracking-widest">
               <div
                 className="text-sm md:text-base opacity-70"

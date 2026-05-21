@@ -16,7 +16,7 @@ const ArrowIcon = () => (
     <path
       d="M19 12H5M11 6l-6 6 6 6"
       fill="none"
-      stroke="white"
+      stroke="currentColor"
       strokeWidth="4"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -25,7 +25,7 @@ const ArrowIcon = () => (
 );
 
 const hoverSpring = {
-  whileHover: { scale: 1.05 },
+  whileHover: { scale: 1.02 },
   transition: { type: "spring", stiffness: 300, damping: 20 },
 };
 
@@ -98,7 +98,7 @@ export default function Contact() {
             value={formData.name}
             onChange={handleChange}
             placeholder="Your Name"
-            className="border form-input p-2"
+            className="form-input"
             required
           />
 
@@ -109,7 +109,7 @@ export default function Contact() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Your Email"
-            className="border form-input p-2"
+            className="form-input"
             required
           />
 
@@ -119,40 +119,25 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
             placeholder="Your Message"
-            className="border form-input p-2"
+            className="form-inputA"
             rows={5}
             required
           />
 
           <motion.button
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95, y: 2 }}
-            transition={hoverSpring.transition}
-            className="gradient-text py-2 px-4"
-            style={{
-              border: "1px solid rgba(255,255,255,0.5)",
-              borderRadius: "6px",
-              padding: "12px 24px",
-              color: "white",
-              fontWeight: 600,
-              fontSize: "14px",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              background: "transparent",
-              cursor: "pointer",
-              alignSelf: "flex-start",
-            }}
+            className="gradient-text"
             type="submit"
           >
             Send Message
           </motion.button>
 
-          <p className="text-sm text-gray-600">{status}</p>
+          {status && <p className="contact-status">{status}</p>}
         </form>
       </section>
 
       {/* Contact Info */}
-      <section className="contact  h-[50vh] p-8 max-w-xl mx-auto text-center md: mt-50" data-aos="fade-in" data-aos-delay="1000">
+      <section className="contact h-[50vh] p-8 max-w-xl mx-auto text-center md:mt-50" data-aos="fade-in" data-aos-delay="1000">
         <h2 className="text-2xl font-bold mb-4 a-heading">
           Contact Information
         </h2>

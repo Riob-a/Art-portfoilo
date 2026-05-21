@@ -28,8 +28,7 @@
         #eeb334,
         #f2857a,
         #e85fc0,
-        #c9339c
-        );
+        #c9339c);
 
     background-size: 350% 400%;
     animation: gradientWave 40s linear infinite;
@@ -276,8 +275,8 @@ font-family: 'Supreme', sans-serif;
 }
 
 .line-arrow {
-  border-radius: 50%;
-  border: 2px solid #ffffff;
+  /* border-radius: 50%; */
+  /* border: 2px solid #ffffff; */
   /* background-color: #007f8c; */
   transition: background-color 0.5s ease-in-out;
 
@@ -1047,4 +1046,822 @@ button.gradient-text {
   border: 1px solid #05c3d8;
   background-color: #161515;
   transition: color 1s ease, border-color 2s ease, background-color 3s ease;
+}
+
+/* =========================================================
+   DARK MODE THEME
+   ========================================================= */
+
+/* Light (default) — warm orange/amber identity preserved */
+:root,
+[data-theme="light"] {
+  --theme-bg: linear-gradient(-45deg,
+      #ec3db7, #e85fc0, #f2857a,
+      #eeb334, #f9c148, #eeb334,
+      #f2857a, #e85fc0, #c9339c);
+  --theme-bg-size: 350% 400%;
+  --theme-bg-anim: gradientWave 40s linear infinite;
+  --theme-surface: rgba(255, 255, 255, 0.12);
+  --theme-text: #ffffff;
+  --theme-text-muted: rgba(255, 255, 255, 0.65);
+  --theme-border: rgba(255, 255, 255, 0.25);
+  --theme-card: rgba(255, 255, 255, 0.1);
+  --theme-navbar: #ffffff;
+  --theme-navbar-text: #111111;
+  --theme-footer-bg: transparent;
+  --theme-scrollbar-thumb: #ff7e5f;
+  --theme-scrollbar-track: #f1faee;
+}
+
+/* Dark — deep warm charcoal, preserves the Y2K warmth */
+[data-theme="dark"] {
+  --theme-bg: linear-gradient(-45deg,
+      #1a0a1e, #250e1a, #1e0f0a,
+      #1a1008, #231508, #1a1008,
+      #1e0f0a, #250e1a, #150618);
+  --theme-bg-size: 350% 400%;
+  --theme-bg-anim: gradientWave 40s linear infinite;
+  --theme-surface: rgba(255, 140, 40, 0.08);
+  --theme-text: #f5d9a0;
+  --theme-text-muted: rgba(245, 217, 160, 0.55);
+  --theme-border: rgba(200, 130, 40, 0.3);
+  --theme-card: rgba(255, 140, 40, 0.06);
+  --theme-navbar: #1a0f04;
+  --theme-navbar-text: #f5d9a0;
+  --theme-footer-bg: rgba(10, 5, 0, 0.6);
+  --theme-scrollbar-thumb: #c49a4f;
+  --theme-scrollbar-track: #120a02;
+}
+
+/* Apply theme background to html/body */
+html[data-theme] body,
+[data-theme] body {
+  background: var(--theme-bg);
+  background-size: var(--theme-bg-size);
+  animation: var(--theme-bg-anim);
+  will-change: background-position;
+  color: var(--theme-text);
+  transition: color 0.4s ease;
+}
+
+/* Scrollbar adapts to theme */
+[data-theme] ::-webkit-scrollbar-thumb {
+  background: var(--theme-scrollbar-thumb);
+}
+
+[data-theme] ::-webkit-scrollbar-track {
+  background: var(--theme-scrollbar-track);
+}
+
+/* Navbar theming */
+[data-theme="dark"] .navbar {
+  background-color: var(--theme-navbar) !important;
+  color: var(--theme-navbar-text);
+  border-color: rgba(200, 130, 40, 0.25);
+}
+
+[data-theme="dark"] .link {
+  color: var(--theme-navbar-text);
+}
+
+[data-theme="dark"] .link:hover {
+  color: #f9c148;
+}
+
+/* Footer */
+[data-theme="dark"] .footer {
+  background-color: var(--theme-footer-bg);
+  color: var(--theme-text-muted);
+  border-color: var(--theme-border);
+}
+
+[data-theme="dark"] .footer:hover {
+  background-color: rgba(20, 10, 2, 0.8);
+  border-color: var(--theme-border);
+  color: #f9c148;
+}
+
+/* Modal */
+[data-theme="dark"] .modal {
+  background-color: rgba(10, 5, 2, 0.7);
+}
+
+/* Gallery cards */
+[data-theme="dark"] .toggle-button {
+  background: #1a0f04;
+  color: var(--theme-text);
+}
+
+/* =========================================================
+   FLOATING DARK MODE TOGGLE BUTTON
+   ========================================================= */
+
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem 0.45rem 0.5rem;
+
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid currentColor;
+  border-radius: 0;
+  /* Hard Y2K corners */
+  cursor: pointer;
+
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  box-shadow:
+    3px 3px 0 currentColor,
+    0 0 0 0 transparent;
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.4s ease,
+    color 0.4s ease;
+}
+
+.dark-mode-toggle:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 currentColor;
+}
+
+.dark-mode-toggle:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 currentColor;
+}
+
+/* Toggle track (pill with sliding thumb) */
+.toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 36px;
+  height: 20px;
+  background: currentColor;
+  border-radius: 0;
+  /* Y2K: square */
+  opacity: 0.15;
+  flex-shrink: 0;
+}
+
+/* Emoji icons inside track */
+.toggle-sun,
+.toggle-moon {
+  position: absolute;
+  font-size: 10px;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.toggle-sun {
+  left: 3px;
+  z-index: 1;
+}
+
+.toggle-moon {
+  right: 3px;
+  z-index: 1;
+}
+
+/* Sliding thumb */
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--theme-navbar, #ffffff);
+  border: none;
+  transition: left 0.2s ease;
+  z-index: 2;
+}
+
+.thumb-light {
+  left: 2px;
+}
+
+.thumb-dark {
+  left: 18px;
+}
+
+/* Make track actually visible (override opacity) */
+.dark-mode-toggle .toggle-track {
+  opacity: 1;
+  background: rgba(128, 128, 128, 0.25);
+  border: 1.5px solid currentColor;
+}
+
+.dark-mode-toggle .toggle-thumb {
+  background: var(--theme-navbar-text, #111111);
+}
+
+/* Label */
+.toggle-label {
+  font-size: 0.6rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+/* Pulse ring on mount — subtle discoverability */
+@keyframes togglePulse {
+  0% {
+    box-shadow: 3px 3px 0 currentColor, 0 0 0 4px transparent;
+  }
+
+  50% {
+    box-shadow: 3px 3px 0 currentColor, 0 0 0 6px rgba(255, 200, 100, 0.35);
+  }
+
+  100% {
+    box-shadow: 3px 3px 0 currentColor, 0 0 0 4px transparent;
+  }
+}
+
+.dark-mode-toggle {
+  animation: togglePulse 2.5s ease-in-out 1.5s 2;
+}
+
+
+/* =========================================================
+   Y2K UNIVERSAL BUTTON SYSTEM
+   All buttons share this aesthetic: square corners, hard
+   offset box-shadow, Unbounded font — matching the toggle.
+   ========================================================= */
+
+/* Base class — applied directly or via element selectors below */
+.y2k-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  padding: 0.5rem 1.1rem;
+
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid currentColor;
+  border-radius: 0;
+
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+
+  box-shadow: 3px 3px 0 currentColor;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.35s ease,
+    color 0.35s ease;
+}
+
+.y2k-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 currentColor;
+}
+
+.y2k-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 currentColor;
+}
+
+/* Accent variant — warm orange/amber fill */
+.y2k-btn-accent {
+  background: #ff7e5f;
+  color: #111111;
+  border-color: #111111;
+  box-shadow: 3px 3px 0 #111111;
+}
+
+.y2k-btn-accent:hover {
+  background: #feb47b;
+  box-shadow: 5px 5px 0 #111111;
+}
+
+/* Ghost variant — outline only (useful on coloured backgrounds) */
+.y2k-btn-ghost {
+  background: transparent;
+  color: var(--theme-text, #ffffff);
+  border-color: currentColor;
+  box-shadow: 3px 3px 0 currentColor;
+}
+
+/* Danger variant — for close/dismiss actions */
+.y2k-btn-danger {
+  background: transparent;
+  color: #ff3333;
+  border-color: #ff3333;
+  box-shadow: 3px 3px 0 #ff3333;
+}
+
+.y2k-btn-danger:hover {
+  background: #ff3333;
+  color: #ffffff;
+}
+
+/* Icon-only (close X, back arrow) — square, no label padding */
+.y2k-btn-icon {
+  padding: 0.45rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1rem;
+}
+
+/* ── Remap existing named classes to y2k-btn ── */
+
+/* .m-button — "More..." / "View" action buttons inside modals/cards */
+.m-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid currentColor;
+  border-radius: 0 !important;
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 currentColor;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.35s ease, color 0.35s ease;
+  text-decoration: none;
+}
+
+.m-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 currentColor;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+}
+
+.m-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 currentColor;
+}
+
+/* .x-button — close button (X icon) */
+.x-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: transparent;
+  color: #ff3333;
+  border: 2px solid #ff3333;
+  border-radius: 0 !important;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #ff3333;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, color 0.12s ease;
+  /* remove old rotation */
+  transform: none !important;
+}
+
+.x-button:hover {
+  background: #ff3333;
+  color: #ffffff;
+  transform: none !important;
+  box-shadow: 4px 4px 0 #ff3333;
+}
+
+.x-button:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 0px 0px 0 #ff3333;
+}
+
+/* .toggle-button — the 3D/Flat gallery view switcher */
+.toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.25rem;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid currentColor;
+  border-radius: 0 !important;
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 currentColor, #0000008e 0 0 0 0;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.35s ease, color 0.35s ease;
+}
+
+.toggle-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 currentColor;
+  color: unset;
+}
+
+.toggle-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 currentColor;
+}
+
+/* gradient-text — contact page submit button */
+button.gradient-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.4rem;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid currentColor;
+  border-radius: 0 !important;
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 currentColor;
+  animation-delay: unset;
+  /* kill the old gradient overrides */
+  background-clip: unset;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.35s ease;
+}
+
+button.gradient-text:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 currentColor;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+}
+
+button.gradient-text:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 currentColor;
+}
+
+/* arrow-l-button / arrow-r-button — back arrow navigation */
+.arrow-l-button,
+.arrow-r-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid currentColor;
+  border-radius: 0 !important;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 currentColor;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.arrow-l-button:hover,
+.arrow-r-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 currentColor;
+}
+
+.arrow-l-button:active,
+.arrow-r-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 currentColor;
+}
+
+
+/* Dark mode overrides for all buttons */
+[data-theme="dark"] .m-button,
+[data-theme="dark"] .toggle-button,
+[data-theme="dark"] button.gradient-text,
+[data-theme="dark"] .arrow-l-button,
+[data-theme="dark"] .arrow-r-button {
+  background: #1a0f04;
+  color: #f5d9a0;
+  border-color: #f5d9a0;
+  box-shadow: 3px 3px 0 #f5d9a0;
+}
+
+[data-theme="dark"] .m-button:hover,
+[data-theme="dark"] .toggle-button:hover,
+[data-theme="dark"] button.gradient-text:hover,
+[data-theme="dark"] .arrow-l-button:hover,
+[data-theme="dark"] .arrow-r-button:hover {
+  box-shadow: 5px 5px 0 #f5d9a0;
+}
+
+[data-theme="dark"] .x-button {
+  color: #ff6060;
+  border-color: #ff6060;
+  box-shadow: 2px 2px 0 #ff6060;
+}
+
+[data-theme="dark"] .x-button:hover {
+  background: #ff6060;
+  color: #fff;
+  box-shadow: 4px 4px 0 #ff6060;
+}
+
+/* Inline Tailwind overrides for LowPowerGallery / gallery.js bg-black buttons */
+.bg-black.logo-3,
+[class*="bg-black"][class*="logo-3"] {
+  background: var(--theme-navbar, #ffffff) !important;
+  color: var(--theme-navbar-text, #111111) !important;
+  border: 2px solid currentColor !important;
+  border-radius: 0 !important;
+  font-family: "Unbounded", sans-serif !important;
+  font-size: 0.65rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em !important;
+  box-shadow: 3px 3px 0 currentColor !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+  padding: 0.5rem 1.25rem !important;
+}
+
+.bg-black.logo-3:hover,
+[class*="bg-black"][class*="logo-3"]:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 5px 5px 0 currentColor !important;
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+}
+/* =========================================================
+   Y2K NAVBAR REDESIGN
+   Keeps expand/collapse animation intact — adds hard corners,
+   offset box-shadow, and Unbounded link treatment.
+   ========================================================= */
+
+/* Expanded state — Y2K block, hard corners, offset shadow */
+.navbar.expanded {
+  background-color: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid var(--theme-navbar-text, #111111) !important;
+  border-radius: 0 !important;          /* override the rounded-lg from JSX */
+  box-shadow: 5px 5px 0 var(--theme-navbar-text, #111111);
+  max-width: 90%;
+  max-height: 100%;
+  /* keep original transition */
+  transition:
+    max-width 0.4s ease-in-out,
+    max-height 0.4s ease-in-out,
+    border-radius 0.7s ease-in-out,
+    background-color 0.8s ease-in-out,
+    border-color 1s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Hover lifts the expanded bar */
+.navbar.expanded:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--theme-navbar-text, #111111);
+  border-color: var(--theme-navbar-text, #111111) !important;
+}
+
+/* Collapsed state — keep the circle pill, just theme-aware */
+.navbar.collapsed {
+  background-color: var(--theme-navbar, #ffffff);
+  border: 2px solid var(--theme-navbar-text, #111111) !important;
+  border-radius: 35px;                  /* keep the circle */
+  box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111);
+  flex-shrink: 0;
+  max-width: 44px;
+  max-height: 44px;
+  overflow: hidden;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    max-width 0.4s ease-in-out,
+    max-height 0.4s ease-in-out,
+    border-radius 0.8s ease-in-out,
+    background-color 0.8s ease-in-out,
+    border-color 1s ease;
+}
+
+/* Remove the old generic .navbar:hover so it doesn't fight */
+.navbar:hover {
+  border: none;
+}
+
+/* Nav links — Y2K treatment */
+.nav-link {
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.6rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--theme-navbar-text, #111111);
+  padding: 0.4rem 0.9rem;
+  border: 2px solid transparent;
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    transform 0.12s ease,
+    color 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--theme-navbar-text, #111111) !important;
+  border: 2px solid var(--theme-navbar-text, #111111);
+  box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111);
+  transform: translate(-1px, -1px) scale(1) !important; /* override the old scale(1.1) */
+}
+
+.nav-link:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 0 0 0 var(--theme-navbar-text, #111111);
+}
+
+/* Active link — accent underline replaced with accent border */
+.nav-link.active-link {
+  border: 2px solid var(--theme-navbar-text, #111111);
+  box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111);
+  /* kill the gradient text from old .active-link */
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  color: var(--theme-navbar-text, #111111);
+}
+
+/* Logo button — no extra border, inherits circle shape */
+.logo-btn {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Dark mode navbar adjustments */
+[data-theme="dark"] .navbar.expanded {
+  background-color: var(--theme-navbar);
+  border-color: var(--theme-navbar-text) !important;
+  box-shadow: 5px 5px 0 var(--theme-navbar-text);
+  color: var(--theme-navbar-text);
+}
+
+[data-theme="dark"] .navbar.expanded:hover {
+  box-shadow: 7px 7px 0 var(--theme-navbar-text);
+}
+
+[data-theme="dark"] .navbar.collapsed {
+  background-color: var(--theme-navbar);
+  border-color: var(--theme-navbar-text) !important;
+  box-shadow: 3px 3px 0 var(--theme-navbar-text);
+}
+
+[data-theme="dark"] .nav-link {
+  color: var(--theme-navbar-text);
+}
+
+[data-theme="dark"] .nav-link:hover {
+  color: var(--theme-navbar-text) !important;
+  border-color: var(--theme-navbar-text);
+  box-shadow: 3px 3px 0 var(--theme-navbar-text);
+}
+
+[data-theme="dark"] .nav-link.active-link {
+  border-color: var(--theme-navbar-text);
+  box-shadow: 3px 3px 0 var(--theme-navbar-text);
+  color: var(--theme-navbar-text);
+}
+
+
+/* Canvas fill fix */
+.home {
+  flex: 1 !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   Y2K FORM FIELDS
+   Inputs and textarea match the button language:
+   hard corners, offset shadow, Unbounded font.
+   ========================================================= */
+
+.form-input,
+.form-inputA,
+input.form-input,
+textarea.form-inputA {
+  display: block;
+  width: 100%;
+
+  background: var(--theme-navbar, #ffffff);
+  color: var(--theme-navbar-text, #111111);
+  border: 2px solid var(--theme-navbar-text, #111111);
+  border-radius: 0 !important;
+
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  padding: 0.75rem 1rem;
+  outline: none;
+  box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111);
+
+  transition:
+    box-shadow 0.12s ease,
+    transform 0.12s ease,
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+
+  /* kill old backdrop blur */
+  backdrop-filter: none;
+}
+
+/* Placeholder */
+.form-input::placeholder,
+.form-inputA::placeholder {
+  color: var(--theme-navbar-text, #111111);
+  opacity: 0.4;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.6rem;
+}
+
+/* Focus — lift like a button press in reverse */
+.form-input:focus,
+.form-inputA:focus {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--theme-navbar-text, #111111);
+  outline: none;
+}
+
+/* Framer motion wraps inputs in a div — make sure shadow isn't clipped */
+.form-input:focus-within,
+.form-inputA:focus-within {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--theme-navbar-text, #111111);
+}
+
+/* Status message */
+.contact-status {
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--theme-navbar-text, #111111);
+  padding: 0.4rem 0.75rem;
+  border: 2px solid currentColor;
+  box-shadow: 2px 2px 0 currentColor;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* Dark mode fields */
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-inputA {
+  background: #1a0f04;
+  color: #f5d9a0;
+  border-color: #f5d9a0;
+  box-shadow: 3px 3px 0 #f5d9a0;
+}
+
+[data-theme="dark"] .form-input::placeholder,
+[data-theme="dark"] .form-inputA::placeholder {
+  color: #f5d9a0;
+  opacity: 0.35;
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-inputA:focus {
+  box-shadow: 5px 5px 0 #f5d9a0;
+}
+
+[data-theme="dark"] .contact-status {
+  color: #f5d9a0;
 }
