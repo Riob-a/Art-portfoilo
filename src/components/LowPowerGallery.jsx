@@ -304,6 +304,44 @@ function LPSingleCard({
         </Html>
       )}
 
+      {/* FRONT LABEL PLAQUE */}
+      {!modalOpen && (
+        <Html
+          position={[cardWidth / 2, -cardHeight / 2 - 0.01, 0.80]}
+          transform
+          distanceFactor={1.25}
+          occlude
+        >
+          <div
+            style={{
+              pointerEvents: "none",
+              opacity: clicked || held ? 0 : 1,
+              transition: "opacity 0.2s ease",
+              background: "#ffffff",
+              border: "2px solid #111111",
+              // boxShadow: "3px 3px 0 #111111",
+              padding: "4px 10px",
+              whiteSpace: "nowrap",
+              transform: `translateX(-100%) rotate(${(art.title.length * 137.5) % 20 - 10}deg)`,
+              transformOrigin: "bottom right",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "Unbounded, sans-serif",
+                fontWeight: 800,
+                fontSize: "0.5rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#111111",
+              }}
+            >
+              {art.title}
+            </div>
+          </div>
+        </Html>
+      )}
+
       {/* RECESSED FRAME */}
       <RecessedFrame
         width={cardWidth + 0.22}
