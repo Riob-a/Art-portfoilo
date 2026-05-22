@@ -921,7 +921,7 @@ button.gradient-text {
   display: flex;
   height: 40px;
 
-  box-shadow: #0000008e 2px 5px 7px;
+  /* box-shadow: #0000008e 2px 5px 7px; */
 }
 
 .link {
@@ -932,14 +932,8 @@ button.gradient-text {
   padding: 0.5rem 2rem;
 }
 
-.navbar:hover {
-  transition: color 1s ease, border-color 2s ease, background-color 0.3s ease;
-  border: 1px solid #ffffff;
-  /* color: #ff0000; */
-}
-
 .link:hover {
-  color: #3deab8;
+  color: #3d85ea;
   transform: scale(1.1);
   transition: color 0.3s, transform 0.3s;
 }
@@ -1012,17 +1006,6 @@ button.gradient-text {
   opacity: 0;
   transform: translateX(-20px);
   pointer-events: none;
-}
-
-.navbar.expanded .chevron-right {
-  color: #ff0000;
-  transition: color 0.5s ease-in-out, transform 0.5s ease-in-out;
-
-}
-
-.navbar.collapsed .chevron-right {
-  color: #000000;
-  transition: color 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .rotated {
@@ -1643,7 +1626,7 @@ button.gradient-text:active {
   background-color: var(--theme-navbar, #ffffff);
   border: 2px solid var(--theme-navbar-text, #111111) !important;
   border-radius: 35px;                  /* keep the circle */
-  box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111);
+  /* box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111); */
   flex-shrink: 0;
   max-width: 44px;
   max-height: 44px;
@@ -1731,7 +1714,7 @@ button.gradient-text:active {
 [data-theme="dark"] .navbar.collapsed {
   background-color: var(--theme-navbar);
   border-color: var(--theme-navbar-text) !important;
-  box-shadow: 3px 3px 0 var(--theme-navbar-text);
+  /* box-shadow: 3px 3px 0 var(--theme-navbar-text); */
 }
 
 [data-theme="dark"] .nav-link {
