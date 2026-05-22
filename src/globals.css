@@ -1624,11 +1624,11 @@ button.gradient-text:active {
 }
 
 /* Hover lifts the expanded bar */
-.navbar.expanded:hover {
+/* .navbar.expanded:hover {
   transform: translate(-2px, -2px);
   box-shadow: 7px 7px 0 var(--theme-navbar-text, #111111);
   border-color: var(--theme-navbar-text, #111111) !important;
-}
+} */
 
 /* Collapsed state — keep the circle pill, just theme-aware */
 .navbar.collapsed {
@@ -1716,9 +1716,9 @@ button.gradient-text:active {
   color: var(--theme-navbar-text);
 }
 
-[data-theme="dark"] .navbar.expanded:hover {
+/* [data-theme="dark"] .navbar.expanded:hover {
   box-shadow: 7px 7px 0 var(--theme-navbar-text);
-}
+} */
 
 [data-theme="dark"] .navbar.collapsed {
   background-color: var(--theme-navbar);
@@ -1856,4 +1856,12 @@ textarea.form-inputA {
 
 [data-theme="dark"] .contact-status {
   color: #f5d9a0;
+}
+/* Cursor */
+* {
+  cursor: url('/cursor.cur') 4 4, auto !important;
+}
+
+button, a, [role="button"], label, select, [onclick] {
+  cursor: url('/cursor-pointer.cur') 4 4, pointer !important;
 }
