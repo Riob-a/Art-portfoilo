@@ -30,7 +30,8 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
 
   // Color feedback
   const { color } = useSpring({
-    color: clicked ? "#a70404" : "#fffff",
+    // color: clicked ? "#a70404" : "#fffff",
+    color: clicked ? "#gold" : "#fffff",
     config: { tension: 180, friction: 20 },
   });
 

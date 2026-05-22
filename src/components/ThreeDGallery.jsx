@@ -561,6 +561,7 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
 
         const cardHeight = 3;
         const cardWidth = aspect * cardHeight;
+        const plaqueRotation = ((i * 137.5) % 15) - 7.5; // -15° to +15°, deterministic per card
 
         return (
           <a.group
@@ -659,54 +660,87 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
             >
               <div
                 style={{
-                  width: "240px",
-                  fontSize: "10px",
-                  lineHeight: 1.2,
-                  color: "#bbb",
+                  width: "260px",
                   pointerEvents: "none",
-                  // opacity: clicked === i && !modalOpen ? 1 : 0,
-                  opacity:
-                    (clicked === i || heldIndex === i) && !modalOpen ? 1 : 0,
-                  transition: "opacity 0.3s ease 0.15s",
+                  opacity: (clicked === i || heldIndex === i) && !modalOpen ? 1 : 0,
+                  transition: "opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s",
                   transform:
                     (clicked === i || heldIndex === i) && !modalOpen
                       ? "translateY(0px)"
                       : "translateY(6px)",
-                  // background: "rgba(0, 0, 0, 0.564)",
-                  background: "rgba(20, 12, 4, 0.82)",
-                  backdropFilter: "blur(6px)",
-                  outline: "1px solid grey",
-                  cursor: "pointer"
+                  background: "var(--theme-navbar, #ffffff)",
+                  border: "2px solid var(--theme-navbar-text, #111111)",
+                  // boxShadow: "3px 3px 0 var(--theme-navbar-text, #111111)",
+                  borderRadius: "0",
+                  backdropFilter: "none",
                 }}
               >
+                {/* Title */}
                 <div
-                  className="modal-text m-1 p-3"
+                  className="logo-3"
                   style={{
+                    fontFamily: "Unbounded, sans-serif",
                     fontWeight: 800,
-                    color: "#EF9F27",
-                    fontSize: "16px",
-                    marginBottom: "10px",
-                    letterSpacing: "0.06em",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    borderBottom: "1px solid rgba(255,255,255,0.15)",
-                    paddingBottom: "8px",
+                    color: "var(--theme-navbar-text, #111111)",
+                    padding: "8px 14px",
+                    borderBottom: "2px solid var(--theme-navbar-text, #111111)",
                   }}
                 >
                   {art.title}
                 </div>
 
+                {/* Description */}
                 <div
-                  className="p-3"
                   style={{
+                    fontFamily: "Unbounded, sans-serif",
                     fontWeight: 400,
-                    fontSize: "14px",
-                    color: "rgba(255,255,255,0.88)",
+                    fontSize: "0.55rem",
+                    letterSpacing: "0.05em",
                     lineHeight: 1.6,
-                    minWidth: "240px",
-                    maxWidth: "280px",
+                    color: "var(--theme-navbar-text, #111111)",
+                    padding: "8px 14px",
+                    opacity: 0.75,
                   }}
                 >
                   {art.description}
+                </div>
+              </div>
+            </Html>
+
+            {/* FRONT LABEL PLAQUE */}
+            <Html
+              position={[cardWidth / 2, -cardHeight / 2 - 0.01, 0.80]}
+              transform
+              distanceFactor={1.25}
+              occlude
+            >
+              <div
+                style={{
+                  pointerEvents: "none",
+                  opacity: clicked || heldIndex ? 0 : 1,
+                  transition: "opacity 0.2s ease",
+                  background: "#ffffff",
+                  border: "2px solid #111111",
+                  padding: "4px 10px",
+                  whiteSpace: "nowrap",
+                  transform: `translateX(-100%) rotate(${plaqueRotation}deg)`,
+                  transformOrigin: "bottom right",
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "Unbounded, sans-serif",
+                    fontWeight: 800,
+                    fontSize: "0.5rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "#111111",
+                  }}
+                >
+                  {art.title}
                 </div>
               </div>
             </Html>
@@ -740,8 +774,8 @@ function GalleryScene({ artworks, sizes = [], openModal, modalOpen, clicked, set
                 <meshPhysicalMaterial
                   transmission={0}
                   transparent
-                  color="rgba(0, 0, 0, 1)"
-                  opacity={0.12}
+                  color="#1a3322"
+                  opacity={0.20}
                   roughness={0.05}
                   thickness={0.5}
                   ior={1.5}

@@ -7,7 +7,7 @@
 
 :root {
   /* --background: #161515; */
-  --foreground: #171717;
+  --foreground: #04a236;
 }
 
 /* @property --angle {
@@ -611,14 +611,14 @@ main {
 .modal-heading {
   color: white;
   font-family: 'Unbounded', sans-serif;
-  font-weight: 400;
+  font-weight: 800;
   font-style: normal;
 }
 
 .modal-text {
   /* color: #608561; */
   font-family: 'Unbounded', sans-serif;
-  font-weight: 400;
+  font-weight: 800;
   font-style: normal;
 }
 

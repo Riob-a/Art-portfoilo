@@ -259,29 +259,28 @@ function LPSingleCard({
         >
           <div
             style={{
-              maxWidth: "200px",
+              width: "260px",
               fontSize: "10px",
               lineHeight: 1.2,
-              color: "#bbb",
               pointerEvents: "none",
               opacity: clicked || held ? 1 : 0,
               transition: "opacity 0.25s ease 0.15s",
-              background: "rgba(20, 12, 4, 0.82)",
-              outline: "1px solid grey",
+              background: "var(--theme-navbar, #ffffff)",
+              border: "2px solid var(--theme-navbar-text, #111111)",
               cursor: "pointer",
             }}
           >
             <div
               className="modal-text m-1 p-3"
               style={{
+                fontFamily: "Unbounded, sans-serif",
                 fontWeight: 800,
-                color: "#EF9F27",
-                fontSize: "16px",
-                marginBottom: "10px",
-                letterSpacing: "0.06em",
+                fontSize: "0.6rem",
+                letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                borderBottom: "1px solid rgba(255,255,255,0.15)",
-                paddingBottom: "8px",
+                color: "var(--theme-navbar-text, #111111)",
+                padding: "8px 14px",
+                borderBottom: "2px solid var(--theme-navbar-text, #111111)",
               }}
             >
               {art.title}
@@ -289,10 +288,13 @@ function LPSingleCard({
             <div
               className="p-1"
               style={{
+                fontFamily: "Unbounded, sans-serif",
                 fontWeight: 400,
-                fontSize: "10px",
-                color: "rgba(255,255,255,0.88)",
-                lineHeight: 1.4,
+                fontSize: "0.55rem",
+                letterSpacing: "0.05em",
+                lineHeight: 1.6,
+                color: "var(--theme-navbar-text, #111111)",
+                padding: "8px 14px",
                 opacity: 0.75,
               }}
             >
