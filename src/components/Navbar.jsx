@@ -88,7 +88,7 @@ export default function Navbar() {
         {/* Left Links */}
         <div className="links left flex space-x-3 justify-start w-1/3">
           <Link className={linkClasses('/about')} href="/about">
-            About
+            ABOUT
           </Link>
         </div>
 
@@ -119,7 +119,7 @@ export default function Navbar() {
         {/* Right Links */}
         <div className="links right flex space-x-3 justify-end w-1/3">
           <Link className={linkClasses('/contact')} href="/contact">
-            Contact
+            CONTACT
           </Link>
         </div>
       </nav>

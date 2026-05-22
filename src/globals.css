@@ -1865,3 +1865,6 @@ textarea.form-inputA {
 button, a, [role="button"], label, select, [onclick] {
   cursor: url('/cursor-pointer.cur') 4 4, pointer !important;
 }
+button *, a * {
+  cursor: inherit !important;
+}
