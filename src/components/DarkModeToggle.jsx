@@ -1,3 +1,4 @@
+import { FaSun, FaMoon } from "react-icons/fa";
 import { useTheme } from "../components/ThemeContext";
 
 export default function DarkModeToggle() {
@@ -10,14 +11,12 @@ export default function DarkModeToggle() {
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {/* Icon track */}
       <span className="toggle-track">
-        <span className="toggle-sun">☀</span>
-        <span className="toggle-moon">☽</span>
+        <span className="toggle-sun"><FaSun size={10} /></span>
+        <span className="toggle-moon"><FaMoon size={10} /></span>
         <span className={`toggle-thumb ${isDark ? "thumb-dark" : "thumb-light"}`} />
       </span>
 
-      {/* Label */}
       <span className="toggle-label">{isDark ? "LITE" : "DARK"}</span>
     </button>
   );

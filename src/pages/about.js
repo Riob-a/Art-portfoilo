@@ -22,22 +22,61 @@ const ArrowIcon = () => (
   </svg>
 );
 
-const fadeUp = {
-  initial: { opacity: 0, y: 40 },
-  animate: { opacity: 1, y: 0 },
-};
-
 export default function About() {
   return (
-    <section className="about min-h-screen p-8 flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-18">
-        <motion.h2 className="text-8xl a-heading">
-          <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="0">About</div>
-          <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="400">Me</div>
-        </motion.h2>
+    <section
+      className="about min-h-screen p-8 flex flex-col"
+      style={{ fontFamily: "Unbounded, sans-serif", position: "relative" }}
+    >
+      {/* CORNER BRACKETS */}
+      {/* {[
+        "top-0 left-0 border-t-2 border-l-2",
+        "top-0 right-0 border-t-2 border-r-2",
+        "bottom-0 left-0 border-b-2 border-l-2",
+        "bottom-0 right-0 border-b-2 border-r-2",
+      ].map((cls, i) => (
+        <div key={i} className={`absolute w-8 h-8 border-black/70 pointer-events-none ${cls}`} />
+      ))} */}
 
-        <motion.div whileTap={{ scale: 0.6 }} className="line-arrow">
+      {/* HEADER */}
+      <div className="flex items-start justify-between mb-18">
+        <div>
+          {["ABOUT", "ME"].map((word, i) => (
+            <div
+              key={word}
+              data-aos="fade-right"
+              data-aos-duration="800"
+              data-aos-delay={i * 400}
+              style={{
+                fontFamily: "Unbounded, sans-serif",
+                fontWeight: 900,
+                fontSize: "clamp(3rem, 8vw, 6rem)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.02em",
+                color: "var(--theme-navbar-text, #111111)",
+                textTransform: "uppercase",
+              }}
+            >
+              {word}
+            </div>
+          ))}
+          {/* ORANGE RULE */}
+          <div
+            style={{
+              marginTop: "1rem",
+              width: "120px",
+              height: "4px",
+              background: "#EF9F27",
+              boxShadow: "3px 3px 0 var(--theme-navbar-text, #111111)",
+            }}
+          />
+        </div>
+
+        <motion.div
+          whileTap={{ scale: 0.6 }}
+          className="line-arrow"
+          style={{ marginTop: "0.5rem" }}
+        >
           <Link href="/">
             <button className="arrow-l-button">
               <ArrowIcon />
@@ -46,87 +85,111 @@ export default function About() {
         </motion.div>
       </div>
 
-      {/* Content */}
+      {/* BODY COPY */}
       <motion.div
-        className="space-y-6 leading-relaxed max-w-2xl"
+        className="space-y-6 max-w-2xl"
         data-aos="fade-in"
         data-aos-delay="800"
         data-aos-duration="400"
       >
-        <p>
-          I am a visual artist comfortable with both paint and pencil,
-          preferably pencil, specializing in creating intricate compositions
-          that combine both pencil and paint, with the occasional still life.
-        </p>
+        {[
+          "I am a visual artist comfortable with both paint and pencil, preferably pencil, specializing in creating intricate compositions that combine both pencil and paint, with the occasional still life.",
+          "I also have a background in web development, which facilitated the design and creation of this very website. Hope you enjoy my work and feel free to reach out and check out my other web projects.",
+        ].map((text, i) => (
+          <p
+            key={i}
+            style={{
+              fontFamily: "Unbounded, sans-serif",
+              fontWeight: 400,
+              fontSize: "0.65rem",
+              letterSpacing: "0.04em",
+              lineHeight: 1.9,
+              color: "var(--theme-navbar-text, #111111)",
+            }}
+          >
+            {text}
+          </p>
+        ))}
 
-        <p>
-          I also have a background in web development, which facilitated the
-          design and creation of this very website. Hope you enjoy my work and
-          feel free to reach out and check out my other web projects.
-        </p>
-
-        {/* Project link — styled as a proper CTA */}
-        <p
-          data-aos="fade-in"
-          data-aos-delay="1000"
-          data-aos-duration="400"
-        >
-          <Link
+        {/* CTA LINK */}
+        <div data-aos="fade-in" data-aos-delay="1000" data-aos-duration="400">
+          <motion.a
             href="https://portfolio-five-five.vercel.app/"
-            className="a-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ x: 2, y: 2, boxShadow: "1px 1px 0 #111111" }}
+            whileTap={{ scale: 0.97 }}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: "6px",
-              fontWeight: 600,
-              fontSize: "15px",
-              letterSpacing: "0.04em",
-              textDecoration: "underline",
-              textUnderlineOffset: "4px",
-              opacity: 0.9,
+              fontFamily: "Unbounded, sans-serif",
+              fontWeight: 800,
+              fontSize: "0.5rem",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "var(--theme-navbar-text, #111111)",
+              textDecoration: "none",
+              background: "#EF9F27",
+              border: "2px solid var(--theme-navbar-text, #111111)",
+              boxShadow: "3px 3px 0 var(--theme-navbar-text, #111111)",
+              padding: "10px 18px",
+              transition: "box-shadow 0.15s ease",
             }}
           >
             Check out my other projects →
-          </Link>
-        </p>
+          </motion.a>
+        </div>
       </motion.div>
 
-      {/* Bottom fill — skills/media row */}
+      {/* MEDIA ROW */}
       <div
-        className="mt-16 pt-16  pb-10"
+        className="mt-16 pt-16 pb-10"
         data-aos="fade-in"
         data-aos-delay="1200"
         data-aos-duration="600"
       >
-        <p
+        <div
           style={{
-            fontSize: "11px",
-            letterSpacing: "0.12em",
+            fontFamily: "Unbounded, sans-serif",
+            fontWeight: 900,
+            fontSize: "0.45rem",
+            letterSpacing: "0.2em",
             textTransform: "uppercase",
-            opacity: 0.8,
-            marginBottom: "12px",
-            display: "flex",
-            justifyContent: "center" 
+            color: "var(--theme-navbar-text, #111111)",
+            background: "#EF9F27",
+            border: "2px solid var(--theme-navbar-text, #111111)",
+            boxShadow: "3px 3px 0 var(--theme-navbar-text, #111111)",
+            padding: "4px 12px",
+            display: "inline-block",
+            marginBottom: "16px",
           }}
         >
           Media
-        </p>
-        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap",  justifyContent: "center"  }}>
-          {["Pencil", "Paint", "Digital", "Still Life"].map((skill) => (
-            <span
+        </div>
+
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          {["Pencil", "Paint", "Digital", "Still Life"].map((skill, i) => (
+            <motion.span
               key={skill}
+              whileHover={{ x: 2, y: 2, boxShadow: "1px 1px 0 #111111" }}
               style={{
+                fontFamily: "Unbounded, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.5rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "var(--theme-navbar-text, #111111)",
+                background: "var(--theme-navbar, #ffffff)",
+                border: "2px solid var(--theme-navbar-text, #111111)",
+                boxShadow: "3px 3px 0 var(--theme-navbar-text, #111111)",
                 padding: "6px 14px",
-                borderRadius: "999px",
-                border: "1px solid rgba(255,255,255,0.35)",
-                fontSize: "13px",
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.85)",
-                letterSpacing: "0.03em",
+                cursor: "default",
+                transition: "box-shadow 0.15s ease",
               }}
             >
               {skill}
-            </span>
+            </motion.span>
           ))}
         </div>
       </div>

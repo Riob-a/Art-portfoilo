@@ -7,7 +7,7 @@
 
 :root {
   /* --background: #161515; */
-  --foreground: #04a236;
+  --foreground: #f2f1f1;
 }
 
 /* @property --angle {
@@ -766,7 +766,16 @@ button.gradient-text {
   font-weight: 600;
   border-color: white;
 }
-
+.c-heading{
+    color: #000000;
+  /* font-family: 'Unbounded', sans-serif; */
+  font-family: "Unbounded", sans-serif;
+  font-weight: 800;
+  font-style: solid;
+}
+.c-content{
+  color: #000000;
+}
 /* end */
 
 /* Components */

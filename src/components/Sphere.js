@@ -214,7 +214,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
           metalness={1.0}
           roughness={isSmallScreen ? 0.5 : 0.0}
           clearcoat={isSmallScreen ? 0.4 : 1}
-          clearcoatRoughness={isSmallScreen ? 0.2 : 1}
+          clearcoatRoughness={isSmallScreen ? 0.0 : 1}
           thickness={isSmallScreen ? 0 : 2.5}
           reflectivity={1}
           samples={isSmallScreen ? 0 : 1}
@@ -236,7 +236,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen }) {
         {/* <Edges threshold={1} color="rgba(136, 136, 136, 1)" lineWidth={0.5} /> */}
         <Edges
           threshold={1}
-          color={isSmallScreen ? "black" : "black"}
+          color={isSmallScreen ? "grey" : "black"}
           lineWidth={isSmallScreen ? 1.5 : 1.1}
         />
       </mesh>
