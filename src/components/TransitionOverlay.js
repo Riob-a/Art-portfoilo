@@ -1,10 +1,22 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const circleVariants = {
-    initial: { clipPath: "circle(0% at 50% 50%)" },
-    animate: { clipPath: "circle(0% at 50% 50%)" },
-    exit: { clipPath: "circle(150% at 50% 50%)" },
+// const circleVariants = {
+//     initial: { clipPath: "circle(0% at 50% 50%)" },
+//     animate: { clipPath: "circle(0% at 50% 50%)" },
+//     exit: { clipPath: "circle(150% at 50% 50%)" },
+// };
+
+// const wipeVariants = {
+//     initial: { clipPath: "inset(0 0 100% 0)" },
+//     animate: { clipPath: "inset(0 0 100% 0)" },
+//     exit: { clipPath: "inset(0 0 0% 0)" },
+// };
+
+const expandVariants = {
+    initial: { clipPath: "inset(50% 50% 50% 50%)" },
+    animate: { clipPath: "inset(50% 50% 50% 50%)" },
+    exit: { clipPath: "inset(0% 0% 0% 0%)" },
 };
 
 const textVariants = {
@@ -15,13 +27,34 @@ const textVariants = {
 
 export default function TransitionOverlay() {
     return (
+        // CIRCLE VARIANT
+        // <motion.div
+        //     variants={circleVariants}
+        //     initial="initial"
+        //     animate="animate"
+        //     exit="exit"
+        //     transition={{ duration: 1.35, ease: "easeInOut" }}
+        //     className="fixed top-0 left-0 w-full h-full bg-[#fbf8f5] z-50"
+        // >
+        // OPTION 1
+        // <motion.div
+        //     variants={wipeVariants}
+        //     initial="initial"
+        //     animate="animate"
+        //     exit="exit"
+        //     transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
+        //     className="fixed top-0 left-0 w-full h-full z-50"
+        //     style={{ background: "var(--theme-navbar, #ffffff)" }}
+        // >
+        // OPTION 2
         <motion.div
-            variants={circleVariants}
+            variants={expandVariants}
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 1.35, ease: "easeInOut" }}
-            className="fixed top-0 left-0 w-full h-full bg-[#fbf8f5] z-50"
+            transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
+            className="fixed top-0 left-0 w-full h-full z-50"
+            style={{ background: "var(--theme-navbar, #ffffff)" }}
         >
             {/* Centered logo — shares layoutId with the navbar logo */}
             <div className="absolute inset-0 flex items-center justify-center">

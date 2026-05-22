@@ -445,13 +445,14 @@ export default function LowPowerGallery({ artworks }) {
           }}
         >
           <img
-            src="/globe-2.svg"
+            // src="/globe-2.svg"
+            src="/hourglass.png"
             alt="loading"
             className="logo-pic"
             style={{
-              width: "20px",
-              height: "20px",
-              animation: "spin 0.6s linear infinite",
+              width: "40px",
+              height: "40px",
+              animation: "spin 0.8s linear infinite",
               opacity: 0.9,
             }}
           />
@@ -468,16 +469,16 @@ export default function LowPowerGallery({ artworks }) {
       style={{ width: "100%", margin: "auto", height: "100%" }}
     >
       {/* CORNER BRACKETS */}
-        <div className="absolute top-0.5 left-0.5 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
-        <div className="absolute top-0.5 right-0.5 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
-        <div className="absolute bottom-0.5 left-0.5 w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
-        <div className="absolute bottom-0.5 right-0.5 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
+      <div className="absolute top-0.5 left-0.5 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
+      <div className="absolute top-0.5 right-0.5 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
+      <div className="absolute bottom-0.5 left-0.5 w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
+      <div className="absolute bottom-0.5 right-0.5 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
 
-        {/* EDGE PLUSES */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+      {/* EDGE PLUSES */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
 
       {/* HINT TEXT */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">

@@ -148,8 +148,6 @@ export default function ThreeDFloatingGallery() {
             color: "white",
             fontSize: "16px",
             borderRadius: "8px",
-            // background: "#161515",
-            // backdropFilter: "blur(6px)",
             display: "flex",
             alignItems: "center",
             gap: "10px",
@@ -158,13 +156,14 @@ export default function ThreeDFloatingGallery() {
           {/* <span className="loader"></span> */}
           {/* SVG replaces spinner */}
           <img
-            src="/globe-2.svg"
+            // src="/globe-2.svg"
+            src="/hourglass.png"
             alt="loading"
             className="logo-pic"
             style={{
-              width: "20px",
-              height: "20px",
-              animation: "spin 0.6s linear infinite",
+              width: "40px",
+              height: "40px",
+              animation: "spin 0.8s linear infinite",
               opacity: 0.9,
             }}
           />

@@ -88,21 +88,21 @@ export default function Gallery() {
               fontSize: "16px",
               borderRadius: "8px",
               // background: "#161515",
-              backdropFilter: "blur(6px)",
+              // backdropFilter: "blur(6px)",
               display: "flex",
               alignItems: "center",
               gap: "10px",
             }}
           >
             <Image
-              src="/globe-2.svg"
+              src="/hourglass.png"
               alt="loading"
               className="logo-pic"
-              width={20}
-              height={20}
+              width={40}
+              height={40}
               style={{
 
-                animation: "spin 0.6s linear infinite",
+                animation: "spin 0.8s linear infinite",
                 opacity: 0.9,
               }}
             />
