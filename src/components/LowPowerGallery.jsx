@@ -9,55 +9,13 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { FaArrowLeft, FaArrowRight, FaDownload, FaSearch } from "react-icons/fa";
 import { a, useSpring } from "@react-spring/three";
-
-// ─── DEVICE POWER DETECTION ──────────────────────────────────────────────────
-function detectDeviceTier() {
-  if (typeof window === "undefined") return "mid";
-
-  const cores = navigator.hardwareConcurrency ?? 2;
-
-  // navigator.deviceMemory is Chrome/Android only — falls back gracefully
-  const ram = navigator.deviceMemory ?? 4;
-
-  // GPU tier via WebGL renderer string
-  let gpuScore = 1; // default: mid
-  // REPLACE the entire GPU try block with this:
-  try {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-    if (gl) {
-      const ext = gl.getExtension("WEBGL_debug_renderer_info");
-      if (ext) {
-        const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL).toLowerCase();
-
-        // Hard exit for low-end Adreno before score calculation
-        const adreno = renderer.match(/adreno[^0-9]+(\d+)/i);
-        if (adreno && parseInt(adreno[1]) < 500) return "low";
-
-        if (/rtx|rx 6|rx 7|rx 5700|m[12] (pro|max|ultra)|a\d{4}|quadro/i.test(renderer))
-          gpuScore = 2;
-        else if (/intel (uhd 6[0-5]|hd [456]|hd graphics)|mali-[gt][0-9]+|adreno \(tm\) [0-9]+|adreno [0-9]{3}[^0-9]|powervr/i.test(renderer))
-          gpuScore = 0;
-      }
-    }
-  } catch (_) { }
-
-  // Network hint (saves on texture env loads on slow connections)
-  const conn = navigator.connection;
-  const slowNetwork = conn && (conn.saveData || conn.effectiveType === "2g" || conn.effectiveType === "slow-2g");
-  if (slowNetwork) return "low";
-
-  const score = cores + ram / 2 + gpuScore * 2;
-  if (score >= 10) return "high";
-  if (score >= 5) return "mid";
-  return "low";
-}
+import { detectDeviceTier } from "../utils/deviceTier"; // ← added
 
 // Maps tier → drei <Environment> props (or null to skip entirely)
 const ENV_CONFIG = {
   high: { preset: "dawn", environmentIntensity: 1.0 },
   mid: { preset: "dawn", environmentIntensity: 0.6 },
-  low: null, // skip Environment completely; fallback to flat lights only
+  low: null,
 };
 
 // Maps tier → directional light intensities [front, back]
@@ -66,8 +24,6 @@ const LIGHT_CONFIG = {
   mid: [2.8, 2.2],
   low: [1.8, 1.2],
 };
-// ─────────────────────────────────────────────────────────────────────────────
-
 
 // --- SINGLE BEVELED CARD ---
 function LPBeveledCard({ width, height, depth }) {
@@ -102,7 +58,8 @@ function LPBeveledCard({ width, height, depth }) {
     </mesh>
   );
 }
-/*  Recess for sunk card */
+
+// --- RECESSED FRAME ---
 function RecessedFrame({ width, height, depth = 0.2, inset = 0.15 }) {
   const shape = useMemo(() => {
     const w = width / 2;
@@ -188,9 +145,7 @@ function LPSingleCard({
   });
 
   const cardHeight = 3;
-  const aspect = texture.image
-    ? texture.image.width / texture.image.height
-    : 1;
+  const aspect = texture.image ? texture.image.width / texture.image.height : 1;
   const cardWidth = aspect * cardHeight;
 
   return (
@@ -238,20 +193,12 @@ function LPSingleCard({
         }
       }}
     >
-      <LPBeveledCard
-        width={cardWidth + 0.12}
-        height={cardHeight + 0.12}
-        depth={0.5}
-      />
+      <LPBeveledCard width={cardWidth + 0.12} height={cardHeight + 0.12} depth={0.5} />
 
       {/* BACK FACE INFO */}
       {!modalOpen && (
         <Html
-          position={[
-            -cardWidth / 2 + BACK_TEXT_WIDTH / 2,
-            -cardHeight / 2 + 0.1,
-            -0.26,
-          ]}
+          position={[-cardWidth / 2 + BACK_TEXT_WIDTH / 2, -cardHeight / 2 + 0.1, -0.26]}
           rotation={[0, Math.PI, 0]}
           transform
           distanceFactor={5.5}
@@ -319,7 +266,6 @@ function LPSingleCard({
               transition: "opacity 0.2s ease",
               background: "#ffffff",
               border: "2px solid #111111",
-              // boxShadow: "3px 3px 0 #111111",
               padding: "4px 10px",
               whiteSpace: "nowrap",
               transform: `translateX(-100%) rotate(${(art.title.length * 137.5) % 20 - 10}deg)`,
@@ -342,37 +288,33 @@ function LPSingleCard({
         </Html>
       )}
 
-      {/* RECESSED FRAME */}
-      <RecessedFrame
-        width={cardWidth + 0.22}
-        height={cardHeight + 0.22}
-        depth={0.45}
-        inset={0.125}
-      />
+      <RecessedFrame width={cardWidth + 0.22} height={cardHeight + 0.22} depth={0.45} inset={0.125} />
 
+      {/* FRONT IMAGE */}
       <mesh position={[0, 0, 0.61]}>
         <planeGeometry args={[cardWidth, cardHeight]} />
         <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
-      {/* GLASS PANE */}
-      {/* {tier !== "low" && ( */}
-      <mesh position={[0, 0, 0.68]}>
-        <planeGeometry args={[cardWidth, cardHeight]} />
-        <meshPhysicalMaterial
-          transmission={0}
-          transparent
-          color="rgba(0, 0, 0, 1)"
-          opacity={0.12}
-          roughness={0.01}
-          thickness={0.1}
-          ior={1.01}
-          reflectivity={1}
-          depthWrite={false}
-          samples={1}
-          resolution={256}
-        />
-      </mesh>
 
+      {/* GLASS PANE — skipped on low-tier devices */}
+      {tier !== "low" && (
+        <mesh position={[0, 0, 0.68]}>
+          <planeGeometry args={[cardWidth, cardHeight]} />
+          <meshPhysicalMaterial
+            transmission={0}
+            transparent
+            color="rgba(0, 0, 0, 1)"
+            opacity={0.12}
+            roughness={0.01}
+            thickness={0.1}
+            ior={1.01}
+            reflectivity={1}
+            depthWrite={false}
+            samples={1}
+            resolution={256}
+          />
+        </mesh>
+      )}
     </a.group>
   );
 }
@@ -383,14 +325,14 @@ export default function LowPowerGallery({ artworks }) {
   const [clicked, setClicked] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-
-  // Detect once on mount — stable for the session
   const [tier, setTier] = useState("mid");
-  useEffect(() => { setTier(detectDeviceTier()); }, []);
 
-  //   const isLargeScreen = useIsLargeScreen(1024);
+  // Detect once on mount — utility handles all logging
+  useEffect(() => {
+    setTier(detectDeviceTier());
+  }, []);
+
   const currentArt = artworks[index];
-
   const envConfig = ENV_CONFIG[tier];
   const [frontLight, backLight] = LIGHT_CONFIG[tier];
 
@@ -402,20 +344,6 @@ export default function LowPowerGallery({ artworks }) {
       setIsClosing(false);
     }, 200);
   };
-
-  useEffect(() => {
-    const t = detectDeviceTier();
-    setTier(t);
-    console.log("Device tier:", t);
-
-    // also log the raw GPU string
-    try {
-      const canvas = document.createElement("canvas");
-      const gl = canvas.getContext("webgl");
-      const ext = gl?.getExtension("WEBGL_debug_renderer_info");
-      if (ext) console.log("GPU:", gl.getParameter(ext.UNMASKED_RENDERER_WEBGL));
-    } catch (_) { }
-  }, []);
 
   // Preload next/prev images
   useEffect(() => {
@@ -445,7 +373,6 @@ export default function LowPowerGallery({ artworks }) {
           }}
         >
           <img
-            // src="/globe-2.svg"
             src="/hourglass.png"
             alt="loading"
             className="logo-pic"
@@ -469,38 +396,46 @@ export default function LowPowerGallery({ artworks }) {
       style={{ width: "100%", margin: "auto", height: "100%" }}
     >
       {/* CORNER BRACKETS */}
-      <div className="absolute top-0.5 left-0.5 w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
+      <div className="absolute top-0.5 left-0.5  w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
       <div className="absolute top-0.5 right-0.5 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
-      <div className="absolute bottom-0.5 left-0.5 w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
+      <div className="absolute bottom-0.5 left-0.5  w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
       <div className="absolute bottom-0.5 right-0.5 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
 
       {/* EDGE PLUSES */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+      <div className="absolute top-0    left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
+      <div className="absolute left-0  top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
       <div className="absolute right-0 top-1/2 -translate-y-1/2 text-black/70 text-3xl font-thin pointer-events-none z-10">+</div>
 
       {/* HINT TEXT */}
       <div className="absolute top-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">
         pan to explore · scroll to zoom
       </div>
+
       <Canvas
-        shadows={tier !== "low"}        // skip shadow maps on low-end
+        shadows={tier !== "low"}
         camera={{ position: [0, 0, 7], fov: 60 }}
         dpr={tier === "high" ? [1, 2] : tier === "mid" ? [1, 1.5] : [1, 1]}
       >
         <ambientLight intensity={0.8} />
 
-        {/* Conditionally mount Environment — null config = skip entirely */}
-        {envConfig && (
-          <Environment
-            preset={envConfig.preset}
-            environmentIntensity={envConfig.environmentIntensity}
-          />
+        {/* Low tier: skip env map, use cheap lights only */}
+        {envConfig ? (
+          <Environment preset={envConfig.preset} environmentIntensity={envConfig.environmentIntensity} />
+        ) : (
+          <>
+            <directionalLight position={[5, 5, 5]} intensity={backLight} />
+            <directionalLight position={[-5, 2, -5]} intensity={frontLight} />
+          </>
         )}
 
-        <directionalLight position={[5, 5, 5]} intensity={frontLight} />
-        <directionalLight position={[-5, 2, -5]} intensity={backLight} />
+        {/* High/mid: env map + directional lights on top */}
+        {tier !== "low" && (
+          <>
+            <directionalLight position={[5, 5, 5]} intensity={frontLight} />
+            <directionalLight position={[-5, 2, -5]} intensity={backLight} />
+          </>
+        )}
 
         <Suspense fallback={<LPLoadingFallback />}>
           <LPSingleCard
@@ -521,24 +456,9 @@ export default function LowPowerGallery({ artworks }) {
       </Canvas>
 
       <div className="flex justify-between w-full px-6 absolute bottom-45 md:bottom-30">
-        <button
-          onClick={prev}
-          className="px-4 py-2 bg-black text-white logo-3"
-        >
-          <FaArrowLeft />
-        </button>
-        <button
-          onClick={openModal}
-          className="px-4 py-2  bg-black text-white logo-3"
-        >
-          <FaSearch size={18} />
-        </button>
-        <button
-          onClick={next}
-          className="px-4 py-2 bg-black text-white  logo-3"
-        >
-          <FaArrowRight />
-        </button>
+        <button onClick={prev} className="px-4 py-2 bg-black text-white logo-3"><FaArrowLeft /></button>
+        <button onClick={openModal} className="px-4 py-2 bg-black text-white logo-3"><FaSearch size={18} /></button>
+        <button onClick={next} className="px-4 py-2 bg-black text-white logo-3"><FaArrowRight /></button>
       </div>
 
       {isModalOpen &&
@@ -552,12 +472,7 @@ export default function LowPowerGallery({ artworks }) {
               className="relative max-w-[50vw] w-full max-h-screen overflow-auto rounded-lg p-1 animate-scaleIn"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                className="absolute top-4 right-8 text-2xl x-button"
-                onClick={closeModal}
-              >
-                ✕
-              </button>
+              <button className="absolute top-4 right-8 text-2xl x-button" onClick={closeModal}>✕</button>
               <div className="max-w-full max-h-full p-2 flex flex-col items-center">
                 <Image
                   src={currentArt.imageUrl}
@@ -566,19 +481,14 @@ export default function LowPowerGallery({ artworks }) {
                   height={300}
                   className="w-auto max-h-[60vh] object-contain rounded"
                 />
-                <h2 className="modal-text-2 text-white text-2xl mt-4">
-                  {currentArt.title}
-                </h2>
-                <p className="text-white text max-w-[80%]">
-                  {currentArt.description}
-                </p>
+                <h2 className="modal-text-2 text-white text-2xl mt-4">{currentArt.title}</h2>
+                <p className="text-white text max-w-[80%]">{currentArt.description}</p>
                 <div className="flex gap-4 mt-2">
                   <a
                     href={currentArt.imageUrl}
                     download
                     className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
                   >
-
                     <FaDownload /> Download
                   </a>
                 </div>
@@ -586,7 +496,8 @@ export default function LowPowerGallery({ artworks }) {
             </div>
           </div>,
           document.body
-        )}
-    </div>
+        )
+      }
+    </div >
   );
 }

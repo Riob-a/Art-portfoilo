@@ -41,7 +41,7 @@ export default function Home() {
                 <span>GALLERY</span>
 
                 {/* Inline Gallery Link */}
-                <Link
+                {/* <Link
                   href="/gallery"
                   className="relative flex items-center justify-center md:hidden"
                   aria-label="Open gallery"
@@ -50,7 +50,7 @@ export default function Home() {
                   <span className="relative p-2 text-white rounded-full">
                     <FaSquareArrowUpRight size={18} />
                   </span>
-                </Link>
+                </Link> */}
               </div>
 
               {/* Subtitle */}
