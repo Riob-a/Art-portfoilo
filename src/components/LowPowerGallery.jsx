@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { OrbitControls, Html, Environment } from "@react-three/drei";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { FaDownload, FaSearch } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaDownload, FaSearch } from "react-icons/fa";
 import { a, useSpring } from "@react-spring/three";
 
 // ─── DEVICE POWER DETECTION ──────────────────────────────────────────────────
@@ -523,21 +523,21 @@ export default function LowPowerGallery({ artworks }) {
       <div className="flex justify-between w-full px-6 absolute bottom-45 md:bottom-30">
         <button
           onClick={prev}
-          className="px-4 py-2 bg-black text-white hover:text-[#007f8cff] transition rounded-lg logo-3"
+          className="px-4 py-2 bg-black text-white logo-3"
         >
-          ◀ Prev
+          <FaArrowLeft />
         </button>
         <button
           onClick={openModal}
-          className="px-4 py-2 text-white hover:text-[#007f8cff] transition"
+          className="px-4 py-2  bg-black text-white logo-3"
         >
           <FaSearch size={18} />
         </button>
         <button
           onClick={next}
-          className="px-4 py-2 bg-black text-white hover:text-[#007f8cff] transition rounded-lg logo-3"
+          className="px-4 py-2 bg-black text-white  logo-3"
         >
-          Next ▶
+          <FaArrowRight />
         </button>
       </div>
 
