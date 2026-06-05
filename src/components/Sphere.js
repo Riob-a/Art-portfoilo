@@ -77,7 +77,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
     window.innerWidth < 1024;
 
   const { color } = useSpring({
-    color: clicked ? "#gold" : "#fffff",
+    color: clicked ? "#FF3333" : "#FFFFFF",
     config: { tension: 180, friction: 20 },
   });
 
