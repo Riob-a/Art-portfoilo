@@ -12,13 +12,10 @@ const artworks = [
   { title: "still-life", imageUrl: "/images/still-life.jpg", description: "Simple still life of a fiew bottles and an apple", category: "Pencil", year: "2021" },
   { title: "Rose", imageUrl: "/images/Rose.jpg", description: "A beautiful rose drawn with intricate details.", category: "Digital", year: "2025" },
   { title: "Cyclops", imageUrl: "/images/Cyclops.jpg", description: "Cyclops .", category: "Digital", year: "2025" },
-
-
-
+  
 ].map(art => ({
   ...art,
   slug: createSlug(art.title),
 }));
-
 
 export default artworks;

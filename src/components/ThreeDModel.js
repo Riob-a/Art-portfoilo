@@ -1,34 +1,89 @@
-import React from 'react'
-import { Canvas } from '@react-three/fiber'
-import { Environment } from '@react-three/drei'
-import { useGLTF, OrbitControls } from '@react-three/drei'
+import React, { Suspense, useRef } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useGLTF, OrbitControls, Environment, Center, Html } from '@react-three/drei'
+import { detectDeviceTier } from '@/utils/deviceTier'
 
-function PolyHavenModel({ path }) {
-  const { scene } = useGLTF(path)
-  return <primitive object={scene} scale={3} /> // scale it up/down as needed
+const tier = detectDeviceTier()
+
+const ENV_CONFIG = {
+  high: { preset: 'studio' },
+  mid:  { preset: 'sunset' },
+  low:  null,
 }
 
-// Preload the model for faster loading:
-useGLTF.preload('/models/Television_01_4k.gltf/Television_01_4k.gltf')
+const TIER_CONFIG = {
+  high: { dpr: [1, 2],   antialias: true  },
+  mid:  { dpr: [1, 1.5], antialias: false },
+  low:  { dpr: [1, 1],   antialias: false },
+}
 
-export default function PolyHavenExample() {
+function Model({ path, autoRotate }) {
+  const { scene } = useGLTF(path)   // hooks first
+  const ref = useRef()
+  useFrame((_, delta) => {
+    if (autoRotate && ref.current) ref.current.rotation.y += delta * 0.4
+  })
+  if (!path) return null             // guard after hooks
   return (
-    <Canvas
-      className="canvas rounded-xl justify-center"
-      // camera={{ position: [0, 0, 5], fov: 30 }}
-      style={{ width: '50%', height: '300px', background: '#080808ff' , margin: 'auto'}}
-      frameloop="demand"
-      dpr={[1, 1.5]}
-    >
-      <ambientLight intensity={0.1} />
-      <Environment preset="sunset" />
-      <directionalLight position={[ 10 ]} intensity={2} />
+    <Center>
+      <primitive ref={ref} object={scene} scale={3}/>
+    </Center>
+  )
+}
 
-      {/* Add orbit controls so you can rotate/zoom */}
-      <OrbitControls makeDefault enableDamping dampingFactor={0.05} enableZoom={false} enablePan={true}/>
+function LoadingFallback() {
+  return (
+    <Html center>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: '10px',
+        color: 'white', fontFamily: 'Unbounded, sans-serif',
+        fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase',
+      }}>
+        <span style={{ opacity: 0.8 }}>Loading...</span>
+      </div>
+    </Html>
+  )
+}
 
-      {/* Load the model */}
-      <PolyHavenModel path="/models/Television_01_4k.gltf/Television_01_4k.gltf" />
-    </Canvas>
+export default function ThreeDModel({
+  path,
+  height = '400px',
+  autoRotate = true,
+}) {
+  if (!path) return null
+
+  const env = ENV_CONFIG[tier]
+  const cfg = TIER_CONFIG[tier]
+
+  return (
+    <div style={{
+      width: '100%',
+      height,
+      border: '2px solid black',
+      boxShadow: '3px 3px 0 black',
+      background: 'var(--bg, #0a0a0a)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      <Canvas
+        frameloop={autoRotate ? "always" : "demand"}
+        dpr={cfg.dpr}
+        gl={{ antialias: cfg.antialias }}
+        camera={{ position: [0, 1.5, 4], fov: 40 }}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <ambientLight intensity={tier === 'low' ? 1.5 : 0.5} />
+        <directionalLight position={[5, 5, 5]} intensity={tier === 'low' ? 2 : 1} />
+        <directionalLight position={[-5, 2, -3]} intensity={0.6} />
+
+        {env && <Environment preset={env.preset} />}
+
+        <Suspense fallback={<LoadingFallback />}>
+          <Model path={path} autoRotate={autoRotate} />
+        </Suspense>
+
+        <OrbitControls makeDefault enableDamping dampingFactor={0.05} enableZoom={true} enablePan={false} />
+      </Canvas>
+    </div>
   )
 }

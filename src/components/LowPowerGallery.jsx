@@ -4,12 +4,12 @@ import React, { useRef, useState, useEffect, useMemo, Suspense } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import * as THREE from "three";
-import { OrbitControls, Html, Environment } from "@react-three/drei";
+import { OrbitControls, Html, Environment, useGLTF, Center } from "@react-three/drei";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { FaArrowLeft, FaArrowRight, FaDownload, FaSearch } from "react-icons/fa";
 import { a, useSpring } from "@react-spring/three";
-import { detectDeviceTier } from "../utils/deviceTier"; // ← added
+import { detectDeviceTier } from "../utils/deviceTier";
 
 // Maps tier → drei <Environment> props (or null to skip entirely)
 const ENV_CONFIG = {
@@ -102,16 +102,112 @@ function RecessedFrame({ width, height, depth = 0.2, inset = 0.15 }) {
   );
 }
 
+// // --- 3D MODEL CARD ---
+// function LPModelCard({ art, clicked, setClicked, onOpenModal, modalOpen, tier }) {
+//   const { scene } = useGLTF(art.modelUrl);
+//   const ref = useRef();
+//   const clickTimeout = useRef(null);
+//   const [held, setHeld] = useState(false);
+//   const holdTimeout = useRef(null);
+//   const HOLD_DELAY = 320;
+
+//   useFrame((_, delta) => {
+//     if (ref.current && !clicked) ref.current.rotation.y += delta * 0.4;
+//   });
+
+//   const [hovered, setHovered] = useState(false);
+//   const spring = useSpring({
+//     scale: hovered || clicked || held ? 1.08 : 1,
+//     config: clicked || held ? { tension: 240, friction: 22 } : { tension: 170, friction: 20 },
+//   });
+
+//   const cardWidth = 3, cardHeight = 3;
+
+//   return (
+//     <a.group
+//       scale={spring.scale.to((s) => [s, s, s])}
+//       onPointerOver={() => setHovered(true)}
+//       onPointerOut={() => setHovered(false)}
+//       onPointerDown={(e) => {
+//         e.stopPropagation();
+//         if (modalOpen) return;
+//         holdTimeout.current = setTimeout(() => {
+//           setHeld(true);
+//           setClicked(null);
+//         }, HOLD_DELAY);
+//       }}
+//       onPointerUp={(e) => {
+//         e.stopPropagation();
+//         if (holdTimeout.current) {
+//           clearTimeout(holdTimeout.current);
+//           holdTimeout.current = null;
+//         }
+//         if (held) { setHeld(false); return; }
+//         if (clickTimeout.current) {
+//           clearTimeout(clickTimeout.current);
+//           clickTimeout.current = null;
+//           onOpenModal();
+//           return;
+//         }
+//         setClicked(true);
+//         clickTimeout.current = setTimeout(() => {
+//           setClicked(null);
+//           clickTimeout.current = null;
+//         }, 600);
+//       }}
+//       onPointerLeave={() => {
+//         if (holdTimeout.current) {
+//           clearTimeout(holdTimeout.current);
+//           holdTimeout.current = null;
+//         }
+//       }}
+//     >
+//       {/* No LPBeveledCard or RecessedFrame here */}
+
+//       <group position={[0, 0, 0]}>
+//         <Center>
+//           <primitive ref={ref} object={scene} scale={0.8} />
+//         </Center>
+//       </group>
+
+//       {!modalOpen && (
+//         <Html
+//           position={[1.5, -1.5, 0]}
+//           transform
+//           distanceFactor={1.25}
+//           occlude
+//         >
+//           <div style={{
+//             pointerEvents: "none",
+//             opacity: clicked || held ? 0 : 1,
+//             transition: "opacity 0.2s ease",
+//             background: "#ffffff",
+//             border: "2px solid #111111",
+//             padding: "4px 10px",
+//             whiteSpace: "nowrap",
+//             transform: `translateX(-100%) rotate(${(art.title.length * 137.5) % 20 - 10}deg)`,
+//             transformOrigin: "bottom right",
+//           }}>
+//             <div style={{
+//               fontFamily: "Unbounded, sans-serif",
+//               fontWeight: 800,
+//               fontSize: "0.5rem",
+//               letterSpacing: "0.1em",
+//               textTransform: "uppercase",
+//               color: "#111111",
+//             }}>
+//               {art.title}
+//             </div>
+//           </div>
+//         </Html>
+//       )}
+//     </a.group>
+
+//   );
+// }
+
 // --- SINGLE CARD COMPONENT ---
-function LPSingleCard({
-  art,
-  clicked,
-  setClicked,
-  onOpenModal,
-  modalOpen,
-  float = true,
-  tier,
-}) {
+function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float = true, tier }) {
   const meshRef = useRef();
   const clickTimeout = useRef(null);
   const [held, setHeld] = useState(false);
@@ -126,13 +222,13 @@ function LPSingleCard({
       texture.needsUpdate = true;
     }
   }, [texture]);
-  // Float animation
+ // Float animation
   useFrame(({ clock }) => {
     if (meshRef.current && float && clicked === null) {
       meshRef.current.position.y = Math.sin(clock.getElapsedTime() * 0.8) * 0.2;
     }
   });
-  // Hover scale
+ // Hover scale
   const [hovered, setHovered] = useState(false);
   const spring = useSpring({
     scale: hovered || clicked || held ? 1.08 : 1,
@@ -296,7 +392,7 @@ function LPSingleCard({
         <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
 
-      {/* GLASS PANE — skipped on low-tier devices */}
+      {/* GLASS PANE */}
       {tier !== "low" && (
         <mesh position={[0, 0, 0.68]}>
           <planeGeometry args={[cardWidth, cardHeight]} />
@@ -317,6 +413,14 @@ function LPSingleCard({
       )}
     </a.group>
   );
+}
+
+// --- ROUTER ---
+function LPCardRouter(props) {
+  if (props.art.modelUrl) {
+    // return <LPModelCard {...props} />;
+  }
+  return <LPSingleCard {...props} />;
 }
 
 // --- LOW-POWER SINGLE-CARD GALLERY ---
@@ -348,7 +452,7 @@ export default function LowPowerGallery({ artworks }) {
   // Preload next/prev images
   useEffect(() => {
     [artworks[index + 1], artworks[index - 1]].forEach((art) => {
-      if (art) {
+      if (art?.imageUrl) {
         const img = new window.Image();
         img.src = art.imageUrl;
       }
@@ -438,7 +542,7 @@ export default function LowPowerGallery({ artworks }) {
         )}
 
         <Suspense fallback={<LPLoadingFallback />}>
-          <LPSingleCard
+          <LPCardRouter
             art={currentArt}
             clicked={clicked}
             setClicked={setClicked}
@@ -464,8 +568,7 @@ export default function LowPowerGallery({ artworks }) {
       {isModalOpen &&
         createPortal(
           <div
-            className={`modal fixed inset-0 z-50 flex items-center justify-center ${isClosing ? "animate-fadeOut" : "animate-fadeIn"
-              }`}
+            className={`modal fixed inset-0 z-50 flex items-center justify-center ${isClosing ? "animate-fadeOut" : "animate-fadeIn"}`}
             onClick={closeModal}
           >
             <div
@@ -474,30 +577,44 @@ export default function LowPowerGallery({ artworks }) {
             >
               <button className="absolute top-4 right-8 text-2xl x-button" onClick={closeModal}>✕</button>
               <div className="max-w-full max-h-full p-2 flex flex-col items-center">
-                <Image
-                  src={currentArt.imageUrl}
-                  alt={currentArt.title}
-                  width={600}
-                  height={300}
-                  className="w-auto max-h-[60vh] object-contain rounded"
-                />
+                {currentArt.imageUrl ? (
+                  <Image
+                    src={currentArt.imageUrl}
+                    alt={currentArt.title}
+                    width={600}
+                    height={300}
+                    className="w-auto max-h-[60vh] object-contain rounded"
+                  />
+                ) : (
+                  <div style={{
+                    width: "100%", height: "300px",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    border: "2px solid black", boxShadow: "3px 3px 0 black",
+                    color: "white", fontFamily: "Unbounded, sans-serif",
+                    fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase",
+                  }}>
+                    3D Model
+                  </div>
+                )}
                 <h2 className="modal-text-2 text-white text-2xl mt-4">{currentArt.title}</h2>
                 <p className="text-white text max-w-[80%]">{currentArt.description}</p>
-                <div className="flex gap-4 mt-2">
-                  <a
-                    href={currentArt.imageUrl}
-                    download
-                    className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
-                  >
-                    <FaDownload /> Download
-                  </a>
-                </div>
+                {currentArt.imageUrl && (
+                  <div className="flex gap-4 mt-2">
+                    <a
+                      href={currentArt.imageUrl}
+                      download
+                      className="px-1 py-2 m-button text-lg rounded-lg flex items-center gap-1"
+                    >
+                      <FaDownload /> Download
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>,
           document.body
         )
       }
-    </div >
+    </div>
   );
 }
