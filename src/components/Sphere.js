@@ -191,7 +191,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
         playClick();
         setTimeout(() => {
           setClicked(false);
-          router.push("/gallery");
+          router.push("/works");
         }, 250);
       }}
     >
