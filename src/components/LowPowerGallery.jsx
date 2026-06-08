@@ -222,13 +222,13 @@ function LPSingleCard({ art, clicked, setClicked, onOpenModal, modalOpen, float 
       texture.needsUpdate = true;
     }
   }, [texture]);
- // Float animation
+  // Float animation
   useFrame(({ clock }) => {
     if (meshRef.current && float && clicked === null) {
       meshRef.current.position.y = Math.sin(clock.getElapsedTime() * 0.8) * 0.2;
     }
   });
- // Hover scale
+  // Hover scale
   const [hovered, setHovered] = useState(false);
   const spring = useSpring({
     scale: hovered || clicked || held ? 1.08 : 1,
@@ -560,9 +560,33 @@ export default function LowPowerGallery({ artworks }) {
       </Canvas>
 
       <div className="flex justify-between w-full px-6 absolute bottom-45 md:bottom-30">
-        <button onClick={prev} className="px-4 py-2 bg-black text-white logo-3"><FaArrowLeft /></button>
-        <button onClick={openModal} className="px-4 py-2 bg-black text-white logo-3"><FaSearch size={18} /></button>
-        <button onClick={next} className="px-4 py-2 bg-black text-white logo-3"><FaArrowRight /></button>
+        <button
+          onClick={prev}
+          disabled={index === 0}
+          className="m-button"
+          style={{
+            opacity: index === 0 ? 0.3 : 1,
+            cursor: index === 0 ? "not-allowed" : "pointer",
+          }}
+        >
+          <FaArrowLeft /> Prev
+        </button>
+
+        <button onClick={openModal} className="m-button">
+          <FaSearch size={14} />
+        </button>
+
+        <button
+          onClick={next}
+          disabled={index === artworks.length - 1}
+          className="m-button"
+          style={{
+            opacity: index === artworks.length - 1 ? 0.3 : 1,
+            cursor: index === artworks.length - 1 ? "not-allowed" : "pointer",
+          }}
+        >
+          Next <FaArrowRight />
+        </button>
       </div>
 
       {isModalOpen &&

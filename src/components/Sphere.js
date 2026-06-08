@@ -218,7 +218,7 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
               animation:      "fadeIn 0.2s ease-out",
             }}
           >
-            {isTouchDevice ? "Tap again to open Gallery" : "Click to View Gallery"}
+            {isTouchDevice ? "Tap again to open Works" : "Click to View Works"}
           </div>
         </Html>
       )}
