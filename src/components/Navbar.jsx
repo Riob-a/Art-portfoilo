@@ -110,7 +110,7 @@ export default function Navbar() {
                 width={35}
                 height={35}
                 style={{ width: "100%", height: "100%" }}
-                className="logo-pic"
+                className="logo-nav-pic"
               />
             </motion.div>
           </button>

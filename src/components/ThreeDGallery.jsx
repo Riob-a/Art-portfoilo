@@ -90,7 +90,7 @@ export default function ThreeDFloatingGallery() {
 
       {/* HINT TEXT */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/70 text-xs logo-3 pointer-events-none z-10">
-        pan to explore · scroll to zoom
+        drag to rotate · scroll to zoom · pan to move
       </div>
 
       {/* DIM BACKGROUND WHEN MODAL OPEN */}
