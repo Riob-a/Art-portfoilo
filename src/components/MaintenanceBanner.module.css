@@ -19,7 +19,7 @@
     background: repeating-linear-gradient(-45deg,
             #EF9F27 0px, #EF9F27 40px,
             #111111 40px, #111111 80px);
-    padding: 24px 0;
+    padding: 14px 0;
     transform: translate(-50%, -50%) rotate(45deg);
     pointer-events: none;
     z-index: 51;
@@ -36,7 +36,7 @@
     background: repeating-linear-gradient(-45deg,
             #EF9F27 0px, #EF9F27 40px,
             #111111 40px, #111111 80px);
-    padding: 24px 0;
+    padding: 14px 0;
     transform: translate(-50%, -50%) rotate(-45deg);
     pointer-events: none;
     z-index: 51;
