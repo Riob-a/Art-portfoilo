@@ -15,12 +15,12 @@
     left: 50%;
     width: 151vw;
     overflow: hidden;
-    box-shadow: #111111 0 -10 50;
+    box-shadow: #111111 0 10 50;
     background: repeating-linear-gradient(-45deg,
             #EF9F27 0px, #EF9F27 40px,
             #111111 40px, #111111 80px);
     padding: 14px 0;
-    transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(5deg);
     pointer-events: none;
     z-index: 51;
 }
@@ -37,7 +37,7 @@
             #EF9F27 0px, #EF9F27 40px,
             #111111 40px, #111111 80px);
     padding: 14px 0;
-    transform: translate(-50%, -50%) rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-35deg);
     pointer-events: none;
     z-index: 51;
 }
@@ -89,11 +89,11 @@
 
 @keyframes scrollTapeReverse {
     0% {
-        transform: translateX(0);
+        transform: translateX(-50%);
     }
 
     100% {
-        transform: translateX(-50%);
+        transform: translateX(0);
     }
 }
 
