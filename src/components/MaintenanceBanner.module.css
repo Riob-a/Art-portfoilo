@@ -42,18 +42,6 @@
     z-index: 51;
 }
 
-.tapeTrack {
-    display: flex;
-    white-space: nowrap;
-    animation: scrollTape 12s linear infinite;
-}
-
-.tapeTrackReverse {
-    display: flex;
-    white-space: nowrap;
-    animation: scrollTapeReverse 12s linear infinite;
-}
-
 .tapeText {
     font-family: 'Unbounded', sans-serif;
     font-size: 15px;
@@ -77,30 +65,8 @@
     border-right: 4px solid #111;
 }
 
-@keyframes scrollTape {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-@keyframes scrollTapeReverse {
-    0% {
-        transform: translateX(-50%);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}
-
 @media (prefers-reduced-motion: reduce) {
-
-    .tapeTrack,
-    .tapeTrackReverse {
+    .tapeTrack {
         animation: none;
     }
 }
