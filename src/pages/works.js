@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import Navbar from "../components/Navbar";
+import MaintenanceBanner from "@/components/MaintenanceBanner";
 
 export default function Works() {
     const router = useRouter();

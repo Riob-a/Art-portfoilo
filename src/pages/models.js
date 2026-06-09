@@ -5,6 +5,7 @@ import models from "../data/model-data";
 import Navbar from "../components/Navbar";
 import { FaArrowLeft, FaArrowRight, FaDownload, FaSearch } from "react-icons/fa";
 import { detectDeviceTier } from "../utils/deviceTier";
+import MaintenanceBanner from "../components/MaintenanceBanner";
 
 const ENV_CONFIG = {
   high: { preset: "sunset" },
@@ -55,6 +56,7 @@ export default function ModelsPage() {
 
   return (
     <div className="relative w-full min-h-screen">
+      <MaintenanceBanner diagonal />
       <div className="absolute top-0.5 left-0.5  w-8 h-8 border-t-2 border-l-2 border-black/70 pointer-events-none z-10" />
       <div className="absolute top-0.5 right-0.5 w-8 h-8 border-t-2 border-r-2 border-black/70 pointer-events-none z-10" />
       <div className="absolute bottom-0.5 left-0.5  w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />

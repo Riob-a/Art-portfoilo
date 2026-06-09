@@ -766,16 +766,19 @@ button.gradient-text {
   font-weight: 600;
   border-color: white;
 }
-.c-heading{
-    color: #000000;
+
+.c-heading {
+  color: #000000;
   /* font-family: 'Unbounded', sans-serif; */
   font-family: "Unbounded", sans-serif;
   font-weight: 800;
   font-style: solid;
 }
-.c-content{
+
+.c-content {
   color: #000000;
 }
+
 /* end */
 
 /* Components */
@@ -1598,6 +1601,7 @@ button.gradient-text:active {
   background: var(--theme-navbar, #ffffff);
   color: var(--theme-navbar-text, #111111);
 }
+
 /* =========================================================
    Y2K NAVBAR REDESIGN
    Keeps expand/collapse animation intact — adds hard corners,
@@ -1609,7 +1613,8 @@ button.gradient-text:active {
   background-color: var(--theme-navbar, #ffffff);
   color: var(--theme-navbar-text, #111111);
   border: 2px solid var(--theme-navbar-text, #111111) !important;
-  border-radius: 0 !important;          /* override the rounded-lg from JSX */
+  border-radius: 0 !important;
+  /* override the rounded-lg from JSX */
   box-shadow: 5px 5px 0 var(--theme-navbar-text, #111111);
   max-width: 90%;
   max-height: 100%;
@@ -1634,7 +1639,8 @@ button.gradient-text:active {
 .navbar.collapsed {
   background-color: var(--theme-navbar, #ffffff);
   border: 2px solid var(--theme-navbar-text, #111111) !important;
-  border-radius: 35px;                  /* keep the circle */
+  border-radius: 35px;
+  /* keep the circle */
   /* box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111); */
   flex-shrink: 0;
   max-width: 44px;
@@ -1679,7 +1685,8 @@ button.gradient-text:active {
   color: var(--theme-navbar-text, #111111) !important;
   border: 2px solid var(--theme-navbar-text, #111111);
   box-shadow: 3px 3px 0 var(--theme-navbar-text, #111111);
-  transform: translate(-1px, -1px) scale(1) !important; /* override the old scale(1.1) */
+  transform: translate(-1px, -1px) scale(1) !important;
+  /* override the old scale(1.1) */
 }
 
 .nav-link:active {
@@ -1857,14 +1864,29 @@ textarea.form-inputA {
 [data-theme="dark"] .contact-status {
   color: #f5d9a0;
 }
+
 /* Cursor */
 * {
   cursor: url('/cursor.cur') 4 4, auto !important;
 }
 
-button, a, [role="button"], label, select, [onclick] {
+button,
+a,
+[role="button"],
+label,
+select,
+[onclick] {
   cursor: url('/cursor-pointer.cur') 4 4, pointer !important;
 }
-button *, a * {
+
+button *,
+a * {
   cursor: inherit !important;
+}
+
+/* MaintenanceBanner.module.css */
+@media (prefers-reduced-motion: reduce) {
+  .tapeTrack {
+    animation: none;
+  }
 }
