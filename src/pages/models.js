@@ -9,14 +9,14 @@ import MaintenanceBanner from "../components/MaintenanceBanner";
 
 const ENV_CONFIG = {
   high: { preset: "sunset" },
-  mid:  { preset: "sunset" },
-  low:  null,
+  mid: { preset: "sunset" },
+  low: null,
 };
 
 const TIER_CONFIG = {
-  high: { dpr: [1, 2],   antialias: true  },
-  mid:  { dpr: [1, 1.5], antialias: false },
-  low:  { dpr: [1, 1],   antialias: false },
+  high: { dpr: [1, 2], antialias: true },
+  mid: { dpr: [1, 1.5], antialias: false },
+  low: { dpr: [1, 1], antialias: false },
 };
 
 const modelArtworks = models.filter((a) => a.modelUrl);
@@ -62,7 +62,11 @@ export default function ModelsPage() {
       <div className="absolute bottom-0.5 left-0.5  w-8 h-8 border-b-2 border-l-2 border-black/70 pointer-events-none z-10" />
       <div className="absolute bottom-0.5 right-0.5 w-8 h-8 border-b-2 border-r-2 border-black/70 pointer-events-none z-10" />
 
-      <div className="max-w-4xl mx-auto px-4 pt-6 pb-12">
+      <div
+        className="max-w-4xl mx-auto px-4 pt-6 pb-12"
+        data-aos="fade-in"
+        data-aos-delay="600"
+      >
 
         <h1 className="logo-3 text-2xl mb-8 uppercase tracking-widest"
           style={{

@@ -1,67 +1,106 @@
 /* ── Horizontal (default) ── */
 .tapeWrap {
-  width: 100%;
-  overflow: hidden;
-  background: repeating-linear-gradient(
-    -45deg,
-    #EF9F27 0px, #EF9F27 40px,
-    #111111 40px, #111111 80px
-  );
-  padding: 14px 0;
+    width: 100%;
+    overflow: hidden;
+    background: repeating-linear-gradient(-45deg,
+            #EF9F27 0px, #EF9F27 40px,
+            #111111 40px, #111111 80px);
+    padding: 14px 0;
 }
 
-/* ── Diagonal overlay ── */
+/* ── Diagonal: top-left → bottom-right ── */
 .tapeWrapDiagonal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 141vw;
-  overflow: hidden;
-  background: repeating-linear-gradient(
-    -45deg,
-    #EF9F27 0px, #EF9F27 40px,
-    #111111 40px, #111111 80px
-  );
-  padding: 14px 0;
-  transform: translate(-50%, -50%) rotate(45deg);
-  pointer-events: none;
-  z-index: 50;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 151vw;
+    overflow: hidden;
+    box-shadow: #111111 0 -10 50;
+    background: repeating-linear-gradient(-45deg,
+            #EF9F27 0px, #EF9F27 40px,
+            #111111 40px, #111111 80px);
+    padding: 24px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+    pointer-events: none;
+    z-index: 51;
+}
+
+/* ── Diagonal: top-right → bottom-left ── */
+.tapeWrapDiagonalReverse {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 151vw;
+    overflow: hidden;
+    box-shadow: #111111 0 10 50;
+    background: repeating-linear-gradient(-45deg,
+            #EF9F27 0px, #EF9F27 40px,
+            #111111 40px, #111111 80px);
+    padding: 24px 0;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    pointer-events: none;
+    z-index: 51;
 }
 
 .tapeTrack {
-  display: flex;
-  white-space: nowrap;
-  animation: scrollTape 12s linear infinite;
+    display: flex;
+    white-space: nowrap;
+    animation: scrollTape 12s linear infinite;
+}
+
+.tapeTrackReverse {
+    display: flex;
+    white-space: nowrap;
+    animation: scrollTapeReverse 12s linear infinite;
 }
 
 .tapeText {
-  font-family: 'Unbounded', sans-serif;
-  font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #111111;
-  background: #EF9F27;
-  padding: 6px 28px;
-  display: inline-block;
-  border-left: 4px solid #111111;
-  border-right: 4px solid #111111;
-  line-height: 1;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #111111;
+    background: #EF9F27;
+    padding: 6px 28px;
+    display: inline-block;
+    border-left: 4px solid #111111;
+    border-right: 4px solid #111111;
+    line-height: 1;
 }
 
 .tapeSpacer {
-  display: inline-block;
-  width: 60px;
-  background: #EF9F27;
-  border-left: 4px solid #111;
-  border-right: 4px solid #111;
+    display: inline-block;
+    width: 60px;
+    background: #EF9F27;
+    border-left: 4px solid #111;
+    border-right: 4px solid #111;
 }
 
 @keyframes scrollTape {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scrollTapeReverse {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tapeTrack { animation: none; }
+
+    .tapeTrack,
+    .tapeTrackReverse {
+        animation: none;
+    }
 }

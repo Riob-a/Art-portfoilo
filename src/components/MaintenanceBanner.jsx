@@ -5,11 +5,10 @@ export default function MaintenanceBanner({
     diagonal = false,
 }) {
     const repeated = [...messages, ...messages, ...messages, ...messages]
-    const wrapClass = diagonal ? styles.tapeWrapDiagonal : styles.tapeWrap
 
-    const banner = (
+    const strip = (wrapClass, trackClass) => (
         <div className={wrapClass}>
-            <div className={styles.tapeTrack}>
+            <div className={trackClass}>
                 {repeated.map((msg, i) => (
                     <span key={i} style={{ display: 'contents' }}>
                         <span className={styles.tapeText}>{msg}</span>
@@ -20,10 +19,11 @@ export default function MaintenanceBanner({
         </div>
     )
 
-    // diagonal needs a fixed full-viewport shell so it doesn't affect layout
     if (diagonal) {
         return (
             <div
+                data-aos="fade-in"
+                data-aos-delay="200"
                 aria-label="Under maintenance"
                 style={{
                     position: 'fixed',
@@ -34,10 +34,11 @@ export default function MaintenanceBanner({
                     background: 'rgba(0, 0, 0, 0.65)',
                 }}
             >
-                {banner}
+                {strip(styles.tapeWrapDiagonal, styles.tapeTrack)}
+                {strip(styles.tapeWrapDiagonalReverse, styles.tapeTrackReverse)}
             </div>
         )
     }
 
-    return banner
+    return strip(styles.tapeWrap, styles.tapeTrack)
 }
