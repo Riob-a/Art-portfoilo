@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Edges, Html, Bounds } from "@react-three/drei";
+import { Environment, Edges, Bounds } from "@react-three/drei";
 import { a, useSpring } from "@react-spring/three";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
@@ -50,40 +50,42 @@ const SPHERE_CONFIG = {
     thickness:       0,
     resolution:      0,
     samples:         0,
-    envPreset:       null,   // use directional lights instead
+    envPreset:       null,
     dpr:             [1, 1],
     antialias:       false,
   },
 };
 
 // ─── Sphere mesh ─────────────────────────────────────────────────────────────
-function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
-  const router  = useRouter();
+function InteractiveSphere({
+  audioCtxRef,
+  isSmallScreen,
+  tier,
+  isTouchDevice,
+  onHoverChange,
+  onPointerMove,
+  onShowTooltipChange,
+}) {
+  const router   = useRouter();
   const groupRef = useRef(null);
-  const cfg = SPHERE_CONFIG[tier];
+  const cfg      = SPHERE_CONFIG[tier];
 
   const baseScale = isSmallScreen ? 1.35 : 1;
 
-  const [hovered,     setHovered]     = useState(false);
-  const [clicked,     setClicked]     = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   const hoverSourceRef = useRef(null);
   const hoverGainRef   = useRef(null);
 
-  const isTouchDevice =
-    typeof window !== "undefined" &&
-    ("ontouchstart" in window || navigator.maxTouchPoints > 0) &&
-    window.innerWidth < 1024;
-
   const { color } = useSpring({
     color: clicked ? "#FF3333" : "#FFFFFF",
-    config: { tension: 180, friction: 20 },
+    config: { tension: 280, friction: 6 },
   });
 
   const { scale } = useSpring({
     scale: hovered ? baseScale * 1.12 : baseScale,
-    config: { tension: 150, friction: 18 },
+    config: { tension: 200, friction: 12 },
   });
 
   useFrame((_, delta) => {
@@ -149,7 +151,8 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
 
   const activateHover = () => {
     setHovered(true);
-    setShowTooltip(true);
+    onHoverChange(true);
+    onShowTooltipChange(true);
     startHoverSound();
     setHoverVolume(0.2, 0.15);
     if (navigator.vibrate) navigator.vibrate(20);
@@ -157,15 +160,15 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
 
   const deactivateHover = () => {
     setHovered(false);
-    setShowTooltip(false);
+    onHoverChange(false);
+    onShowTooltipChange(false);
     setHoverVolume(0.15, 0.2);
   };
 
-  // Derive geometry args from config, further reduced on small screens
   const sW = cfg.segments[0];
   const sH = cfg.segments[1];
-  const radius      = isSmallScreen ? 1    : 2;
-  const wireRadius  = isSmallScreen ? 1.01 : 2.02;
+  const radius     = isSmallScreen ? 1    : 2;
+  const wireRadius = isSmallScreen ? 1.01 : 2.02;
   const wW = isSmallScreen ? Math.min(cfg.wireSegments[0], 32) : cfg.wireSegments[0];
   const wH = isSmallScreen ? Math.min(cfg.wireSegments[1], 20) : cfg.wireSegments[1];
 
@@ -173,9 +176,13 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
     <a.group
       ref={groupRef}
       scale={scale.to((s) => [s, s, s])}
-      onPointerOver={() => {
+      onPointerOver={(e) => {
         document.body.style.cursor = "pointer";
+        onPointerMove({ x: e.clientX, y: e.clientY });
         activateHover();
+      }}
+      onPointerMove={(e) => {
+        onPointerMove({ x: e.clientX, y: e.clientY });
       }}
       onPointerOut={() => {
         document.body.style.cursor = "default";
@@ -192,37 +199,9 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
         setTimeout(() => {
           setClicked(false);
           router.push("/works");
-        }, 250);
+        }, 2500);
       }}
     >
-      {/* Tooltip */}
-      {showTooltip && (
-        <Html position={[0, 0, 0]} left>
-          <div
-            className="logo-3"
-            style={{
-              background:     "var(--theme-navbar, #ffffff)",
-              border:         "2px solid var(--theme-navbar-text, #111111)",
-              color:          "var(--theme-navbar-text, #111111)",
-              padding:        "8px 14px",
-              borderRadius:   "0",
-              fontSize:       "0.6rem",
-              fontFamily:     "Unbounded, sans-serif",
-              fontWeight:     800,
-              letterSpacing:  "0.1em",
-              textTransform:  "uppercase",
-              whiteSpace:     "nowrap",
-              pointerEvents:  "none",
-              boxShadow:      "3px 3px 0 var(--theme-navbar-text, #111111)",
-              transform:      "translateY(-10px)",
-              animation:      "fadeIn 0.2s ease-out",
-            }}
-          >
-            {isTouchDevice ? "Tap again to open Works" : "Click to View Works"}
-          </div>
-        </Html>
-      )}
-
       {/* Solid sphere */}
       <mesh>
         <sphereGeometry args={[radius, sW, sH]} />
@@ -257,12 +236,22 @@ function InteractiveSphere({ audioCtxRef, isSmallScreen, tier }) {
 
 // ─── Canvas wrapper ───────────────────────────────────────────────────────────
 export default function InteractiveSpinningSphere() {
-  const audioCtxRef       = useRef(null);
-  const audioUnlockedRef  = useRef(false);
+  const audioCtxRef      = useRef(null);
+  const audioUnlockedRef = useRef(false);
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [tier,          setTier]          = useState("mid");
   const [ready,         setReady]         = useState(false);
+
+  // Lifted tooltip state
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [pointerPos,  setPointerPos]  = useState({ x: 0, y: 0 });
+  const [, setHovered] = useState(false);
+
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0) &&
+    window.innerWidth < 1024;
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -273,11 +262,9 @@ export default function InteractiveSpinningSphere() {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  // Detect tier once on mount
   useEffect(() => {
     const t = detectDeviceTier();
     setTier(t);
-    // console.log("[Sphere] Device tier:", t);
   }, []);
 
   useEffect(() => { setReady(true); }, [isSmallScreen]);
@@ -317,32 +304,66 @@ export default function InteractiveSpinningSphere() {
   const cfg = SPHERE_CONFIG[tier];
 
   return (
-    <Canvas
-      className="home"
-      style={{ height: "100%", width: "100%", margin: "auto", display: "block" }}
-      dpr={cfg.dpr}
-      camera={{ position: [0, 4, 3], fov: 90 }}
-      gl={{ antialias: cfg.antialias }}
-    >
-      <ambientLight intensity={0.5} />
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+      <Canvas
+        className="home"
+        style={{ height: "100%", width: "100%", margin: "auto", display: "block" }}
+        dpr={cfg.dpr}
+        camera={{ position: [0, 4, 3], fov: 90 }}
+        gl={{ antialias: cfg.antialias }}
+      >
+        <ambientLight intensity={0.5} />
 
-      {/* Low tier: skip Environment, use cheap directional lights instead */}
-      {tier === "low" ? (
-        <>
-          <directionalLight position={[5,  5,  5]} intensity={1.8} />
-          <directionalLight position={[-3, 2, -4]} intensity={1.2} />
-        </>
-      ) : (
-        <Environment preset={cfg.envPreset} blur={cfg.envBlur} />
+        {tier === "low" ? (
+          <>
+            <directionalLight position={[5,  5,  5]} intensity={1.8} />
+            <directionalLight position={[-3, 2, -4]} intensity={1.2} />
+          </>
+        ) : (
+          <Environment preset={cfg.envPreset} blur={cfg.envBlur} />
+        )}
+
+        <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>
+          <InteractiveSphere
+            audioCtxRef={audioCtxRef}
+            isSmallScreen={isSmallScreen}
+            tier={tier}
+            isTouchDevice={isTouchDevice}
+            onHoverChange={setHovered}
+            onPointerMove={setPointerPos}
+            onShowTooltipChange={setShowTooltip}
+          />
+        </Bounds>
+      </Canvas>
+
+      {/* Cursor-following tooltip — lives in normal DOM, outside Canvas */}
+      {showTooltip && (
+        <div
+          className="logo-3"
+          style={{
+            position:      "fixed",
+            left:          pointerPos.x + 16,
+            top:           pointerPos.y - 12,
+            background:    "var(--theme-navbar, #ffffff)",
+            border:        "2px solid var(--theme-navbar-text, #111111)",
+            color:         "var(--theme-navbar-text, #111111)",
+            padding:       "8px 14px",
+            borderRadius:  "0",
+            fontSize:      "0.6rem",
+            fontFamily:    "Unbounded, sans-serif",
+            fontWeight:    800,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            whiteSpace:    "nowrap",
+            pointerEvents: "none",
+            boxShadow:     "3px 3px 0 var(--theme-navbar-text, #111111)",
+            zIndex:        9999,
+            animation:     "fadeIn 0.2s ease-out",
+          }}
+        >
+          {isTouchDevice ? "Tap again to open Works" : "Click to View Works"}
+        </div>
       )}
-
-      <Bounds clip observe fit={isSmallScreen} margin={isSmallScreen ? 1.2 : 1}>
-        <InteractiveSphere
-          audioCtxRef={audioCtxRef}
-          isSmallScreen={isSmallScreen}
-          tier={tier}
-        />
-      </Bounds>
-    </Canvas>
+    </div>
   );
 }
