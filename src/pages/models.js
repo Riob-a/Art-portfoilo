@@ -68,14 +68,14 @@ export default function ModelsPage() {
         data-aos-delay="600"
       >
 
-        <h1 className="logo-3 text-2xl mb-8 uppercase tracking-widest"
+        {/* <h1 className="logo-3 text-2xl mb-8 uppercase tracking-widest"
           style={{
             borderBottom: "2px solid var(--theme-navbar-text, #111111)",
             paddingBottom: "8px",
             fontWeight: 900,
           }}>
           3D Models
-        </h1>
+        </h1> */}
 
         {/* Viewer */}
         <div style={{

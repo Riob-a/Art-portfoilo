@@ -95,7 +95,7 @@ export default function ThreeDFloatingGallery() {
 
       {/* DIM BACKGROUND WHEN MODAL OPEN */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 pointer-events-none" />
+        <div className="fixed inset-0  backdrop-blur-sm z-50 pointer-events-none" />
       )}
 
       <div className="relative h-screen" style={{ width: "100%", margin: "auto", height: "100%" }}>

@@ -28,7 +28,7 @@ export default function GalleryOverlay() {
         <div className="text-xs opacity-70">
           the
         </div>
-        <div className="flex items-center gap-2 text-xl">
+        <div className="flex items-center gap-2 text-lg">
           <span>GALLERY</span>
         </div>
       </motion.div>

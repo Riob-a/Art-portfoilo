@@ -597,7 +597,6 @@ export default function LowPowerGallery({ artworks }) {
           >
             <div
               className="relative max-w-[50vw] w-full max-h-screen overflow-auto rounded-lg p-1 animate-scaleIn"
-              onClick={(e) => e.stopPropagation()}
             >
               <button className="absolute top-4 right-8 text-2xl x-button" onClick={closeModal}>✕</button>
               <div className="max-w-full max-h-full p-2 flex flex-col items-center">

@@ -16,7 +16,14 @@ import Image from "next/image";
 const expandVariants = {
     initial: { clipPath: "inset(50% 50% 50% 50%)" },
     animate: { clipPath: "inset(50% 50% 50% 50%)" },
-    exit: { clipPath: "inset(0% 0% 0% 0%)" },
+    exit: {
+        clipPath: [
+            "inset(50% 50% 50% 50%)",
+            "inset(0% 0% 0% 0%)",
+            "inset(0% 0% 0% 0%)",
+            "inset(50% 50% 50% 50%)",
+        ],
+    },
 };
 
 const textVariants = {
@@ -52,7 +59,16 @@ export default function TransitionOverlay() {
             initial="initial"
             animate="animate"
             exit="exit"
-            transition={{ duration: 0.9, ease: [0.77, 0, 0.175, 1] }}
+            transition={{
+                duration: 2.2,
+                type: "keyframes",
+                times: [0, 0.35, 0.65, 1],  // 35% expand, 30% hold, 35% compress
+                ease: [
+                    [0.77, 0, 0.175, 1],   // expand
+                    "linear",               // hold (no easing needed)
+                    [0.25, 0.1, 0.25, 1],  // compress
+                ],
+            }}
             className="fixed top-0 left-0 w-full h-full z-50"
             style={{ background: "var(--theme-navbar, #ffffff)" }}
         >
@@ -80,7 +96,7 @@ export default function TransitionOverlay() {
                 className="main-logo-h2 fixed bottom-10 left-4 z-55 uppercase tracking-widest cursor-pointer"
             >
                 <div className="text-xs opacity-70 text-black">the</div>
-                <div className="flex items-center gap-2 text-xl text-black">
+                <div className="flex items-center gap-2 text-lg text-black">
                     <span>GALLERY</span>
                 </div>
             </motion.div>

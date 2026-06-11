@@ -21,7 +21,7 @@ export default function Works() {
             <div className="max-w-4xl mx-auto px-4 pt-24 pb-12">
 
                 {/* Title */}
-                <h1
+                {/* <h1
                     className="logo-3 text-2xl mb-12 uppercase tracking-widest"
                     style={{
                         borderBottom: "2px solid var(--theme-navbar-text, #111111)",
@@ -31,7 +31,7 @@ export default function Works() {
                     }}
                 >
                     /. Works
-                </h1>
+                </h1> */}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
@@ -51,7 +51,7 @@ export default function Works() {
                         }}
                         onMouseEnter={(e) => {
                             e.currentTarget.style.transform = "translate(-2px, -2px)";
-                            e.currentTarget.style.boxShadow = "5px 5px 0 var(--theme-navbar-text, #111111)";
+                            e.currentTarget.style.boxShadow = "6px 6px 0 var(--theme-navbar-text, #111111)";
                         }}
                         onMouseLeave={(e) => {
                             e.currentTarget.style.transform = "translate(0, 0)";
@@ -148,7 +148,7 @@ export default function Works() {
                         }}
                         onMouseEnter={(e) => {
                             e.currentTarget.style.transform = "translate(-2px, -2px)";
-                            e.currentTarget.style.boxShadow = "5px 5px 0 var(--theme-navbar-text, #111111)";
+                            e.currentTarget.style.boxShadow = "6px 6px 0 var(--theme-navbar-text, #111111)";
                         }}
                         onMouseLeave={(e) => {
                             e.currentTarget.style.transform = "translate(0, 0)";

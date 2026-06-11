@@ -199,7 +199,7 @@ function InteractiveSphere({
         setTimeout(() => {
           setClicked(false);
           router.push("/works");
-        }, 1250);
+        }, 1200);
       }}
     >
       {/* Solid sphere */}
